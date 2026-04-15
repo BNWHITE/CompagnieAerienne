@@ -3,8 +3,12 @@ package com.isep.airline.model;
 /**
  * Classe abstraite représentant une personne.
  * Classe mère de Passager et Employe.
+ * Implémente l'interface ObtenirInformation.
+ *
+ * Remarque du prof : "les attributs sont en String"
+ * → Tous les attributs de Personne sont de type String.
  */
-public abstract class Personne {
+public abstract class Personne implements ObtenirInformation {
     private String id;
     private String nom;
     private String prenom;
@@ -22,18 +26,32 @@ public abstract class Personne {
         this.telephone = telephone;
     }
 
-    // ==================== CRUD ====================
+    // ==================== Interface ObtenirInformation ====================
 
     /**
-     * Affiche les différentes informations d'une personne.
+     * Retourne les informations de la personne sous forme de String.
+     * Les sous-classes (Passager, Employe…) peuvent surcharger cette méthode
+     * pour ajouter leurs propres informations.
+     *
+     * Remarque du prof : "Obtenir des infos : toString (afficher les infos du proprio)"
      */
-    public void obtenirInfos() {
-        System.out.println("===== Informations Personne =====");
-        System.out.println("ID          : " + id);
-        System.out.println("Nom         : " + nom);
-        System.out.println("Prénom      : " + prenom);
-        System.out.println("Email       : " + email);
-        System.out.println("Téléphone   : " + telephone);
+    @Override
+    public String obtenirInformation() {
+        return "===== Informations Personne =====\n"
+                + "ID          : " + id + "\n"
+                + "Nom         : " + nom + "\n"
+                + "Prénom      : " + prenom + "\n"
+                + "Email       : " + email + "\n"
+                + "Téléphone   : " + telephone;
+    }
+
+    /**
+     * toString() délègue à obtenirInformation() — conformément aux attentes du prof.
+     * "Obtenir des infos : toString (afficher les infos du proprio)"
+     */
+    @Override
+    public String toString() {
+        return obtenirInformation();
     }
 
     // ==================== Getters & Setters ====================
@@ -76,16 +94,5 @@ public abstract class Personne {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
-    }
-
-    @Override
-    public String toString() {
-        return "Personne{" +
-                "id='" + id + '\'' +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", email='" + email + '\'' +
-                ", telephone='" + telephone + '\'' +
-                '}';
     }
 }

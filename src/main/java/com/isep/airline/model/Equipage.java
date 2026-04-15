@@ -7,11 +7,12 @@ import java.util.List;
  * Classe représentant un équipage affecté à un vol.
  * Un équipage est composé d'un pilote et d'une liste de personnel de cabine.
  * Composition : un équipage appartient à un vol.
+ * Implémente ObtenirInformation.
  */
-public class Equipage {
+public class Equipage implements ObtenirInformation {
     private String idEquipage;
     private Pilote pilote;
-    private List<PersonnelCabine> personnelCabine;
+    private List<PersonnelCabine> personnelCabine; // Déclaré avec List (pas ArrayList)
 
     public Equipage() {
         this.personnelCabine = new ArrayList<>();
@@ -33,8 +34,6 @@ public class Equipage {
 
     /**
      * Ajoute un membre du personnel de cabine à l'équipage.
-     *
-     * @param membre le personnel de cabine à ajouter
      */
     public void ajouterPersonnelCabine(PersonnelCabine membre) {
         if (membre != null && !personnelCabine.contains(membre)) {
@@ -45,8 +44,6 @@ public class Equipage {
 
     /**
      * Retire un membre du personnel de cabine de l'équipage.
-     *
-     * @param membre le personnel de cabine à retirer
      */
     public void retirerPersonnelCabine(PersonnelCabine membre) {
         if (personnelCabine.remove(membre)) {
@@ -56,25 +53,34 @@ public class Equipage {
 
     /**
      * Vérifie si l'équipage est complet (a un pilote et au moins un personnel de cabine).
-     *
-     * @return true si l'équipage est complet
      */
     public boolean estComplet() {
         return pilote != null && !personnelCabine.isEmpty();
     }
 
-    public void obtenirInfos() {
-        System.out.println("===== Informations Équipage =====");
-        System.out.println("ID Équipage : " + idEquipage);
+    // ==================== Interface ObtenirInformation ====================
+
+    @Override
+    public String obtenirInformation() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("===== Informations Équipage =====\n");
+        sb.append("ID Équipage : ").append(idEquipage).append("\n");
         if (pilote != null) {
-            System.out.println("Pilote      : " + pilote.getNom() + " " + pilote.getPrenom());
+            sb.append("Pilote      : ").append(pilote.getNom()).append(" ").append(pilote.getPrenom()).append("\n");
         } else {
-            System.out.println("Pilote      : Non assigné");
+            sb.append("Pilote      : Non assigné\n");
         }
-        System.out.println("Personnel cabine (" + personnelCabine.size() + ") :");
+        sb.append("Personnel cabine (").append(personnelCabine.size()).append(") :");
         for (PersonnelCabine pc : personnelCabine) {
-            System.out.println("  - " + pc.getNom() + " " + pc.getPrenom() + " (" + pc.getQualification() + ")");
+            sb.append("\n  - ").append(pc.getNom()).append(" ").append(pc.getPrenom())
+              .append(" (").append(pc.getQualification()).append(")");
         }
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return obtenirInformation();
     }
 
     // ==================== Getters & Setters ====================
@@ -101,14 +107,5 @@ public class Equipage {
 
     public void setPersonnelCabine(List<PersonnelCabine> personnelCabine) {
         this.personnelCabine = personnelCabine;
-    }
-
-    @Override
-    public String toString() {
-        return "Equipage{" +
-                "idEquipage='" + idEquipage + '\'' +
-                ", pilote=" + (pilote != null ? pilote.getNom() + " " + pilote.getPrenom() : "N/A") +
-                ", personnelCabine=" + personnelCabine.size() + " membres" +
-                '}';
     }
 }

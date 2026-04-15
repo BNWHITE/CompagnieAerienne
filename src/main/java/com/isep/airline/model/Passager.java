@@ -5,12 +5,12 @@ import java.util.List;
 
 /**
  * Classe représentant un passager.
- * Hérite de Personne.
+ * Hérite de Personne (qui implémente ObtenirInformation).
  * Un passager peut réserver plusieurs vols.
  */
 public class Passager extends Personne {
     private String numeroPasseport;
-    private List<Reservation> reservations;
+    private List<Reservation> reservations; // Déclaré avec List (pas ArrayList) — conforme aux attentes du prof
 
     public Passager() {
         super();
@@ -96,11 +96,13 @@ public class Passager extends Personne {
         return new ArrayList<>(reservations);
     }
 
+    // ==================== Interface ObtenirInformation ====================
+
     @Override
-    public void obtenirInfos() {
-        super.obtenirInfos();
-        System.out.println("Passeport   : " + numeroPasseport);
-        System.out.println("Nb réserv.  : " + reservations.size());
+    public String obtenirInformation() {
+        return super.obtenirInformation() + "\n"
+                + "Passeport   : " + numeroPasseport + "\n"
+                + "Nb réserv.  : " + reservations.size();
     }
 
     // ==================== Getters & Setters ====================
@@ -119,16 +121,5 @@ public class Passager extends Personne {
 
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
-    }
-
-    @Override
-    public String toString() {
-        return "Passager{" +
-                "id='" + getId() + '\'' +
-                ", nom='" + getNom() + '\'' +
-                ", prenom='" + getPrenom() + '\'' +
-                ", passeport='" + numeroPasseport + '\'' +
-                ", nbReservations=" + reservations.size() +
-                '}';
     }
 }

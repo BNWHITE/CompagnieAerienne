@@ -5,13 +5,14 @@ import java.util.List;
 
 /**
  * Classe représentant un avion de la compagnie aérienne.
+ * Implémente ObtenirInformation.
  */
-public class Avion {
+public class Avion implements ObtenirInformation {
     private String immatriculation;
     private String modele;
     private int capacite;
     private boolean disponible;
-    private List<Vol> volsAffectes;
+    private List<Vol> volsAffectes; // Déclaré avec List (pas ArrayList)
 
     public Avion() {
         this.disponible = true;
@@ -30,12 +31,6 @@ public class Avion {
 
     /**
      * Vérifie la disponibilité de l'avion pour un horaire donné.
-     * L'avion est considéré indisponible s'il est déjà affecté à un vol
-     * dont les horaires chevauchent ceux demandés.
-     *
-     * @param dateDepart  la date de départ prévue
-     * @param dateArrivee la date d'arrivée prévue
-     * @return true si l'avion est disponible, false sinon
      */
     public boolean verifierDisponibilite(String dateDepart, String dateArrivee) {
         if (!disponible) {
@@ -44,7 +39,6 @@ public class Avion {
         }
         for (Vol vol : volsAffectes) {
             if (vol.getStatut().equals("PLANIFIE") || vol.getStatut().equals("EN_COURS")) {
-                // Vérification simplifiée de chevauchement de dates
                 if (vol.getDateDepart().equals(dateDepart)) {
                     System.out.println("L'avion " + immatriculation + " est déjà affecté à un vol à cette date.");
                     return false;
@@ -56,8 +50,6 @@ public class Avion {
 
     /**
      * Affecte cet avion à un vol.
-     *
-     * @param vol le vol auquel affecter l'avion
      */
     public void affecterVol(Vol vol) {
         if (vol != null) {
@@ -67,13 +59,21 @@ public class Avion {
         }
     }
 
-    public void obtenirInfos() {
-        System.out.println("===== Informations Avion =====");
-        System.out.println("Immatriculation : " + immatriculation);
-        System.out.println("Modèle          : " + modele);
-        System.out.println("Capacité        : " + capacite + " places");
-        System.out.println("Disponible      : " + (disponible ? "Oui" : "Non"));
-        System.out.println("Vols affectés   : " + volsAffectes.size());
+    // ==================== Interface ObtenirInformation ====================
+
+    @Override
+    public String obtenirInformation() {
+        return "===== Informations Avion =====\n"
+                + "Immatriculation : " + immatriculation + "\n"
+                + "Modèle          : " + modele + "\n"
+                + "Capacité        : " + capacite + " places\n"
+                + "Disponible      : " + (disponible ? "Oui" : "Non") + "\n"
+                + "Vols affectés   : " + volsAffectes.size();
+    }
+
+    @Override
+    public String toString() {
+        return obtenirInformation();
     }
 
     // ==================== Getters & Setters ====================
@@ -116,15 +116,5 @@ public class Avion {
 
     public void setVolsAffectes(List<Vol> volsAffectes) {
         this.volsAffectes = volsAffectes;
-    }
-
-    @Override
-    public String toString() {
-        return "Avion{" +
-                "immatriculation='" + immatriculation + '\'' +
-                ", modele='" + modele + '\'' +
-                ", capacite=" + capacite +
-                ", disponible=" + disponible +
-                '}';
     }
 }

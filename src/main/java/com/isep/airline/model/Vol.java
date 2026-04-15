@@ -4,33 +4,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe représentant un vol de la compagnie aérienne.
+ * Classe abstraite representant un vol de la compagnie aerienne.
+ * Implemente ObtenirInformation.
+ *
+ * Remarques du prof :
+ * - "Relation d association : il faut donc dans le class vol avoir un objet airport"
+ *   -> villeDepart/villeArrivee remplaces par Aeroport aeroportDepart/aeroportArrivee
+ * - "Il faut ajouter des relations entre par exemple Vol et Employe"
+ *   -> Ajout de List<Employe> employes (relation directe)
+ * - "Le vol doit etre dans obtenir information"
+ *   -> implemente ObtenirInformation
+ * - "Relation entre Vol et Pilote : c est List et pas ArrayList"
+ *   -> toutes les collections declarees en List (pas ArrayList)
+ * - "Entre court, moyen et long courrier il y a une difference de structure"
+ *   -> Vol est abstract, sous-classes : CourtCourrier, MoyenCourrier, LongCourrier
  */
-public class Vol {
+public abstract class Vol implements ObtenirInformation {
     private String numeroVol;
-    private String villeDepart;
-    private String villeArrivee;
+    private Aeroport aeroportDepart;    // Agregation / Association avec Aeroport
+    private Aeroport aeroportArrivee;   // Agregation / Association avec Aeroport
     private String dateDepart;
     private String dateArrivee;
     private String heureDepart;
     private String heureArrivee;
-    private double prix;
+    private String prix;   // En String conformement aux attentes du prof
     private String statut; // PLANIFIE, EN_COURS, TERMINE, ANNULE
-    private Avion avion;
-    private Equipage equipage;
-    private List<Passager> passagers;
+    private Avion avion;   // Composition : un vol est opere par un avion
+    private Equipage equipage; // Composition : un vol necessite un equipage
+    private List<Passager> passagers;   // Association : passagers sur ce vol
+    private List<Employe> employes;     // Relation directe Vol <-> Employe
 
     public Vol() {
         this.passagers = new ArrayList<>();
+        this.employes = new ArrayList<>();
         this.statut = "PLANIFIE";
     }
 
-    public Vol(String numeroVol, String villeDepart, String villeArrivee,
+    public Vol(String numeroVol, Aeroport aeroportDepart, Aeroport aeroportArrivee,
                String dateDepart, String dateArrivee, String heureDepart,
-               String heureArrivee, double prix) {
+               String heureArrivee, String prix) {
         this.numeroVol = numeroVol;
-        this.villeDepart = villeDepart;
-        this.villeArrivee = villeArrivee;
+        this.aeroportDepart = aeroportDepart;
+        this.aeroportArrivee = aeroportArrivee;
         this.dateDepart = dateDepart;
         this.dateArrivee = dateArrivee;
         this.heureDepart = heureDepart;
@@ -38,67 +53,66 @@ public class Vol {
         this.prix = prix;
         this.statut = "PLANIFIE";
         this.passagers = new ArrayList<>();
-    }
+        this.employes = new ArrayList<>();
 
-    // ==================== Méthodes métier ====================
-
-    /**
-     * Obtenir les informations du vol.
-     */
-    public void obtenirVol() {
-        System.out.println("===== Informations Vol =====");
-        System.out.println("N° Vol       : " + numeroVol);
-        System.out.println("Départ       : " + villeDepart + " le " + dateDepart + " à " + heureDepart);
-        System.out.println("Arrivée      : " + villeArrivee + " le " + dateArrivee + " à " + heureArrivee);
-        System.out.println("Prix         : " + prix + " €");
-        System.out.println("Statut       : " + statut);
-        System.out.println("Avion        : " + (avion != null ? avion.getImmatriculation() + " (" + avion.getModele() + ")" : "Non affecté"));
-        System.out.println("Équipage     : " + (equipage != null ? equipage.getIdEquipage() : "Non affecté"));
-        System.out.println("Passagers    : " + passagers.size());
-        if (avion != null) {
-            System.out.println("Places dispo : " + (avion.getCapacite() - passagers.size()));
+        // Association bidirectionnelle : ajouter ce vol aux Deque de l aeroport
+        if (aeroportDepart != null) {
+            aeroportDepart.ajouterVolDepart(this);
+        }
+        if (aeroportArrivee != null) {
+            aeroportArrivee.ajouterVolArrivee(this);
         }
     }
 
+    // ==================== Methode abstraite (difference de structure) ====================
+
     /**
-     * Affecter un équipage au vol.
-     * Un pilote et une équipe cabine doivent assurer l'acheminement du vol.
-     *
-     * @param equipage l'équipage à affecter
-     * @return true si l'affectation a réussi
+     * Retourne le type de vol (Court Courrier, Moyen Courrier, Long Courrier).
+     * Chaque sous-classe implemente cette methode.
+     */
+    public abstract String getTypeVol();
+
+    // ==================== Methodes metier ====================
+
+    /**
+     * Affecter un equipage au vol.
      */
     public boolean affecterEquipage(Equipage equipage) {
         if (equipage == null) {
-            System.out.println("Erreur : l'équipage spécifié est null.");
+            System.out.println("Erreur : l equipage specifie est null.");
             return false;
         }
         if (!equipage.estComplet()) {
-            System.out.println("Erreur : l'équipage doit avoir un pilote et au moins un personnel de cabine.");
+            System.out.println("Erreur : l equipage doit avoir un pilote et au moins un personnel de cabine.");
             return false;
         }
         this.equipage = equipage;
-        System.out.println("Équipage " + equipage.getIdEquipage() + " affecté au vol " + numeroVol);
+        // Ajouter les employes de l equipage a la relation directe Employe <-> Vol
+        if (equipage.getPilote() != null) {
+            ajouterEmploye(equipage.getPilote());
+        }
+        for (PersonnelCabine pc : equipage.getPersonnelCabine()) {
+            ajouterEmploye(pc);
+        }
+        System.out.println("Equipage " + equipage.getIdEquipage() + " affecte au vol " + numeroVol);
         return true;
     }
 
     /**
-     * Affecter un avion au vol après vérification de disponibilité.
-     *
-     * @param avion l'avion à affecter
-     * @return true si l'affectation a réussi
+     * Affecter un avion au vol.
      */
     public boolean affecterAvion(Avion avion) {
         if (avion == null) {
-            System.out.println("Erreur : l'avion spécifié est null.");
+            System.out.println("Erreur : l avion specifie est null.");
             return false;
         }
         if (!avion.verifierDisponibilite(this.dateDepart, this.dateArrivee)) {
-            System.out.println("Erreur : l'avion " + avion.getImmatriculation() + " n'est pas disponible.");
+            System.out.println("Erreur : l avion " + avion.getImmatriculation() + " n est pas disponible.");
             return false;
         }
         this.avion = avion;
         avion.getVolsAffectes().add(this);
-        System.out.println("Avion " + avion.getImmatriculation() + " affecté au vol " + numeroVol);
+        System.out.println("Avion " + avion.getImmatriculation() + " affecte au vol " + numeroVol);
         return true;
     }
 
@@ -107,17 +121,14 @@ public class Vol {
      */
     public void annulerVol() {
         this.statut = "ANNULE";
-        System.out.println("Vol " + numeroVol + " annulé.");
-        // Notifier les passagers
+        System.out.println("Vol " + numeroVol + " annule.");
         for (Passager passager : passagers) {
-            System.out.println("  Notification envoyée à " + passager.getNom() + " " + passager.getPrenom());
+            System.out.println("  Notification envoyee a " + passager.getNom() + " " + passager.getPrenom());
         }
     }
 
     /**
-     * Vérifier si le vol est disponible pour réservation.
-     *
-     * @return true si le vol accepte des réservations
+     * Verifier si le vol est disponible pour reservation.
      */
     public boolean isDisponible() {
         if (!statut.equals("PLANIFIE")) {
@@ -131,8 +142,6 @@ public class Vol {
 
     /**
      * Ajouter un passager au vol.
-     *
-     * @param passager le passager à ajouter
      */
     public void ajouterPassager(Passager passager) {
         if (passager != null && !passagers.contains(passager)) {
@@ -142,11 +151,61 @@ public class Vol {
 
     /**
      * Retirer un passager du vol.
-     *
-     * @param passager le passager à retirer
      */
     public void retirerPassager(Passager passager) {
         passagers.remove(passager);
+    }
+
+    /**
+     * Ajouter un employe au vol (relation directe Vol <-> Employe).
+     */
+    public void ajouterEmploye(Employe employe) {
+        if (employe != null && !employes.contains(employe)) {
+            employes.add(employe);
+            employe.ajouterVol(this); // bidirectionnel
+        }
+    }
+
+    /**
+     * Retirer un employe du vol.
+     */
+    public void retirerEmploye(Employe employe) {
+        if (employes.remove(employe)) {
+            employe.retirerVol(this);
+        }
+    }
+
+    // ==================== Interface ObtenirInformation ====================
+
+    @Override
+    public String obtenirInformation() {
+        String departInfo = (aeroportDepart != null)
+                ? aeroportDepart.getCodeIATA() + " (" + aeroportDepart.getVille() + ")"
+                : "Non defini";
+        String arriveeInfo = (aeroportArrivee != null)
+                ? aeroportArrivee.getCodeIATA() + " (" + aeroportArrivee.getVille() + ")"
+                : "Non defini";
+
+        return "===== Informations Vol =====\n"
+                + "N Vol        : " + numeroVol + "\n"
+                + "Type         : " + getTypeVol() + "\n"
+                + "Depart       : " + departInfo + " le " + dateDepart + " a " + heureDepart + "\n"
+                + "Arrivee      : " + arriveeInfo + " le " + dateArrivee + " a " + heureArrivee + "\n"
+                + "Prix         : " + prix + " EUR\n"
+                + "Statut       : " + statut + "\n"
+                + "Avion        : " + (avion != null ? avion.getImmatriculation() + " (" + avion.getModele() + ")" : "Non affecte") + "\n"
+                + "Equipage     : " + (equipage != null ? equipage.getIdEquipage() : "Non affecte") + "\n"
+                + "Passagers    : " + passagers.size() + "\n"
+                + "Employes     : " + employes.size()
+                + (avion != null ? "\nPlaces dispo : " + (avion.getCapacite() - passagers.size()) : "");
+    }
+
+    /**
+     * toString() delegue a obtenirInformation().
+     */
+    @Override
+    public String toString() {
+        return obtenirInformation();
     }
 
     // ==================== Getters & Setters ====================
@@ -159,20 +218,20 @@ public class Vol {
         this.numeroVol = numeroVol;
     }
 
-    public String getVilleDepart() {
-        return villeDepart;
+    public Aeroport getAeroportDepart() {
+        return aeroportDepart;
     }
 
-    public void setVilleDepart(String villeDepart) {
-        this.villeDepart = villeDepart;
+    public void setAeroportDepart(Aeroport aeroportDepart) {
+        this.aeroportDepart = aeroportDepart;
     }
 
-    public String getVilleArrivee() {
-        return villeArrivee;
+    public Aeroport getAeroportArrivee() {
+        return aeroportArrivee;
     }
 
-    public void setVilleArrivee(String villeArrivee) {
-        this.villeArrivee = villeArrivee;
+    public void setAeroportArrivee(Aeroport aeroportArrivee) {
+        this.aeroportArrivee = aeroportArrivee;
     }
 
     public String getDateDepart() {
@@ -207,11 +266,11 @@ public class Vol {
         this.heureArrivee = heureArrivee;
     }
 
-    public double getPrix() {
+    public String getPrix() {
         return prix;
     }
 
-    public void setPrix(double prix) {
+    public void setPrix(String prix) {
         this.prix = prix;
     }
 
@@ -247,14 +306,11 @@ public class Vol {
         this.passagers = passagers;
     }
 
-    @Override
-    public String toString() {
-        return "Vol{" +
-                "numero='" + numeroVol + '\'' +
-                ", " + villeDepart + " -> " + villeArrivee +
-                ", depart=" + dateDepart + " " + heureDepart +
-                ", statut='" + statut + '\'' +
-                ", passagers=" + passagers.size() +
-                '}';
+    public List<Employe> getEmployes() {
+        return employes;
+    }
+
+    public void setEmployes(List<Employe> employes) {
+        this.employes = employes;
     }
 }

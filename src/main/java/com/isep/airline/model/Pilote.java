@@ -2,11 +2,16 @@ package com.isep.airline.model;
 
 /**
  * Classe représentant un pilote.
- * Hérite de Employe.
+ * Hérite de Employe → Personne → ObtenirInformation.
+ *
+ * Polymorphisme : Pilote et PersonnelCabine surchargent obtenirRole() et obtenirInformation().
+ * "Il y a un seul polymorphisme : juste entre pilote et personnel cabine"
+ *
+ * Attributs en String : "les attributs sont en String"
  */
 public class Pilote extends Employe {
     private String licence;
-    private int heuresDeVol;
+    private String heuresDeVol; // En String conformément aux attentes du prof
 
     public Pilote() {
         super();
@@ -14,22 +19,29 @@ public class Pilote extends Employe {
     }
 
     public Pilote(String id, String nom, String prenom, String email, String telephone,
-                  String numeroEmploye, double salaire, String licence, int heuresDeVol) {
+                  String numeroEmploye, String salaire, String licence, String heuresDeVol) {
         super(id, nom, prenom, email, telephone, numeroEmploye, "Pilote", salaire);
         this.licence = licence;
         this.heuresDeVol = heuresDeVol;
     }
 
+    // ==================== Polymorphisme ====================
+
+    /**
+     * Surcharge de obtenirRole() — polymorphisme avec PersonnelCabine.
+     */
     @Override
     public String obtenirRole() {
         return "Pilote (Licence: " + licence + ", Heures de vol: " + heuresDeVol + ")";
     }
 
+    // ==================== Interface ObtenirInformation ====================
+
     @Override
-    public void obtenirInfos() {
-        super.obtenirInfos();
-        System.out.println("Licence     : " + licence);
-        System.out.println("Heures vol  : " + heuresDeVol);
+    public String obtenirInformation() {
+        return super.obtenirInformation() + "\n"
+                + "Licence     : " + licence + "\n"
+                + "Heures vol  : " + heuresDeVol;
     }
 
     // ==================== Getters & Setters ====================
@@ -42,22 +54,11 @@ public class Pilote extends Employe {
         this.licence = licence;
     }
 
-    public int getHeuresDeVol() {
+    public String getHeuresDeVol() {
         return heuresDeVol;
     }
 
-    public void setHeuresDeVol(int heuresDeVol) {
+    public void setHeuresDeVol(String heuresDeVol) {
         this.heuresDeVol = heuresDeVol;
-    }
-
-    @Override
-    public String toString() {
-        return "Pilote{" +
-                "id='" + getId() + '\'' +
-                ", nom='" + getNom() + '\'' +
-                ", prenom='" + getPrenom() + '\'' +
-                ", licence='" + licence + '\'' +
-                ", heuresDeVol=" + heuresDeVol +
-                '}';
     }
 }

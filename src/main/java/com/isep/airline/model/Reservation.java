@@ -6,15 +6,16 @@ import java.util.List;
 /**
  * Classe représentant une réservation.
  * Association entre un Passager et un ou plusieurs Vols.
+ * Implémente ObtenirInformation.
  */
-public class Reservation {
+public class Reservation implements ObtenirInformation {
     private String numeroReservation;
     private Passager passager;
     private Vol vol;
-    private List<Vol> volsReserves;
+    private List<Vol> volsReserves; // Déclaré avec List (pas ArrayList)
     private String dateReservation;
     private String statut; // CONFIRMEE, ANNULEE, EN_ATTENTE
-    private double montantTotal;
+    private String montantTotal; // En String conformément aux attentes du prof
 
     public Reservation() {
         this.volsReserves = new ArrayList<>();
@@ -37,31 +38,44 @@ public class Reservation {
 
     /**
      * Ajouter un vol à la réservation.
-     *
-     * @param vol le vol à ajouter
      */
     public void ajouterVol(Vol vol) {
         if (vol != null && !volsReserves.contains(vol)) {
             volsReserves.add(vol);
-            montantTotal += vol.getPrix();
+            // Calcul du montant total
+            try {
+                double total = Double.parseDouble(this.montantTotal) + Double.parseDouble(vol.getPrix());
+                this.montantTotal = String.valueOf(total);
+            } catch (NumberFormatException e) {
+                // Si le prix n'est pas un nombre valide, on garde l'ancien montant
+            }
             System.out.println("Vol " + vol.getNumeroVol() + " ajouté à la réservation " + numeroReservation);
         }
     }
 
-    /**
-     * Obtenir les informations de la réservation.
-     */
-    public void obtenirReservation() {
-        System.out.println("===== Informations Réservation =====");
-        System.out.println("N° Réservation : " + numeroReservation);
-        System.out.println("Passager       : " + passager.getNom() + " " + passager.getPrenom());
-        System.out.println("Date réserv.   : " + dateReservation);
-        System.out.println("Statut         : " + statut);
-        System.out.println("Montant total  : " + montantTotal + " €");
-        System.out.println("Vols réservés  :");
+    // ==================== Interface ObtenirInformation ====================
+
+    @Override
+    public String obtenirInformation() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("===== Informations Réservation =====\n");
+        sb.append("N° Réservation : ").append(numeroReservation).append("\n");
+        sb.append("Passager       : ").append(passager.getNom()).append(" ").append(passager.getPrenom()).append("\n");
+        sb.append("Date réserv.   : ").append(dateReservation).append("\n");
+        sb.append("Statut         : ").append(statut).append("\n");
+        sb.append("Montant total  : ").append(montantTotal).append(" €\n");
+        sb.append("Vols réservés  :");
         for (Vol v : volsReserves) {
-            System.out.println("  - " + v.getNumeroVol() + " : " + v.getVilleDepart() + " -> " + v.getVilleArrivee());
+            String depart = (v.getAeroportDepart() != null) ? v.getAeroportDepart().getCodeIATA() : "?";
+            String arrivee = (v.getAeroportArrivee() != null) ? v.getAeroportArrivee().getCodeIATA() : "?";
+            sb.append("\n  - ").append(v.getNumeroVol()).append(" : ").append(depart).append(" -> ").append(arrivee);
         }
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return obtenirInformation();
     }
 
     // ==================== Getters & Setters ====================
@@ -114,22 +128,11 @@ public class Reservation {
         this.statut = statut;
     }
 
-    public double getMontantTotal() {
+    public String getMontantTotal() {
         return montantTotal;
     }
 
-    public void setMontantTotal(double montantTotal) {
+    public void setMontantTotal(String montantTotal) {
         this.montantTotal = montantTotal;
-    }
-
-    @Override
-    public String toString() {
-        return "Reservation{" +
-                "numero='" + numeroReservation + '\'' +
-                ", passager=" + passager.getNom() + " " + passager.getPrenom() +
-                ", statut='" + statut + '\'' +
-                ", montant=" + montantTotal + "€" +
-                ", nbVols=" + volsReserves.size() +
-                '}';
     }
 }

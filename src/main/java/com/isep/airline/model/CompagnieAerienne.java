@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Classe principale représentant la compagnie aérienne.
- * Gère les vols, passagers, employés, avions, équipages et réservations.
+ * Classe principale representant la compagnie aerienne.
+ * Gere les vols, passagers, employes, avions, equipages, reservations et aeroports.
+ * Implemente ObtenirInformation.
  */
-public class CompagnieAerienne {
+public class CompagnieAerienne implements ObtenirInformation {
     private String nom;
     private String codeIATA;
     private List<Vol> vols;
@@ -18,6 +19,7 @@ public class CompagnieAerienne {
     private List<Avion> avions;
     private List<Equipage> equipages;
     private List<Reservation> reservations;
+    private List<Aeroport> aeroports; // Nouvelle liste d'aeroports
 
     public CompagnieAerienne() {
         this.vols = new ArrayList<>();
@@ -26,6 +28,7 @@ public class CompagnieAerienne {
         this.avions = new ArrayList<>();
         this.equipages = new ArrayList<>();
         this.reservations = new ArrayList<>();
+        this.aeroports = new ArrayList<>();
     }
 
     public CompagnieAerienne(String nom, String codeIATA) {
@@ -37,27 +40,72 @@ public class CompagnieAerienne {
         this.avions = new ArrayList<>();
         this.equipages = new ArrayList<>();
         this.reservations = new ArrayList<>();
+        this.aeroports = new ArrayList<>();
+    }
+
+    // ========================================================================
+    // ==================== GESTION DES AEROPORTS (CRUD) ====================
+    // ========================================================================
+
+    public void ajouterAeroport(Aeroport aeroport) {
+        if (aeroport != null && rechercherAeroport(aeroport.getCodeIATA()) == null) {
+            aeroports.add(aeroport);
+            System.out.println("Aeroport " + aeroport.getCodeIATA() + " (" + aeroport.getNom() + ") ajoute.");
+        } else {
+            System.out.println("Erreur : aeroport null ou deja existant.");
+        }
+    }
+
+    public Aeroport rechercherAeroport(String codeIATA) {
+        for (Aeroport a : aeroports) {
+            if (a.getCodeIATA().equals(codeIATA)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public boolean modifierAeroport(String codeIATA, String nom, String ville, String pays) {
+        Aeroport aeroport = rechercherAeroport(codeIATA);
+        if (aeroport != null) {
+            if (nom != null && !nom.isEmpty()) aeroport.setNom(nom);
+            if (ville != null && !ville.isEmpty()) aeroport.setVille(ville);
+            if (pays != null && !pays.isEmpty()) aeroport.setPays(pays);
+            System.out.println("Aeroport " + codeIATA + " modifie avec succes.");
+            return true;
+        }
+        System.out.println("Erreur : aeroport " + codeIATA + " introuvable.");
+        return false;
+    }
+
+    public boolean supprimerAeroport(String codeIATA) {
+        Aeroport aeroport = rechercherAeroport(codeIATA);
+        if (aeroport != null) {
+            aeroports.remove(aeroport);
+            System.out.println("Aeroport " + codeIATA + " supprime.");
+            return true;
+        }
+        System.out.println("Erreur : aeroport " + codeIATA + " introuvable.");
+        return false;
+    }
+
+    public List<Aeroport> listerAeroports() {
+        return new ArrayList<>(aeroports);
     }
 
     // ========================================================================
     // ==================== GESTION DES PASSAGERS (CRUD) ====================
     // ========================================================================
 
-    /**
-     * Ajouter un passager.
-     */
     public void ajouterPassager(Passager passager) {
         if (passager != null && rechercherPassager(passager.getId()) == null) {
             passagers.add(passager);
-            System.out.println("Passager " + passager.getNom() + " " + passager.getPrenom() + " ajouté.");
+            System.out.println("Passager " + passager.getNom() + " " + passager.getPrenom() + " ajoute.");
         } else {
-            System.out.println("Erreur : passager null ou déjà existant.");
+            System.out.println("Erreur : passager null ou deja existant.");
         }
     }
 
-    /**
-     * Rechercher un passager par son ID.
-     */
     public Passager rechercherPassager(String id) {
         for (Passager p : passagers) {
             if (p.getId().equals(id)) {
@@ -67,9 +115,6 @@ public class CompagnieAerienne {
         return null;
     }
 
-    /**
-     * Modifier un passager.
-     */
     public boolean modifierPassager(String id, String nom, String prenom, String email, String telephone, String passeport) {
         Passager passager = rechercherPassager(id);
         if (passager != null) {
@@ -78,30 +123,24 @@ public class CompagnieAerienne {
             if (email != null && !email.isEmpty()) passager.setEmail(email);
             if (telephone != null && !telephone.isEmpty()) passager.setTelephone(telephone);
             if (passeport != null && !passeport.isEmpty()) passager.setNumeroPasseport(passeport);
-            System.out.println("Passager " + id + " modifié avec succès.");
+            System.out.println("Passager " + id + " modifie avec succes.");
             return true;
         }
         System.out.println("Erreur : passager " + id + " introuvable.");
         return false;
     }
 
-    /**
-     * Supprimer un passager par son ID.
-     */
     public boolean supprimerPassager(String id) {
         Passager passager = rechercherPassager(id);
         if (passager != null) {
             passagers.remove(passager);
-            System.out.println("Passager " + id + " supprimé.");
+            System.out.println("Passager " + id + " supprime.");
             return true;
         }
         System.out.println("Erreur : passager " + id + " introuvable.");
         return false;
     }
 
-    /**
-     * Lister tous les passagers.
-     */
     public List<Passager> listerPassagers() {
         return new ArrayList<>(passagers);
     }
@@ -110,21 +149,15 @@ public class CompagnieAerienne {
     // ==================== GESTION DES EMPLOYES (CRUD) =====================
     // ========================================================================
 
-    /**
-     * Ajouter un employé.
-     */
     public void ajouterEmploye(Employe employe) {
         if (employe != null && rechercherEmploye(employe.getId()) == null) {
             employes.add(employe);
-            System.out.println("Employé " + employe.getNom() + " " + employe.getPrenom() + " ajouté (rôle: " + employe.obtenirRole() + ").");
+            System.out.println("Employe " + employe.getNom() + " " + employe.getPrenom() + " ajoute (role: " + employe.obtenirRole() + ").");
         } else {
-            System.out.println("Erreur : employé null ou déjà existant.");
+            System.out.println("Erreur : employe null ou deja existant.");
         }
     }
 
-    /**
-     * Rechercher un employé par son ID.
-     */
     public Employe rechercherEmploye(String id) {
         for (Employe e : employes) {
             if (e.getId().equals(id)) {
@@ -134,21 +167,15 @@ public class CompagnieAerienne {
         return null;
     }
 
-    /**
-     * Obtenir le rôle d'un employé par son identifiant.
-     */
     public String obtenirRoleEmploye(String id) {
         Employe employe = rechercherEmploye(id);
         if (employe != null) {
             return employe.obtenirRole();
         }
-        System.out.println("Erreur : employé " + id + " introuvable.");
+        System.out.println("Erreur : employe " + id + " introuvable.");
         return null;
     }
 
-    /**
-     * Modifier un employé.
-     */
     public boolean modifierEmploye(String id, String nom, String prenom, String email, String telephone) {
         Employe employe = rechercherEmploye(id);
         if (employe != null) {
@@ -156,36 +183,31 @@ public class CompagnieAerienne {
             if (prenom != null && !prenom.isEmpty()) employe.setPrenom(prenom);
             if (email != null && !email.isEmpty()) employe.setEmail(email);
             if (telephone != null && !telephone.isEmpty()) employe.setTelephone(telephone);
-            System.out.println("Employé " + id + " modifié avec succès.");
+            System.out.println("Employe " + id + " modifie avec succes.");
             return true;
         }
-        System.out.println("Erreur : employé " + id + " introuvable.");
+        System.out.println("Erreur : employe " + id + " introuvable.");
         return false;
     }
 
-    /**
-     * Supprimer un employé par son ID.
-     */
     public boolean supprimerEmploye(String id) {
         Employe employe = rechercherEmploye(id);
         if (employe != null) {
             employes.remove(employe);
-            System.out.println("Employé " + id + " supprimé.");
+            System.out.println("Employe " + id + " supprime.");
             return true;
         }
-        System.out.println("Erreur : employé " + id + " introuvable.");
+        System.out.println("Erreur : employe " + id + " introuvable.");
         return false;
     }
 
-    /**
-     * Lister tous les employés.
-     */
     public List<Employe> listerEmployes() {
         return new ArrayList<>(employes);
     }
 
     /**
-     * Lister les pilotes.
+     * Polymorphisme : lister les pilotes parmi les employes.
+     * Utilise instanceof pour filtrer — demontre le polymorphisme.
      */
     public List<Pilote> listerPilotes() {
         List<Pilote> pilotes = new ArrayList<>();
@@ -198,7 +220,7 @@ public class CompagnieAerienne {
     }
 
     /**
-     * Lister le personnel de cabine.
+     * Polymorphisme : lister le personnel de cabine parmi les employes.
      */
     public List<PersonnelCabine> listerPersonnelCabine() {
         List<PersonnelCabine> personnelCabines = new ArrayList<>();
@@ -214,22 +236,18 @@ public class CompagnieAerienne {
     // ==================== GESTION DES VOLS (CRUD) =========================
     // ========================================================================
 
-    /**
-     * Planifier un vol - ajouter un vol à la liste des vols planifiés.
-     */
     public void planifierVol(Vol vol) {
         if (vol != null && rechercherVol(vol.getNumeroVol()) == null) {
             vol.setStatut("PLANIFIE");
             vols.add(vol);
-            System.out.println("Vol " + vol.getNumeroVol() + " planifié : " + vol.getVilleDepart() + " -> " + vol.getVilleArrivee());
+            String depart = (vol.getAeroportDepart() != null) ? vol.getAeroportDepart().getCodeIATA() : "?";
+            String arrivee = (vol.getAeroportArrivee() != null) ? vol.getAeroportArrivee().getCodeIATA() : "?";
+            System.out.println("Vol " + vol.getNumeroVol() + " planifie : " + depart + " -> " + arrivee + " (" + vol.getTypeVol() + ")");
         } else {
-            System.out.println("Erreur : vol null ou déjà existant.");
+            System.out.println("Erreur : vol null ou deja existant.");
         }
     }
 
-    /**
-     * Rechercher un vol par son numéro.
-     */
     public Vol rechercherVol(String numeroVol) {
         for (Vol v : vols) {
             if (v.getNumeroVol().equals(numeroVol)) {
@@ -239,44 +257,35 @@ public class CompagnieAerienne {
         return null;
     }
 
-    /**
-     * Obtenir les informations d'un vol par son numéro.
-     */
     public Vol obtenirVol(String numeroVol) {
         Vol vol = rechercherVol(numeroVol);
         if (vol != null) {
-            vol.obtenirVol();
+            System.out.println(vol.obtenirInformation());
             return vol;
         }
         System.out.println("Erreur : vol " + numeroVol + " introuvable.");
         return null;
     }
 
-    /**
-     * Modifier un vol.
-     */
-    public boolean modifierVol(String numeroVol, String villeDepart, String villeArrivee,
+    public boolean modifierVol(String numeroVol, Aeroport aeroportDepart, Aeroport aeroportArrivee,
                                String dateDepart, String dateArrivee, String heureDepart,
-                               String heureArrivee, double prix) {
+                               String heureArrivee, String prix) {
         Vol vol = rechercherVol(numeroVol);
         if (vol != null) {
-            if (villeDepart != null && !villeDepart.isEmpty()) vol.setVilleDepart(villeDepart);
-            if (villeArrivee != null && !villeArrivee.isEmpty()) vol.setVilleArrivee(villeArrivee);
+            if (aeroportDepart != null) vol.setAeroportDepart(aeroportDepart);
+            if (aeroportArrivee != null) vol.setAeroportArrivee(aeroportArrivee);
             if (dateDepart != null && !dateDepart.isEmpty()) vol.setDateDepart(dateDepart);
             if (dateArrivee != null && !dateArrivee.isEmpty()) vol.setDateArrivee(dateArrivee);
             if (heureDepart != null && !heureDepart.isEmpty()) vol.setHeureDepart(heureDepart);
             if (heureArrivee != null && !heureArrivee.isEmpty()) vol.setHeureArrivee(heureArrivee);
-            if (prix > 0) vol.setPrix(prix);
-            System.out.println("Vol " + numeroVol + " modifié avec succès.");
+            if (prix != null && !prix.isEmpty() && !prix.equals("0")) vol.setPrix(prix);
+            System.out.println("Vol " + numeroVol + " modifie avec succes.");
             return true;
         }
         System.out.println("Erreur : vol " + numeroVol + " introuvable.");
         return false;
     }
 
-    /**
-     * Annuler un vol par son numéro.
-     */
     public boolean annulerVol(String numeroVol) {
         Vol vol = rechercherVol(numeroVol);
         if (vol != null) {
@@ -287,23 +296,17 @@ public class CompagnieAerienne {
         return false;
     }
 
-    /**
-     * Supprimer un vol de la liste.
-     */
     public boolean supprimerVol(String numeroVol) {
         Vol vol = rechercherVol(numeroVol);
         if (vol != null) {
             vols.remove(vol);
-            System.out.println("Vol " + numeroVol + " supprimé.");
+            System.out.println("Vol " + numeroVol + " supprime.");
             return true;
         }
         System.out.println("Erreur : vol " + numeroVol + " introuvable.");
         return false;
     }
 
-    /**
-     * Affecter un équipage à un vol.
-     */
     public boolean affecterEquipageAuVol(String numeroVol, String idEquipage) {
         Vol vol = rechercherVol(numeroVol);
         Equipage equipage = rechercherEquipage(idEquipage);
@@ -312,15 +315,12 @@ public class CompagnieAerienne {
             return false;
         }
         if (equipage == null) {
-            System.out.println("Erreur : équipage " + idEquipage + " introuvable.");
+            System.out.println("Erreur : equipage " + idEquipage + " introuvable.");
             return false;
         }
         return vol.affecterEquipage(equipage);
     }
 
-    /**
-     * Affecter un avion à un vol.
-     */
     public boolean affecterAvionAuVol(String numeroVol, String immatriculation) {
         Vol vol = rechercherVol(numeroVol);
         Avion avion = rechercherAvion(immatriculation);
@@ -335,16 +335,10 @@ public class CompagnieAerienne {
         return vol.affecterAvion(avion);
     }
 
-    /**
-     * Lister tous les vols.
-     */
     public List<Vol> listerVols() {
         return new ArrayList<>(vols);
     }
 
-    /**
-     * Lister les vols planifiés.
-     */
     public List<Vol> listerVolsPlanifies() {
         List<Vol> volsPlanifies = new ArrayList<>();
         for (Vol v : vols) {
@@ -359,21 +353,15 @@ public class CompagnieAerienne {
     // ==================== GESTION DES AVIONS (CRUD) =======================
     // ========================================================================
 
-    /**
-     * Ajouter un avion.
-     */
     public void ajouterAvion(Avion avion) {
         if (avion != null && rechercherAvion(avion.getImmatriculation()) == null) {
             avions.add(avion);
-            System.out.println("Avion " + avion.getImmatriculation() + " (" + avion.getModele() + ") ajouté.");
+            System.out.println("Avion " + avion.getImmatriculation() + " (" + avion.getModele() + ") ajoute.");
         } else {
-            System.out.println("Erreur : avion null ou déjà existant.");
+            System.out.println("Erreur : avion null ou deja existant.");
         }
     }
 
-    /**
-     * Rechercher un avion par son immatriculation.
-     */
     public Avion rechercherAvion(String immatriculation) {
         for (Avion a : avions) {
             if (a.getImmatriculation().equals(immatriculation)) {
@@ -383,45 +371,33 @@ public class CompagnieAerienne {
         return null;
     }
 
-    /**
-     * Modifier un avion.
-     */
     public boolean modifierAvion(String immatriculation, String modele, int capacite) {
         Avion avion = rechercherAvion(immatriculation);
         if (avion != null) {
             if (modele != null && !modele.isEmpty()) avion.setModele(modele);
             if (capacite > 0) avion.setCapacite(capacite);
-            System.out.println("Avion " + immatriculation + " modifié avec succès.");
+            System.out.println("Avion " + immatriculation + " modifie avec succes.");
             return true;
         }
         System.out.println("Erreur : avion " + immatriculation + " introuvable.");
         return false;
     }
 
-    /**
-     * Supprimer un avion.
-     */
     public boolean supprimerAvion(String immatriculation) {
         Avion avion = rechercherAvion(immatriculation);
         if (avion != null) {
             avions.remove(avion);
-            System.out.println("Avion " + immatriculation + " supprimé.");
+            System.out.println("Avion " + immatriculation + " supprime.");
             return true;
         }
         System.out.println("Erreur : avion " + immatriculation + " introuvable.");
         return false;
     }
 
-    /**
-     * Lister tous les avions.
-     */
     public List<Avion> listerAvions() {
         return new ArrayList<>(avions);
     }
 
-    /**
-     * Lister les avions disponibles.
-     */
     public List<Avion> listerAvionsDisponibles() {
         List<Avion> disponibles = new ArrayList<>();
         for (Avion a : avions) {
@@ -436,21 +412,15 @@ public class CompagnieAerienne {
     // ==================== GESTION DES EQUIPAGES (CRUD) ====================
     // ========================================================================
 
-    /**
-     * Ajouter un équipage.
-     */
     public void ajouterEquipage(Equipage equipage) {
         if (equipage != null && rechercherEquipage(equipage.getIdEquipage()) == null) {
             equipages.add(equipage);
-            System.out.println("Équipage " + equipage.getIdEquipage() + " ajouté.");
+            System.out.println("Equipage " + equipage.getIdEquipage() + " ajoute.");
         } else {
-            System.out.println("Erreur : équipage null ou déjà existant.");
+            System.out.println("Erreur : equipage null ou deja existant.");
         }
     }
 
-    /**
-     * Rechercher un équipage par son ID.
-     */
     public Equipage rechercherEquipage(String idEquipage) {
         for (Equipage eq : equipages) {
             if (eq.getIdEquipage().equals(idEquipage)) {
@@ -460,23 +430,17 @@ public class CompagnieAerienne {
         return null;
     }
 
-    /**
-     * Supprimer un équipage.
-     */
     public boolean supprimerEquipage(String idEquipage) {
         Equipage equipage = rechercherEquipage(idEquipage);
         if (equipage != null) {
             equipages.remove(equipage);
-            System.out.println("Équipage " + idEquipage + " supprimé.");
+            System.out.println("Equipage " + idEquipage + " supprime.");
             return true;
         }
-        System.out.println("Erreur : équipage " + idEquipage + " introuvable.");
+        System.out.println("Erreur : equipage " + idEquipage + " introuvable.");
         return false;
     }
 
-    /**
-     * Lister tous les équipages.
-     */
     public List<Equipage> listerEquipages() {
         return new ArrayList<>(equipages);
     }
@@ -485,9 +449,6 @@ public class CompagnieAerienne {
     // ==================== GESTION DES RESERVATIONS (CRUD) =================
     // ========================================================================
 
-    /**
-     * Créer une réservation pour un passager sur un vol.
-     */
     public Reservation reserverVol(String idPassager, String numeroVol) {
         Passager passager = rechercherPassager(idPassager);
         Vol vol = rechercherVol(numeroVol);
@@ -506,9 +467,6 @@ public class CompagnieAerienne {
         return reservation;
     }
 
-    /**
-     * Annuler une réservation.
-     */
     public boolean annulerReservation(String numeroReservation) {
         for (int i = 0; i < reservations.size(); i++) {
             Reservation r = reservations.get(i);
@@ -518,13 +476,10 @@ public class CompagnieAerienne {
                 return true;
             }
         }
-        System.out.println("Erreur : réservation " + numeroReservation + " introuvable.");
+        System.out.println("Erreur : reservation " + numeroReservation + " introuvable.");
         return false;
     }
 
-    /**
-     * Rechercher une réservation par son numéro.
-     */
     public Reservation rechercherReservation(String numeroReservation) {
         for (Reservation r : reservations) {
             if (r.getNumeroReservation().equals(numeroReservation)) {
@@ -534,40 +489,28 @@ public class CompagnieAerienne {
         return null;
     }
 
-    /**
-     * Obtenir les informations d'une réservation par son numéro.
-     */
     public Reservation obtenirReservation(String numeroReservation) {
         Reservation reservation = rechercherReservation(numeroReservation);
         if (reservation != null) {
-            reservation.obtenirReservation();
+            System.out.println(reservation.obtenirInformation());
             return reservation;
         }
-        System.out.println("Erreur : réservation " + numeroReservation + " introuvable.");
+        System.out.println("Erreur : reservation " + numeroReservation + " introuvable.");
         return null;
     }
 
-    /**
-     * Lister toutes les réservations.
-     */
     public List<Reservation> listerReservations() {
         return new ArrayList<>(reservations);
     }
 
     // ========================================================================
-    // ==================== STATISTIQUES ET RAPPORTS (BONUS) ================
+    // ==================== STATISTIQUES ET RAPPORTS ========================
     // ========================================================================
 
-    /**
-     * Génère un rapport sur le nombre total de vols.
-     */
     public int getNombreVols() {
         return vols.size();
     }
 
-    /**
-     * Nombre de vols par statut.
-     */
     public Map<String, Integer> getStatistiquesVols() {
         Map<String, Integer> stats = new HashMap<>();
         for (Vol v : vols) {
@@ -576,9 +519,14 @@ public class CompagnieAerienne {
         return stats;
     }
 
-    /**
-     * Nombre total de passagers transportés (sur les vols terminés).
-     */
+    public Map<String, Integer> getStatistiquesTypesVols() {
+        Map<String, Integer> stats = new HashMap<>();
+        for (Vol v : vols) {
+            stats.merge(v.getTypeVol(), 1, Integer::sum);
+        }
+        return stats;
+    }
+
     public int getNombrePassagersTransportes() {
         int total = 0;
         for (Vol v : vols) {
@@ -589,64 +537,87 @@ public class CompagnieAerienne {
         return total;
     }
 
-    /**
-     * Revenus générés (somme des montants des réservations confirmées).
-     */
     public double getRevenusGeneres() {
         double revenus = 0;
         for (Reservation r : reservations) {
             if (r.getStatut().equals("CONFIRMEE")) {
-                revenus += r.getMontantTotal();
+                try {
+                    revenus += Double.parseDouble(r.getMontantTotal());
+                } catch (NumberFormatException e) {
+                    // ignorer les montants non numeriques
+                }
             }
         }
         return revenus;
     }
 
-    /**
-     * Destinations les plus populaires (classées par nombre de réservations).
-     */
     public Map<String, Integer> getDestinationsPopulaires() {
         Map<String, Integer> destinations = new HashMap<>();
         for (Reservation r : reservations) {
             if (r.getStatut().equals("CONFIRMEE")) {
                 for (Vol v : r.getVolsReserves()) {
-                    destinations.merge(v.getVilleArrivee(), 1, Integer::sum);
+                    String dest = (v.getAeroportArrivee() != null) ? v.getAeroportArrivee().getCodeIATA() : "Inconnu";
+                    destinations.merge(dest, 1, Integer::sum);
                 }
             }
         }
         return destinations;
     }
 
-    /**
-     * Affiche un rapport complet.
-     */
     public void afficherRapport() {
-        System.out.println("\n╔══════════════════════════════════════════════════╗");
-        System.out.println("║       RAPPORT - " + nom + " (" + codeIATA + ")");
-        System.out.println("╠══════════════════════════════════════════════════╣");
-        System.out.println("║ Nombre total de vols        : " + getNombreVols());
-        System.out.println("║ Nombre de passagers         : " + passagers.size());
-        System.out.println("║ Nombre d'employés           : " + employes.size());
-        System.out.println("║ Nombre d'avions             : " + avions.size());
-        System.out.println("║ Nombre de réservations      : " + reservations.size());
-        System.out.println("║ Passagers transportés       : " + getNombrePassagersTransportes());
-        System.out.println("║ Revenus générés             : " + String.format("%.2f", getRevenusGeneres()) + " €");
-        System.out.println("╠══════════════════════════════════════════════════╣");
+        System.out.println("\n====================================================");
+        System.out.println("       RAPPORT - " + nom + " (" + codeIATA + ")");
+        System.out.println("====================================================");
+        System.out.println(" Nombre total de vols        : " + getNombreVols());
+        System.out.println(" Nombre de passagers         : " + passagers.size());
+        System.out.println(" Nombre d employes           : " + employes.size());
+        System.out.println(" Nombre d avions             : " + avions.size());
+        System.out.println(" Nombre d aeroports          : " + aeroports.size());
+        System.out.println(" Nombre de reservations      : " + reservations.size());
+        System.out.println(" Passagers transportes       : " + getNombrePassagersTransportes());
+        System.out.println(" Revenus generes             : " + String.format("%.2f", getRevenusGeneres()) + " EUR");
+        System.out.println("----------------------------------------------------");
 
-        System.out.println("║ Vols par statut :");
+        System.out.println(" Vols par statut :");
         Map<String, Integer> statsVols = getStatistiquesVols();
         for (Map.Entry<String, Integer> entry : statsVols.entrySet()) {
-            System.out.println("║   - " + entry.getKey() + " : " + entry.getValue());
+            System.out.println("   - " + entry.getKey() + " : " + entry.getValue());
         }
 
-        System.out.println("╠══════════════════════════════════════════════════╣");
-        System.out.println("║ Destinations populaires :");
+        System.out.println(" Vols par type :");
+        Map<String, Integer> statsTypes = getStatistiquesTypesVols();
+        for (Map.Entry<String, Integer> entry : statsTypes.entrySet()) {
+            System.out.println("   - " + entry.getKey() + " : " + entry.getValue());
+        }
+
+        System.out.println("----------------------------------------------------");
+        System.out.println(" Destinations populaires :");
         Map<String, Integer> destinations = getDestinationsPopulaires();
         destinations.entrySet().stream()
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .forEach(entry -> System.out.println("║   - " + entry.getKey() + " : " + entry.getValue() + " réservation(s)"));
+                .forEach(entry -> System.out.println("   - " + entry.getKey() + " : " + entry.getValue() + " reservation(s)"));
 
-        System.out.println("╚══════════════════════════════════════════════════╝\n");
+        System.out.println("====================================================\n");
+    }
+
+    // ==================== Interface ObtenirInformation ====================
+
+    @Override
+    public String obtenirInformation() {
+        return "===== Compagnie Aerienne =====\n"
+                + "Nom         : " + nom + "\n"
+                + "Code IATA   : " + codeIATA + "\n"
+                + "Vols        : " + vols.size() + "\n"
+                + "Passagers   : " + passagers.size() + "\n"
+                + "Employes    : " + employes.size() + "\n"
+                + "Avions      : " + avions.size() + "\n"
+                + "Aeroports   : " + aeroports.size() + "\n"
+                + "Reservations: " + reservations.size();
+    }
+
+    @Override
+    public String toString() {
+        return obtenirInformation();
     }
 
     // ==================== Getters & Setters ====================
@@ -691,15 +662,7 @@ public class CompagnieAerienne {
         return reservations;
     }
 
-    @Override
-    public String toString() {
-        return "CompagnieAerienne{" +
-                "nom='" + nom + '\'' +
-                ", codeIATA='" + codeIATA + '\'' +
-                ", vols=" + vols.size() +
-                ", passagers=" + passagers.size() +
-                ", employes=" + employes.size() +
-                ", avions=" + avions.size() +
-                '}';
+    public List<Aeroport> getAeroports() {
+        return aeroports;
     }
 }
