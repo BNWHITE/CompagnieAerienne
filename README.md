@@ -901,7 +901,10 @@ CompagnieAerienne/
 
 ---
 
-## 👨‍💻 Auteur
+## 👨‍💻 Auteurs
+
+- **Seydina SY**
+- **Kahina MEDJKANE**
 
 Projet réalisé dans le cadre du cours de Java — **ISEP 2025/2026**
 
