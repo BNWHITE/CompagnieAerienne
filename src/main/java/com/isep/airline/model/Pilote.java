@@ -3,22 +3,32 @@ package com.isep.airline.model;
 /**
  * Classe représentant un pilote de la compagnie aérienne.
  *
- * <p>Hiérarchie : {@code Pilote} → {@link Employe} → {@link Personne} → {@link ObtenirInformation}.</p>
+ * <p>
+ * Hiérarchie : {@code Pilote} → {@link Employe} → {@link Personne} →
+ * {@link ObtenirInformation}.
+ * </p>
  *
- * <p><b>Polymorphisme :</b> {@link #obtenirRole()} est surchargée par rapport à
- * {@link PersonnelCabine#obtenirRole()}.</p>
+ * <p>
+ * <b>Polymorphisme :</b> {@link #obtenirRole()} est surchargée par rapport à
+ * {@link PersonnelCabine#obtenirRole()}.
+ * </p>
  *
- * <p><b>Attributs en String</b> : heuresDeVol (conformément aux attentes pédagogiques).</p>
+ * <p>
+ * <b>Attributs en String</b> : heuresDeVol (conformément aux attentes
+ * pédagogiques).
+ * </p>
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
- * @see     Employe
- * @see     PersonnelCabine
+ * @since 2025
+ * @see Employe
+ * @see PersonnelCabine
  */
 public class Pilote extends Employe {
+    /** Numéro de licence du pilote. */
     private String licence;
-    private String heuresDeVol; // En String conformément aux attentes du prof
+    /** Nombre d'heures de vol cumulées (format String). */
+    private String heuresDeVol;
 
     /**
      * Constructeur par défaut. Définit le rôle à {@code "Pilote"}.
@@ -38,11 +48,12 @@ public class Pilote extends Employe {
      * @param telephone     numéro de téléphone
      * @param numeroEmploye matricule de l'employé
      * @param salaire       salaire mensuel brut (en String)
-     * @param licence       numéro de licence de pilote (ex : {@code "ATPL-FR-12345"})
+     * @param licence       numéro de licence de pilote (ex :
+     *                      {@code "ATPL-FR-12345"})
      * @param heuresDeVol   total des heures de vol (en String, ex : {@code "3500"})
      */
     public Pilote(String id, String nom, String prenom, String email, String telephone,
-                  String numeroEmploye, String salaire, String licence, String heuresDeVol) {
+            String numeroEmploye, String salaire, String licence, String heuresDeVol) {
         super(id, nom, prenom, email, telephone, numeroEmploye, "Pilote", salaire);
         this.licence = licence;
         this.heuresDeVol = heuresDeVol;
@@ -51,10 +62,13 @@ public class Pilote extends Employe {
     // ==================== Polymorphisme ====================
 
     /**
-     * Retourne la description du rôle du pilote avec sa licence et ses heures de vol.
+     * Retourne la description du rôle du pilote avec sa licence et ses heures de
+     * vol.
      *
-     * <p>Surcharge de {@link Employe#obtenirRole()} — polymorphisme avec
-     * {@link PersonnelCabine#obtenirRole()}.</p>
+     * <p>
+     * Surcharge de {@link Employe#obtenirRole()} — polymorphisme avec
+     * {@link PersonnelCabine#obtenirRole()}.
+     * </p>
      *
      * @return une {@link String} décrivant le rôle, la licence et les heures de vol
      */
@@ -68,7 +82,8 @@ public class Pilote extends Employe {
     /**
      * Retourne les informations complètes du pilote.
      *
-     * @return informations de {@link Employe#obtenirInformation()} enrichies de la licence et des heures de vol
+     * @return informations de {@link Employe#obtenirInformation()} enrichies de la
+     *         licence et des heures de vol
      */
     @Override
     public String obtenirInformation() {

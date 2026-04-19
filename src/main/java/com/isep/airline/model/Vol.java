@@ -27,19 +27,32 @@ import java.util.List;
  * @see     LongCourrier
  */
 public abstract class Vol implements ObtenirInformation {
+    /** Identifiant unique du vol (ex: AF123). */
     private String numeroVol;
-    private Aeroport aeroportDepart;    // Agregation / Association avec Aeroport
-    private Aeroport aeroportArrivee;   // Agregation / Association avec Aeroport
+    /** Aéroport de départ (agrégation). */
+    private Aeroport aeroportDepart;
+    /** Aéroport d'arrivée (agrégation). */
+    private Aeroport aeroportArrivee;
+    /** Date de départ au format JJ/MM/AAAA. */
     private String dateDepart;
+    /** Date d'arrivée au format JJ/MM/AAAA. */
     private String dateArrivee;
+    /** Heure de départ au format HH:MM. */
     private String heureDepart;
+    /** Heure d'arrivée au format HH:MM. */
     private String heureArrivee;
-    private String prix;   // En String conformement aux attentes du prof
-    private String statut; // PLANIFIE, EN_COURS, TERMINE, ANNULE
-    private Avion avion;   // Composition : un vol est opere par un avion
-    private Equipage equipage; // Composition : un vol necessite un equipage
-    private List<Passager> passagers;   // Association : passagers sur ce vol
-    private List<Employe> employes;     // Relation directe Vol <-> Employe
+    /** Prix du vol en euros (String conformément aux attentes du prof). */
+    private String prix;
+    /** Statut du vol : PLANIFIE, EN_COURS, TERMINE ou ANNULE. */
+    private String statut;
+    /** Avion affecté au vol (composition). */
+    private Avion avion;
+    /** Équipage affecté au vol (composition). */
+    private Equipage equipage;
+    /** Liste des passagers sur ce vol (association). */
+    private List<Passager> passagers;
+    /** Liste des employés associés à ce vol. */
+    private List<Employe> employes;
 
     public Vol() {
         this.passagers = new ArrayList<>();

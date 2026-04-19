@@ -6,20 +6,28 @@ import java.util.List;
 /**
  * Classe représentant un avion de la flotte de la compagnie aérienne.
  *
- * <p>Implémente {@link ObtenirInformation}.<br>
- * <b>Relation :</b> {@code Avion} → {@code List<Vol>} (composition avec les vols affectés).</p>
+ * <p>
+ * Implémente {@link ObtenirInformation}.<br>
+ * <b>Relation :</b> {@code Avion} → {@code List<Vol>} (composition avec les
+ * vols affectés).
+ * </p>
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
- * @see     Vol
+ * @since 2025
+ * @see Vol
  */
 public class Avion implements ObtenirInformation {
+    /** Immatriculation de l'avion (ex: F-GKXA). */
     private String immatriculation;
+    /** Modèle de l'avion (ex: Boeing 737). */
     private String modele;
+    /** Capacité maximale en nombre de passagers. */
     private int capacite;
+    /** Indique si l'avion est disponible pour un vol. */
     private boolean disponible;
-    private List<Vol> volsAffectes; // Déclaré avec List (pas ArrayList)
+    /** Liste des vols affectés à cet avion (composition). */
+    private List<Vol> volsAffectes;
 
     /**
      * Constructeur par défaut. L'avion est disponible par défaut.
@@ -50,7 +58,8 @@ public class Avion implements ObtenirInformation {
      * Vérifie si l'avion est disponible pour une date de départ donnée.
      *
      * @param dateDepart  la date de départ souhaitée (format {@code "yyyy-MM-dd"})
-     * @param dateArrivee la date d'arrivée souhaitée (non utilisée actuellement, prévu pour extension)
+     * @param dateArrivee la date d'arrivée souhaitée (non utilisée actuellement,
+     *                    prévu pour extension)
      * @return {@code true} si l'avion est disponible, {@code false} sinon
      */
     public boolean verifierDisponibilite(String dateDepart, String dateArrivee) {
