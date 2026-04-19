@@ -6,37 +6,54 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Classe centrale orchestrant l'ensemble des opérations de la compagnie aérienne.
+ * Classe centrale orchestrant l'ensemble des opérations de la compagnie
+ * aérienne.
  *
- * <p>Gère les entités suivantes via des opérations CRUD complètes :
+ * <p>
+ * Gère les entités suivantes via des opérations CRUD complètes :
  * {@link Aeroport}, {@link Vol}, {@link Passager}, {@link Employe},
- * {@link Avion}, {@link Equipage}, {@link Reservation}.</p>
+ * {@link Avion}, {@link Equipage}, {@link Reservation}.
+ * </p>
  *
- * <p>Implémente {@link ObtenirInformation}.</p>
+ * <p>
+ * Implémente {@link ObtenirInformation}.
+ * </p>
  *
- * <p><b>Exemple d'utilisation :</b></p>
+ * <p>
+ * <b>Exemple d'utilisation :</b>
+ * </p>
+ * 
  * <pre>
  *   CompagnieAerienne compagnie = new CompagnieAerienne("SkyISEP Airlines", "SI");
  *   compagnie.ajouterPassager(new Passager("P001", "Dupont", "Jean", ...));
  * </pre>
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
- * @see     Vol
- * @see     Passager
- * @see     Employe
+ * @since 2025
+ * @see Vol
+ * @see Passager
+ * @see Employe
  */
 public class CompagnieAerienne implements ObtenirInformation {
+    /** Nom de la compagnie aérienne. */
     private String nom;
+    /** Code IATA de la compagnie (ex: SI). */
     private String codeIATA;
+    /** Liste de tous les vols de la compagnie. */
     private List<Vol> vols;
+    /** Liste de tous les passagers enregistrés. */
     private List<Passager> passagers;
+    /** Liste de tous les employés de la compagnie. */
     private List<Employe> employes;
+    /** Flotte d'avions de la compagnie. */
     private List<Avion> avions;
+    /** Liste des équipages disponibles. */
     private List<Equipage> equipages;
+    /** Liste de toutes les réservations. */
     private List<Reservation> reservations;
-    private List<Aeroport> aeroports; // Nouvelle liste d'aeroports
+    /** Liste des aéroports desservis. */
+    private List<Aeroport> aeroports;
 
     public CompagnieAerienne() {
         this.vols = new ArrayList<>();
@@ -85,9 +102,12 @@ public class CompagnieAerienne implements ObtenirInformation {
     public boolean modifierAeroport(String codeIATA, String nom, String ville, String pays) {
         Aeroport aeroport = rechercherAeroport(codeIATA);
         if (aeroport != null) {
-            if (nom != null && !nom.isEmpty()) aeroport.setNom(nom);
-            if (ville != null && !ville.isEmpty()) aeroport.setVille(ville);
-            if (pays != null && !pays.isEmpty()) aeroport.setPays(pays);
+            if (nom != null && !nom.isEmpty())
+                aeroport.setNom(nom);
+            if (ville != null && !ville.isEmpty())
+                aeroport.setVille(ville);
+            if (pays != null && !pays.isEmpty())
+                aeroport.setPays(pays);
             System.out.println("Aeroport " + codeIATA + " modifie avec succes.");
             return true;
         }
@@ -132,14 +152,20 @@ public class CompagnieAerienne implements ObtenirInformation {
         return null;
     }
 
-    public boolean modifierPassager(String id, String nom, String prenom, String email, String telephone, String passeport) {
+    public boolean modifierPassager(String id, String nom, String prenom, String email, String telephone,
+            String passeport) {
         Passager passager = rechercherPassager(id);
         if (passager != null) {
-            if (nom != null && !nom.isEmpty()) passager.setNom(nom);
-            if (prenom != null && !prenom.isEmpty()) passager.setPrenom(prenom);
-            if (email != null && !email.isEmpty()) passager.setEmail(email);
-            if (telephone != null && !telephone.isEmpty()) passager.setTelephone(telephone);
-            if (passeport != null && !passeport.isEmpty()) passager.setNumeroPasseport(passeport);
+            if (nom != null && !nom.isEmpty())
+                passager.setNom(nom);
+            if (prenom != null && !prenom.isEmpty())
+                passager.setPrenom(prenom);
+            if (email != null && !email.isEmpty())
+                passager.setEmail(email);
+            if (telephone != null && !telephone.isEmpty())
+                passager.setTelephone(telephone);
+            if (passeport != null && !passeport.isEmpty())
+                passager.setNumeroPasseport(passeport);
             System.out.println("Passager " + id + " modifie avec succes.");
             return true;
         }
@@ -169,7 +195,8 @@ public class CompagnieAerienne implements ObtenirInformation {
     public void ajouterEmploye(Employe employe) {
         if (employe != null && rechercherEmploye(employe.getId()) == null) {
             employes.add(employe);
-            System.out.println("Employe " + employe.getNom() + " " + employe.getPrenom() + " ajoute (role: " + employe.obtenirRole() + ").");
+            System.out.println("Employe " + employe.getNom() + " " + employe.getPrenom() + " ajoute (role: "
+                    + employe.obtenirRole() + ").");
         } else {
             System.out.println("Erreur : employe null ou deja existant.");
         }
@@ -196,10 +223,14 @@ public class CompagnieAerienne implements ObtenirInformation {
     public boolean modifierEmploye(String id, String nom, String prenom, String email, String telephone) {
         Employe employe = rechercherEmploye(id);
         if (employe != null) {
-            if (nom != null && !nom.isEmpty()) employe.setNom(nom);
-            if (prenom != null && !prenom.isEmpty()) employe.setPrenom(prenom);
-            if (email != null && !email.isEmpty()) employe.setEmail(email);
-            if (telephone != null && !telephone.isEmpty()) employe.setTelephone(telephone);
+            if (nom != null && !nom.isEmpty())
+                employe.setNom(nom);
+            if (prenom != null && !prenom.isEmpty())
+                employe.setPrenom(prenom);
+            if (email != null && !email.isEmpty())
+                employe.setEmail(email);
+            if (telephone != null && !telephone.isEmpty())
+                employe.setTelephone(telephone);
             System.out.println("Employe " + id + " modifie avec succes.");
             return true;
         }
@@ -259,7 +290,8 @@ public class CompagnieAerienne implements ObtenirInformation {
             vols.add(vol);
             String depart = (vol.getAeroportDepart() != null) ? vol.getAeroportDepart().getCodeIATA() : "?";
             String arrivee = (vol.getAeroportArrivee() != null) ? vol.getAeroportArrivee().getCodeIATA() : "?";
-            System.out.println("Vol " + vol.getNumeroVol() + " planifie : " + depart + " -> " + arrivee + " (" + vol.getTypeVol() + ")");
+            System.out.println("Vol " + vol.getNumeroVol() + " planifie : " + depart + " -> " + arrivee + " ("
+                    + vol.getTypeVol() + ")");
         } else {
             System.out.println("Erreur : vol null ou deja existant.");
         }
@@ -285,17 +317,24 @@ public class CompagnieAerienne implements ObtenirInformation {
     }
 
     public boolean modifierVol(String numeroVol, Aeroport aeroportDepart, Aeroport aeroportArrivee,
-                               String dateDepart, String dateArrivee, String heureDepart,
-                               String heureArrivee, String prix) {
+            String dateDepart, String dateArrivee, String heureDepart,
+            String heureArrivee, String prix) {
         Vol vol = rechercherVol(numeroVol);
         if (vol != null) {
-            if (aeroportDepart != null) vol.setAeroportDepart(aeroportDepart);
-            if (aeroportArrivee != null) vol.setAeroportArrivee(aeroportArrivee);
-            if (dateDepart != null && !dateDepart.isEmpty()) vol.setDateDepart(dateDepart);
-            if (dateArrivee != null && !dateArrivee.isEmpty()) vol.setDateArrivee(dateArrivee);
-            if (heureDepart != null && !heureDepart.isEmpty()) vol.setHeureDepart(heureDepart);
-            if (heureArrivee != null && !heureArrivee.isEmpty()) vol.setHeureArrivee(heureArrivee);
-            if (prix != null && !prix.isEmpty() && !prix.equals("0")) vol.setPrix(prix);
+            if (aeroportDepart != null)
+                vol.setAeroportDepart(aeroportDepart);
+            if (aeroportArrivee != null)
+                vol.setAeroportArrivee(aeroportArrivee);
+            if (dateDepart != null && !dateDepart.isEmpty())
+                vol.setDateDepart(dateDepart);
+            if (dateArrivee != null && !dateArrivee.isEmpty())
+                vol.setDateArrivee(dateArrivee);
+            if (heureDepart != null && !heureDepart.isEmpty())
+                vol.setHeureDepart(heureDepart);
+            if (heureArrivee != null && !heureArrivee.isEmpty())
+                vol.setHeureArrivee(heureArrivee);
+            if (prix != null && !prix.isEmpty() && !prix.equals("0"))
+                vol.setPrix(prix);
             System.out.println("Vol " + numeroVol + " modifie avec succes.");
             return true;
         }
@@ -391,8 +430,10 @@ public class CompagnieAerienne implements ObtenirInformation {
     public boolean modifierAvion(String immatriculation, String modele, int capacite) {
         Avion avion = rechercherAvion(immatriculation);
         if (avion != null) {
-            if (modele != null && !modele.isEmpty()) avion.setModele(modele);
-            if (capacite > 0) avion.setCapacite(capacite);
+            if (modele != null && !modele.isEmpty())
+                avion.setModele(modele);
+            if (capacite > 0)
+                avion.setCapacite(capacite);
             System.out.println("Avion " + immatriculation + " modifie avec succes.");
             return true;
         }
@@ -612,7 +653,8 @@ public class CompagnieAerienne implements ObtenirInformation {
         Map<String, Integer> destinations = getDestinationsPopulaires();
         destinations.entrySet().stream()
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .forEach(entry -> System.out.println("   - " + entry.getKey() + " : " + entry.getValue() + " reservation(s)"));
+                .forEach(entry -> System.out
+                        .println("   - " + entry.getKey() + " : " + entry.getValue() + " reservation(s)"));
 
         System.out.println("====================================================\n");
     }
