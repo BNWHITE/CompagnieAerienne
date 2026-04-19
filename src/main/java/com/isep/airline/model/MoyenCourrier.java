@@ -4,11 +4,13 @@ package com.isep.airline.model;
  * Classe représentant un vol moyen courrier (1500 - 4000 km).
  * Hérite de {@link Vol} et implémente {@link ObtenirInformation}.
  *
- * <p>Caractéristiques spécifiques :</p>
+ * <p>
+ * Caractéristiques spécifiques :
+ * </p>
  * <ul>
- *   <li>Service repas léger inclus</li>
- *   <li>Possibilité de classe affaires (limité)</li>
- *   <li>Durée typique : 3h - 6h</li>
+ * <li>Service repas léger inclus</li>
+ * <li>Possibilité de classe affaires (limité)</li>
+ * <li>Durée typique : 3h - 6h</li>
  * </ul>
  *
  * @author Compagnie Aérienne ISEP
@@ -36,19 +38,19 @@ public class MoyenCourrier extends Vol {
     /**
      * Constructeur complet d'un vol moyen courrier.
      *
-     * @param numeroVol         numéro unique du vol
-     * @param aeroportDepart    aéroport de départ
-     * @param aeroportArrivee   aéroport d'arrivée
-     * @param dateDepart        date de départ
-     * @param dateArrivee       date d'arrivée
-     * @param heureDepart       heure de départ
-     * @param heureArrivee      heure d'arrivée
-     * @param prix              prix du billet
-     * @param distanceKm        distance en kilomètres
+     * @param numeroVol       numéro unique du vol
+     * @param aeroportDepart  aéroport de départ
+     * @param aeroportArrivee aéroport d'arrivée
+     * @param dateDepart      date de départ
+     * @param dateArrivee     date d'arrivée
+     * @param heureDepart     heure de départ
+     * @param heureArrivee    heure d'arrivée
+     * @param prix            prix du billet
+     * @param distanceKm      distance en kilomètres
      */
     public MoyenCourrier(String numeroVol, Aeroport aeroportDepart, Aeroport aeroportArrivee,
-                         String dateDepart, String dateArrivee, String heureDepart,
-                         String heureArrivee, String prix, String distanceKm) {
+            String dateDepart, String dateArrivee, String heureDepart,
+            String heureArrivee, String prix, String distanceKm) {
         super(numeroVol, aeroportDepart, aeroportArrivee, dateDepart, dateArrivee, heureDepart, heureArrivee, prix);
         this.distanceKm = distanceKm;
         this.repasInclus = true;
@@ -57,6 +59,7 @@ public class MoyenCourrier extends Vol {
 
     /**
      * {@inheritDoc}
+     * 
      * @return {@code "Moyen Courrier"}
      */
     @Override
@@ -82,6 +85,7 @@ public class MoyenCourrier extends Vol {
 
     /**
      * Retourne la distance du vol en km.
+     * 
      * @return distance en km
      */
     public String getDistanceKm() {

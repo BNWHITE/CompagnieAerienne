@@ -3,18 +3,22 @@ package com.isep.airline.model;
 /**
  * Classe abstraite représentant une personne.
  *
- * <p>Classe mère de {@link Passager} et {@link Employe}.
- * Implémente l'interface {@link ObtenirInformation}.</p>
+ * <p>
+ * Classe mère de {@link Passager} et {@link Employe}.
+ * Implémente l'interface {@link ObtenirInformation}.
+ * </p>
  *
- * <p><b>Attributs en String</b> (conformément aux attentes pédagogiques) :
- * id, nom, prénom, email, téléphone.</p>
+ * <p>
+ * <b>Attributs en String</b> (conformément aux attentes pédagogiques) :
+ * id, nom, prénom, email, téléphone.
+ * </p>
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
- * @see     Passager
- * @see     Employe
- * @see     ObtenirInformation
+ * @since 2025
+ * @see Passager
+ * @see Employe
+ * @see ObtenirInformation
  */
 public abstract class Personne implements ObtenirInformation {
     private String id;
@@ -51,8 +55,11 @@ public abstract class Personne implements ObtenirInformation {
     /**
      * Retourne les informations de la personne sous forme lisible.
      *
-     * <p>Les sous-classes ({@link Passager}, {@link Employe}…) surchargent cette méthode
-     * via {@code super.obtenirInformation()} pour enrichir l'affichage.</p>
+     * <p>
+     * Les sous-classes ({@link Passager}, {@link Employe}…) surchargent cette
+     * méthode
+     * via {@code super.obtenirInformation()} pour enrichir l'affichage.
+     * </p>
      *
      * @return une {@link String} contenant id, nom, prénom, email et téléphone
      */

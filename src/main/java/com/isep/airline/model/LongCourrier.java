@@ -4,12 +4,14 @@ package com.isep.airline.model;
  * Classe représentant un vol long courrier (&gt; 4000 km).
  * Hérite de {@link Vol} et implémente {@link ObtenirInformation}.
  *
- * <p>Caractéristiques spécifiques :</p>
+ * <p>
+ * Caractéristiques spécifiques :
+ * </p>
  * <ul>
- *   <li>Service repas complet (plusieurs services)</li>
- *   <li>Classe affaires et première classe disponibles</li>
- *   <li>Divertissement à bord (écrans individuels)</li>
- *   <li>Durée typique : &gt; 6h</li>
+ * <li>Service repas complet (plusieurs services)</li>
+ * <li>Classe affaires et première classe disponibles</li>
+ * <li>Divertissement à bord (écrans individuels)</li>
+ * <li>Durée typique : &gt; 6h</li>
  * </ul>
  *
  * @author Compagnie Aérienne ISEP
@@ -39,28 +41,29 @@ public class LongCourrier extends Vol {
     /**
      * Constructeur complet d'un vol long courrier.
      *
-     * @param numeroVol         numéro unique du vol
-     * @param aeroportDepart    aéroport de départ
-     * @param aeroportArrivee   aéroport d'arrivée
-     * @param dateDepart        date de départ
-     * @param dateArrivee       date d'arrivée
-     * @param heureDepart       heure de départ
-     * @param heureArrivee      heure d'arrivée
-     * @param prix              prix du billet
-     * @param distanceKm        distance en kilomètres
+     * @param numeroVol       numéro unique du vol
+     * @param aeroportDepart  aéroport de départ
+     * @param aeroportArrivee aéroport d'arrivée
+     * @param dateDepart      date de départ
+     * @param dateArrivee     date d'arrivée
+     * @param heureDepart     heure de départ
+     * @param heureArrivee    heure d'arrivée
+     * @param prix            prix du billet
+     * @param distanceKm      distance en kilomètres
      */
     public LongCourrier(String numeroVol, Aeroport aeroportDepart, Aeroport aeroportArrivee,
-                        String dateDepart, String dateArrivee, String heureDepart,
-                        String heureArrivee, String prix, String distanceKm) {
+            String dateDepart, String dateArrivee, String heureDepart,
+            String heureArrivee, String prix, String distanceKm) {
         super(numeroVol, aeroportDepart, aeroportArrivee, dateDepart, dateArrivee, heureDepart, heureArrivee, prix);
         this.distanceKm = distanceKm;
-        this.nombreRepas = "2";          // Par défaut 2 repas pour un long courrier
+        this.nombreRepas = "2"; // Par défaut 2 repas pour un long courrier
         this.premiereClasseDisponible = true;
         this.divertissementABord = true;
     }
 
     /**
      * {@inheritDoc}
+     * 
      * @return {@code "Long Courrier"}
      */
     @Override
@@ -72,7 +75,8 @@ public class LongCourrier extends Vol {
 
     /**
      * {@inheritDoc}
-     * Inclut la distance, le nombre de repas, la première classe et le divertissement.
+     * Inclut la distance, le nombre de repas, la première classe et le
+     * divertissement.
      */
     @Override
     public String obtenirInformation() {

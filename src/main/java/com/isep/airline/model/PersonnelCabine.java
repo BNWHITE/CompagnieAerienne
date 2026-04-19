@@ -3,19 +3,26 @@ package com.isep.airline.model;
 /**
  * Classe représentant un membre du personnel de cabine.
  *
- * <p>Hiérarchie : {@code PersonnelCabine} → {@link Employe} → {@link Personne}
- * → {@link ObtenirInformation}.</p>
+ * <p>
+ * Hiérarchie : {@code PersonnelCabine} → {@link Employe} → {@link Personne}
+ * → {@link ObtenirInformation}.
+ * </p>
  *
- * <p><b>Polymorphisme :</b> {@link #obtenirRole()} est surchargée par rapport à
- * {@link Pilote#obtenirRole()}.</p>
+ * <p>
+ * <b>Polymorphisme :</b> {@link #obtenirRole()} est surchargée par rapport à
+ * {@link Pilote#obtenirRole()}.
+ * </p>
  *
- * <p><b>Attributs en String</b> : anneesExperience (conformément aux attentes pédagogiques).</p>
+ * <p>
+ * <b>Attributs en String</b> : anneesExperience (conformément aux attentes
+ * pédagogiques).
+ * </p>
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
- * @see     Employe
- * @see     Pilote
+ * @since 2025
+ * @see Employe
+ * @see Pilote
  */
 public class PersonnelCabine extends Employe {
     private String qualification;
@@ -43,7 +50,7 @@ public class PersonnelCabine extends Employe {
      * @param anneesExperience nombre d'années d'expérience (en String)
      */
     public PersonnelCabine(String id, String nom, String prenom, String email, String telephone,
-                           String numeroEmploye, String salaire, String qualification, String anneesExperience) {
+            String numeroEmploye, String salaire, String qualification, String anneesExperience) {
         super(id, nom, prenom, email, telephone, numeroEmploye, "Personnel Cabine", salaire);
         this.qualification = qualification;
         this.anneesExperience = anneesExperience;
@@ -52,11 +59,16 @@ public class PersonnelCabine extends Employe {
     // ==================== Polymorphisme ====================
 
     /**
-     * Retourne la description du rôle du personnel de cabine avec sa qualification et son expérience.
+     * Retourne la description du rôle du personnel de cabine avec sa qualification
+     * et son expérience.
      *
-     * <p>Surcharge de {@link Employe#obtenirRole()} — polymorphisme avec {@link Pilote#obtenirRole()}.</p>
+     * <p>
+     * Surcharge de {@link Employe#obtenirRole()} — polymorphisme avec
+     * {@link Pilote#obtenirRole()}.
+     * </p>
      *
-     * @return une {@link String} décrivant le rôle, la qualification et les années d'expérience
+     * @return une {@link String} décrivant le rôle, la qualification et les années
+     *         d'expérience
      */
     @Override
     public String obtenirRole() {
@@ -68,7 +80,8 @@ public class PersonnelCabine extends Employe {
     /**
      * Retourne les informations complètes du personnel de cabine.
      *
-     * @return informations de {@link Employe#obtenirInformation()} enrichies de la qualification et de l'expérience
+     * @return informations de {@link Employe#obtenirInformation()} enrichies de la
+     *         qualification et de l'expérience
      */
     @Override
     public String obtenirInformation() {

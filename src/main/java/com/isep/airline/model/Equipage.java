@@ -6,19 +6,24 @@ import java.util.List;
 /**
  * Classe représentant un équipage affecté à un vol.
  *
- * <p>Un équipage est composé d'un {@link Pilote} et d'une {@link java.util.List}
- * de {@link PersonnelCabine}. Il est considéré complet lorsqu'il possède au moins
- * un pilote et un membre de personnel de cabine.</p>
+ * <p>
+ * Un équipage est composé d'un {@link Pilote} et d'une {@link java.util.List}
+ * de {@link PersonnelCabine}. Il est considéré complet lorsqu'il possède au
+ * moins
+ * un pilote et un membre de personnel de cabine.
+ * </p>
  *
- * <p><b>Relation :</b> Composition — un équipage appartient à un {@link Vol}.</p>
+ * <p>
+ * <b>Relation :</b> Composition — un équipage appartient à un {@link Vol}.
+ * </p>
  *
- * @author  Équipe SkyISEP
- * @author  Kahina Medjkoune
+ * @author Équipe SkyISEP
+ * @author Kahina Medjkoune
  * @version 1.0
- * @since   2025
- * @see     Pilote
- * @see     PersonnelCabine
- * @see     Vol
+ * @since 2025
+ * @see Pilote
+ * @see PersonnelCabine
+ * @see Vol
  */
 public class Equipage implements ObtenirInformation {
     private String idEquipage;
@@ -62,7 +67,8 @@ public class Equipage implements ObtenirInformation {
     /**
      * Ajoute un membre du personnel de cabine à l'équipage.
      *
-     * @param membre le membre à ajouter (ignoré s'il est {@code null} ou déjà présent)
+     * @param membre le membre à ajouter (ignoré s'il est {@code null} ou déjà
+     *               présent)
      */
     public void ajouterPersonnelCabine(PersonnelCabine membre) {
         if (membre != null && !personnelCabine.contains(membre)) {
@@ -81,7 +87,8 @@ public class Equipage implements ObtenirInformation {
     }
 
     /**
-     * Vérifie si l'équipage est complet (a un pilote et au moins un personnel de cabine).
+     * Vérifie si l'équipage est complet (a un pilote et au moins un personnel de
+     * cabine).
      */
     public boolean estComplet() {
         return pilote != null && !personnelCabine.isEmpty();
@@ -102,7 +109,7 @@ public class Equipage implements ObtenirInformation {
         sb.append("Personnel cabine (").append(personnelCabine.size()).append(") :");
         for (PersonnelCabine pc : personnelCabine) {
             sb.append("\n  - ").append(pc.getNom()).append(" ").append(pc.getPrenom())
-              .append(" (").append(pc.getQualification()).append(")");
+                    .append(" (").append(pc.getQualification()).append(")");
         }
         return sb.toString();
     }
