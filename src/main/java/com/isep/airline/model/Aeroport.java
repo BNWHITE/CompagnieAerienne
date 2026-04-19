@@ -6,27 +6,39 @@ import java.util.Deque;
 /**
  * Classe représentant un aéroport.
  *
- * <p><b>Association bidirectionnelle avec {@link Vol}</b> : un {@code Aeroport} contient
- * une {@link java.util.Deque} de vols au départ et à l'arrivée, et un {@link Vol} référence
- * ses aéroports de départ/arrivée.</p>
+ * <p>
+ * <b>Association bidirectionnelle avec {@link Vol}</b> : un {@code Aeroport}
+ * contient
+ * une {@link java.util.Deque} de vols au départ et à l'arrivée, et un
+ * {@link Vol} référence
+ * ses aéroports de départ/arrivée.
+ * </p>
  *
- * <p><b>Pourquoi {@link java.util.Deque} ?</b><br>
- * Permet d'ajouter/retirer des vols en tête ou en queue efficacement et représente
- * mieux la file des vols (prochain vol = premier de la Deque).</p>
+ * <p>
+ * <b>Pourquoi {@link java.util.Deque} ?</b><br>
+ * Permet d'ajouter/retirer des vols en tête ou en queue efficacement et
+ * représente
+ * mieux la file des vols (prochain vol = premier de la Deque).
+ * </p>
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
- * @see     Vol
+ * @since 2025
+ * @see Vol
  */
 public class Aeroport implements ObtenirInformation {
-    private String codeIATA;       // Ex: "CDG", "JFK"
-    private String nom;            // Ex: "Charles de Gaulle"
-    private String ville;          // Ex: "Paris"
-    private String pays;           // Ex: "France"
+    /** Code IATA de l'aéroport (ex: CDG, JFK). */
+    private String codeIATA;
+    /** Nom complet de l'aéroport (ex: Charles de Gaulle). */
+    private String nom;
+    /** Ville de l'aéroport (ex: Paris). */
+    private String ville;
+    /** Pays de l'aéroport (ex: France). */
+    private String pays;
 
-    // Association : un aéroport gère une file de vols au départ et à l'arrivée
+    /** File des vols au départ depuis cet aéroport. */
     private Deque<Vol> volsDepart;
+    /** File des vols à l'arrivée vers cet aéroport. */
     private Deque<Vol> volsArrivee;
 
     /**
@@ -118,7 +130,8 @@ public class Aeroport implements ObtenirInformation {
     }
 
     /**
-     * toString() délègue à obtenirInformation() — conformément aux attentes du prof.
+     * toString() délègue à obtenirInformation() — conformément aux attentes du
+     * prof.
      */
     @Override
     public String toString() {
