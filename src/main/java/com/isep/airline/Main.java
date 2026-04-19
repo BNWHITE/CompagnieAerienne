@@ -20,12 +20,14 @@ public class Main {
     private static Scanner scanner;
     private static FichierService fichierService;
     private static DatabaseService databaseService;
+    private static MongoDBService mongoService;
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
         compagnie = new CompagnieAerienne("SkyISEP Airlines", "SI");
         fichierService = new FichierService();
         databaseService = new DatabaseService();
+        mongoService = new MongoDBService();
 
         // Charger des donnees de demonstration
         chargerDonneesDemonstration();
@@ -178,6 +180,14 @@ public class Main {
                     String passeport = lireChaine("N Passeport : ");
                     Passager p = new Passager(id, nom, prenom, email, tel, passeport);
                     compagnie.ajouterPassager(p);
+                    // Synchronisation MongoDB Atlas
+                    try {
+                        mongoService.ouvrirConnexion();
+                        mongoService.insererPassager(p);
+                        mongoService.fermerConnexion();
+                    } catch (Exception e) {
+                        System.out.println("[MongoDB] Erreur sync : " + e.getMessage());
+                    }
                 }
                 case 2 -> {
                     String id = lireChaine("ID du passager : ");
@@ -196,10 +206,29 @@ public class Main {
                     String tel = lireChaine("Nouveau telephone (vide pour ne pas modifier) : ");
                     String passeport = lireChaine("Nouveau passeport (vide pour ne pas modifier) : ");
                     compagnie.modifierPassager(id, nom, prenom, email, tel, passeport);
+                    // Synchronisation MongoDB Atlas
+                    try {
+                        Passager pModifie = compagnie.rechercherPassager(id);
+                        if (pModifie != null) {
+                            mongoService.ouvrirConnexion();
+                            mongoService.mettreAJourPassager(pModifie);
+                            mongoService.fermerConnexion();
+                        }
+                    } catch (Exception e) {
+                        System.out.println("[MongoDB] Erreur sync : " + e.getMessage());
+                    }
                 }
                 case 4 -> {
                     String id = lireChaine("ID du passager a supprimer : ");
                     compagnie.supprimerPassager(id);
+                    // Synchronisation MongoDB Atlas
+                    try {
+                        mongoService.ouvrirConnexion();
+                        mongoService.supprimerPassager(id);
+                        mongoService.fermerConnexion();
+                    } catch (Exception e) {
+                        System.out.println("[MongoDB] Erreur sync : " + e.getMessage());
+                    }
                 }
                 case 5 -> {
                     List<Passager> passagers = compagnie.listerPassagers();
