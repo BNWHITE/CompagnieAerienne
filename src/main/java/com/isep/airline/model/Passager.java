@@ -19,8 +19,10 @@ import java.util.List;
  * @see     Reservation
  */
 public class Passager extends Personne {
+    /** Numéro de passeport unique du passager. */
     private String numeroPasseport;
-    private List<Reservation> reservations; // Déclaré avec List (pas ArrayList) — conforme aux attentes du prof
+    /** Liste des réservations effectuées par le passager (composition). */
+    private List<Reservation> reservations;
 
     /**
      * Constructeur par défaut. Initialise la liste de réservations.
