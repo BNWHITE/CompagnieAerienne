@@ -45,7 +45,8 @@ CompagnieAerienne/
 │   │   │       │   └── CompagnieAerienne.java
 │   │   │       └── service/
 │   │   │           ├── FichierService.java
-│   │   │           └── DatabaseService.java
+│   │   │           ├── DatabaseService.java
+│   │   │           └── MongoDBService.java
 │   │   └── resources/
 │   └── test/
 │       └── java/
@@ -54,7 +55,8 @@ CompagnieAerienne/
 │               ├── VolTest.java
 │               ├── CompagnieAerienneTest.java
 │               ├── FichierServiceTest.java
-│               └── DatabaseServiceTest.java
+│               ├── DatabaseServiceTest.java
+│               └── MongoDBServiceTest.java
 ├── pom.xml
 └── README.md
 ```
@@ -90,6 +92,7 @@ Toutes les dépendances sont gérées par **Maven** via le fichier `pom.xml`.
 | **JFreeChart** | 1.5.4 | Génération de graphiques statistiques (histogrammes, camemberts) | [jfree.org](http://www.jfree.org/jfreechart/) |
 | **JUnit Jupiter** | 5.10.2 | Tests unitaires (JUnit 5 API) | [junit.org](https://junit.org/junit5/) |
 | **H2 Database** | 2.2.224 | Base de données embarquée (JDBC, bonus) | [h2database.com](https://www.h2database.com/) |
+| **MongoDB Driver** | 4.11.1 | Connexion à MongoDB Atlas (base NoSQL cloud) | [mongodb.com](https://www.mongodb.com/docs/drivers/java/sync/current/) |
 
 > JFreeChart inclut automatiquement **JCommon** comme dépendance transitive.
 
