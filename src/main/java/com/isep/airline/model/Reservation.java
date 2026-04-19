@@ -4,9 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe représentant une réservation.
- * Association entre un Passager et un ou plusieurs Vols.
- * Implémente ObtenirInformation.
+ * Classe représentant une réservation de vol.
+ *
+ * <p><b>Association</b> entre un {@link Passager} et un ou plusieurs {@link Vol}s.
+ * Implémente {@link ObtenirInformation}.</p>
+ *
+ * <p>Statuts possibles : {@code CONFIRMEE}, {@code ANNULEE}, {@code EN_ATTENTE}.</p>
+ *
+ * @author  Équipe SkyISEP
+ * @version 1.0
+ * @since   2025
+ * @see     Passager
+ * @see     Vol
  */
 public class Reservation implements ObtenirInformation {
     private String numeroReservation;
@@ -17,12 +26,22 @@ public class Reservation implements ObtenirInformation {
     private String statut; // CONFIRMEE, ANNULEE, EN_ATTENTE
     private String montantTotal; // En String conformément aux attentes du prof
 
+    /**
+     * Constructeur par défaut. Statut initialisé à {@code "CONFIRMEE"}.
+     */
     public Reservation() {
         this.volsReserves = new ArrayList<>();
         this.statut = "CONFIRMEE";
         this.dateReservation = java.time.LocalDate.now().toString();
     }
 
+    /**
+     * Constructeur complet.
+     *
+     * @param numeroReservation numéro unique de réservation (ex : {@code "RES-001"})
+     * @param passager          le passager qui effectue la réservation
+     * @param vol               le vol principal réservé
+     */
     public Reservation(String numeroReservation, Passager passager, Vol vol) {
         this.numeroReservation = numeroReservation;
         this.passager = passager;
@@ -37,7 +56,9 @@ public class Reservation implements ObtenirInformation {
     // ==================== Méthodes métier ====================
 
     /**
-     * Ajouter un vol à la réservation.
+     * Ajoute un vol supplémentaire à la réservation et met à jour le montant total.
+     *
+     * @param vol le vol à ajouter (ignoré s'il est {@code null} ou déjà présent)
      */
     public void ajouterVol(Vol vol) {
         if (vol != null && !volsReserves.contains(vol)) {

@@ -4,8 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe représentant un avion de la compagnie aérienne.
- * Implémente ObtenirInformation.
+ * Classe représentant un avion de la flotte de la compagnie aérienne.
+ *
+ * <p>Implémente {@link ObtenirInformation}.<br>
+ * <b>Relation :</b> {@code Avion} → {@code List<Vol>} (composition avec les vols affectés).</p>
+ *
+ * @author  Équipe SkyISEP
+ * @version 1.0
+ * @since   2025
+ * @see     Vol
  */
 public class Avion implements ObtenirInformation {
     private String immatriculation;
@@ -14,11 +21,21 @@ public class Avion implements ObtenirInformation {
     private boolean disponible;
     private List<Vol> volsAffectes; // Déclaré avec List (pas ArrayList)
 
+    /**
+     * Constructeur par défaut. L'avion est disponible par défaut.
+     */
     public Avion() {
         this.disponible = true;
         this.volsAffectes = new ArrayList<>();
     }
 
+    /**
+     * Constructeur complet.
+     *
+     * @param immatriculation immatriculation de l'avion (ex : {@code "F-GKXA"})
+     * @param modele          modèle de l'appareil (ex : {@code "Airbus A320"})
+     * @param capacite        nombre de sièges passagers
+     */
     public Avion(String immatriculation, String modele, int capacite) {
         this.immatriculation = immatriculation;
         this.modele = modele;
@@ -30,7 +47,11 @@ public class Avion implements ObtenirInformation {
     // ==================== Méthodes métier ====================
 
     /**
-     * Vérifie la disponibilité de l'avion pour un horaire donné.
+     * Vérifie si l'avion est disponible pour une date de départ donnée.
+     *
+     * @param dateDepart  la date de départ souhaitée (format {@code "yyyy-MM-dd"})
+     * @param dateArrivee la date d'arrivée souhaitée (non utilisée actuellement, prévu pour extension)
+     * @return {@code true} si l'avion est disponible, {@code false} sinon
      */
     public boolean verifierDisponibilite(String dateDepart, String dateArrivee) {
         if (!disponible) {

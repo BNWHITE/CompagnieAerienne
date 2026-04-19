@@ -5,26 +5,48 @@ import java.util.List;
 
 /**
  * Classe représentant un employé de la compagnie aérienne.
- * Hérite de Personne (qui implémente ObtenirInformation).
- * Classe mère de Pilote et PersonnelCabine.
  *
- * Remarque du prof : "les attributs sont en String" et
- * "il faut ajouter des relations entre par exemple Vol et Employé meme si ce n'est pas fait dans l'énoncé"
- * → salaire est en String, et on ajoute une relation directe List<Vol>.
+ * <p>Hérite de {@link Personne} (qui implémente {@link ObtenirInformation}).
+ * Classe mère de {@link Pilote} et {@link PersonnelCabine}.</p>
+ *
+ * <p><b>Attributs en String</b> : salaire (conformément aux attentes pédagogiques).<br>
+ * <b>Relation directe</b> : {@code Employe} → {@code List<Vol>}.</p>
+ *
+ * @author  Équipe SkyISEP
+ * @version 1.0
+ * @since   2025
+ * @see     Pilote
+ * @see     PersonnelCabine
+ * @see     Vol
  */
 public class Employe extends Personne {
     private String numeroEmploye;
     private String role;
     private String salaire; // En String conformément aux attentes du prof
 
-    // Association directe avec Vol — "Mieux vaut créer un lien direct c'est mieux"
+    // Association directe avec Vol
     private List<Vol> vols;
 
+    /**
+     * Constructeur par défaut.
+     */
     public Employe() {
         super();
         this.vols = new ArrayList<>();
     }
 
+    /**
+     * Constructeur complet.
+     *
+     * @param id             identifiant unique
+     * @param nom            nom de famille
+     * @param prenom         prénom
+     * @param email          adresse e-mail
+     * @param telephone      numéro de téléphone
+     * @param numeroEmploye  matricule de l'employé
+     * @param role           rôle dans la compagnie (ex : {@code "Pilote"})
+     * @param salaire        salaire mensuel brut (en String)
+     */
     public Employe(String id, String nom, String prenom, String email, String telephone,
                    String numeroEmploye, String role, String salaire) {
         super(id, nom, prenom, email, telephone);
@@ -37,17 +59,21 @@ public class Employe extends Personne {
     // ==================== Méthodes métier ====================
 
     /**
-     * Retourne le rôle d'un employé.
-     * Cette méthode est surchargée (polymorphisme) dans Pilote et PersonnelCabine.
+     * Retourne le rôle de l'employé.
      *
-     * @return le rôle de l'employé (pilote, personnel cabine, etc.)
+     * <p>Cette méthode est surchargée (polymorphisme) dans {@link Pilote} et
+     * {@link PersonnelCabine} pour fournir une description enrichie.</p>
+     *
+     * @return le rôle de l'employé
      */
     public String obtenirRole() {
         return this.role;
     }
 
     /**
-     * Affecter un vol à cet employé (relation directe Employe ↔ Vol).
+     * Affecte un vol à cet employé (relation directe {@code Employe} ↔ {@code Vol}).
+     *
+     * @param vol le vol à affecter (ignoré s'il est {@code null} ou déjà présent)
      */
     public void ajouterVol(Vol vol) {
         if (vol != null && !vols.contains(vol)) {

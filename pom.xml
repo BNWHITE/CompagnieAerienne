@@ -25,6 +25,21 @@
             <artifactId>jfreechart</artifactId>
             <version>1.5.4</version>
         </dependency>
+
+        <!-- ===== JUnit 5 — Tests unitaires ===== -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- ===== H2 Database — Base de données embarquée (BONUS) ===== -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.224</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -48,6 +63,34 @@
                             <mainClass>com.isep.airline.Main</mainClass>
                         </manifest>
                     </archive>
+                </configuration>
+            </plugin>
+            <!-- ===== Maven Surefire — Lancement des tests JUnit 5 ===== -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <useModulePath>false</useModulePath>
+                </configuration>
+            </plugin>
+            <!-- ===== Maven Javadoc — Génération de la documentation ===== -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <configuration>
+                    <outputDirectory>${project.build.directory}/javadoc</outputDirectory>
+                    <reportOutputDirectory>${project.reporting.outputDirectory}/apidocs</reportOutputDirectory>
+                    <show>private</show>
+                    <author>true</author>
+                    <version>true</version>
+                    <windowtitle>SkyISEP Airlines — API Documentation</windowtitle>
+                    <doctitle>SkyISEP Airlines — API Documentation v${project.version}</doctitle>
+                    <encoding>UTF-8</encoding>
+                    <charset>UTF-8</charset>
+                    <docencoding>UTF-8</docencoding>
+                    <doclint>none</doclint>
                 </configuration>
             </plugin>
         </plugins>

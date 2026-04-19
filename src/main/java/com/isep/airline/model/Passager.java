@@ -4,19 +4,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe représentant un passager.
- * Hérite de Personne (qui implémente ObtenirInformation).
- * Un passager peut réserver plusieurs vols.
+ * Classe représentant un passager de la compagnie aérienne.
+ *
+ * <p>Hérite de {@link Personne} (qui implémente {@link ObtenirInformation}).
+ * Un passager possède un numéro de passeport et peut effectuer plusieurs réservations.</p>
+ *
+ * <p><b>Relation :</b> {@code Passager} → {@code List<Reservation>} (composition).</p>
+ *
+ * @author  Équipe SkyISEP
+ * @version 1.0
+ * @since   2025
+ * @see     Personne
+ * @see     Reservation
  */
 public class Passager extends Personne {
     private String numeroPasseport;
     private List<Reservation> reservations; // Déclaré avec List (pas ArrayList) — conforme aux attentes du prof
 
+    /**
+     * Constructeur par défaut. Initialise la liste de réservations.
+     */
     public Passager() {
         super();
         this.reservations = new ArrayList<>();
     }
 
+    /**
+     * Constructeur complet.
+     *
+     * @param id              identifiant unique du passager (ex : {@code "P001"})
+     * @param nom             nom de famille
+     * @param prenom          prénom
+     * @param email           adresse e-mail
+     * @param telephone       numéro de téléphone
+     * @param numeroPasseport numéro de passeport
+     */
     public Passager(String id, String nom, String prenom, String email, String telephone, String numeroPasseport) {
         super(id, nom, prenom, email, telephone);
         this.numeroPasseport = numeroPasseport;
@@ -26,11 +48,13 @@ public class Passager extends Personne {
     // ==================== Méthodes métier ====================
 
     /**
-     * Réserver un vol pour ce passager.
-     * Crée une nouvelle réservation et l'ajoute à la liste des réservations du passager.
+     * Réserve un vol pour ce passager.
      *
-     * @param vol le vol à réserver
-     * @return la réservation créée
+     * <p>Crée une nouvelle {@link Reservation} et l'ajoute à la liste des réservations
+     * du passager, puis ajoute le passager au vol.</p>
+     *
+     * @param  vol le vol à réserver (ne doit pas être {@code null} ni indisponible)
+     * @return la {@link Reservation} créée, ou {@code null} si le vol est invalide
      */
     public Reservation reserverVol(Vol vol) {
         if (vol == null) {

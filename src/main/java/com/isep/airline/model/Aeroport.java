@@ -5,12 +5,19 @@ import java.util.Deque;
 
 /**
  * Classe représentant un aéroport.
- * Association bidirectionnelle avec Vol : un Aeroport contient une Deque de Vols,
- * et un Vol référence ses Aeroports de départ et d'arrivée.
  *
- * Utilisation d'un Deque (Double-Ended Queue) plutôt qu'un ArrayList :
- * - Permet d'ajouter/retirer des vols en tête ou en queue efficacement
- * - Représente mieux la file des vols (prochain vol au départ = premier de la Deque)
+ * <p><b>Association bidirectionnelle avec {@link Vol}</b> : un {@code Aeroport} contient
+ * une {@link java.util.Deque} de vols au départ et à l'arrivée, et un {@link Vol} référence
+ * ses aéroports de départ/arrivée.</p>
+ *
+ * <p><b>Pourquoi {@link java.util.Deque} ?</b><br>
+ * Permet d'ajouter/retirer des vols en tête ou en queue efficacement et représente
+ * mieux la file des vols (prochain vol = premier de la Deque).</p>
+ *
+ * @author  Équipe SkyISEP
+ * @version 1.0
+ * @since   2025
+ * @see     Vol
  */
 public class Aeroport implements ObtenirInformation {
     private String codeIATA;       // Ex: "CDG", "JFK"
@@ -22,11 +29,22 @@ public class Aeroport implements ObtenirInformation {
     private Deque<Vol> volsDepart;
     private Deque<Vol> volsArrivee;
 
+    /**
+     * Constructeur par défaut. Initialise les files de vols.
+     */
     public Aeroport() {
         this.volsDepart = new ArrayDeque<>();
         this.volsArrivee = new ArrayDeque<>();
     }
 
+    /**
+     * Constructeur complet.
+     *
+     * @param codeIATA code IATA de l'aéroport sur 3 lettres (ex : {@code "CDG"})
+     * @param nom      nom officiel de l'aéroport (ex : {@code "Charles de Gaulle"})
+     * @param ville    ville hôte (ex : {@code "Paris"})
+     * @param pays     pays hôte (ex : {@code "France"})
+     */
     public Aeroport(String codeIATA, String nom, String ville, String pays) {
         this.codeIATA = codeIATA;
         this.nom = nom;
@@ -40,6 +58,8 @@ public class Aeroport implements ObtenirInformation {
 
     /**
      * Ajoute un vol au départ de cet aéroport (en fin de Deque).
+     *
+     * @param vol le vol à ajouter (ignoré s'il est {@code null} ou déjà présent)
      */
     public void ajouterVolDepart(Vol vol) {
         if (vol != null && !volsDepart.contains(vol)) {

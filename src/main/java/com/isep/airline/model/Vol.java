@@ -4,20 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe abstraite representant un vol de la compagnie aerienne.
- * Implemente ObtenirInformation.
+ * Classe abstraite représentant un vol de la compagnie aérienne.
  *
- * Remarques du prof :
- * - "Relation d association : il faut donc dans le class vol avoir un objet airport"
- *   -> villeDepart/villeArrivee remplaces par Aeroport aeroportDepart/aeroportArrivee
- * - "Il faut ajouter des relations entre par exemple Vol et Employe"
- *   -> Ajout de List<Employe> employes (relation directe)
- * - "Le vol doit etre dans obtenir information"
- *   -> implemente ObtenirInformation
- * - "Relation entre Vol et Pilote : c est List et pas ArrayList"
- *   -> toutes les collections declarees en List (pas ArrayList)
- * - "Entre court, moyen et long courrier il y a une difference de structure"
- *   -> Vol est abstract, sous-classes : CourtCourrier, MoyenCourrier, LongCourrier
+ * <p>Implémente {@link ObtenirInformation}. Trois sous-classes concrètes :
+ * {@link CourtCourrier}, {@link MoyenCourrier}, {@link LongCourrier}.</p>
+ *
+ * <p><b>Relations :</b>
+ * <ul>
+ *   <li>Agrégation avec {@link Aeroport} (départ / arrivée)</li>
+ *   <li>Composition avec {@link Avion} et {@link Equipage}</li>
+ *   <li>Association avec {@link Passager} et {@link Employe}</li>
+ * </ul></p>
+ *
+ * <p><b>Statuts possibles :</b> {@code PLANIFIE}, {@code EN_COURS}, {@code TERMINE},
+ * {@code ANNULE}.</p>
+ *
+ * @author  Équipe SkyISEP
+ * @version 1.0
+ * @since   2025
+ * @see     CourtCourrier
+ * @see     MoyenCourrier
+ * @see     LongCourrier
  */
 public abstract class Vol implements ObtenirInformation {
     private String numeroVol;

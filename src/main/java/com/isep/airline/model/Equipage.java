@@ -5,25 +5,51 @@ import java.util.List;
 
 /**
  * Classe représentant un équipage affecté à un vol.
- * Un équipage est composé d'un pilote et d'une liste de personnel de cabine.
- * Composition : un équipage appartient à un vol.
- * Implémente ObtenirInformation.
+ *
+ * <p>Un équipage est composé d'un {@link Pilote} et d'une {@link java.util.List}
+ * de {@link PersonnelCabine}. Il est considéré complet lorsqu'il possède au moins
+ * un pilote et un membre de personnel de cabine.</p>
+ *
+ * <p><b>Relation :</b> Composition — un équipage appartient à un {@link Vol}.</p>
+ *
+ * @author  Équipe SkyISEP
+ * @version 1.0
+ * @since   2025
+ * @see     Pilote
+ * @see     PersonnelCabine
+ * @see     Vol
  */
 public class Equipage implements ObtenirInformation {
     private String idEquipage;
     private Pilote pilote;
     private List<PersonnelCabine> personnelCabine; // Déclaré avec List (pas ArrayList)
 
+    /**
+     * Constructeur par défaut.
+     */
     public Equipage() {
         this.personnelCabine = new ArrayList<>();
     }
 
+    /**
+     * Constructeur avec pilote.
+     *
+     * @param idEquipage identifiant unique de l'équipage (ex : {@code "EQ001"})
+     * @param pilote     le pilote responsable de l'équipage
+     */
     public Equipage(String idEquipage, Pilote pilote) {
         this.idEquipage = idEquipage;
         this.pilote = pilote;
         this.personnelCabine = new ArrayList<>();
     }
 
+    /**
+     * Constructeur complet avec liste de personnel de cabine.
+     *
+     * @param idEquipage      identifiant unique de l'équipage
+     * @param pilote          le pilote responsable
+     * @param personnelCabine liste du personnel de cabine (peut être {@code null})
+     */
     public Equipage(String idEquipage, Pilote pilote, List<PersonnelCabine> personnelCabine) {
         this.idEquipage = idEquipage;
         this.pilote = pilote;
@@ -34,6 +60,8 @@ public class Equipage implements ObtenirInformation {
 
     /**
      * Ajoute un membre du personnel de cabine à l'équipage.
+     *
+     * @param membre le membre à ajouter (ignoré s'il est {@code null} ou déjà présent)
      */
     public void ajouterPersonnelCabine(PersonnelCabine membre) {
         if (membre != null && !personnelCabine.contains(membre)) {

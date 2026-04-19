@@ -1,7 +1,11 @@
 package com.isep.airline;
 
 import com.isep.airline.model.*;
+import com.isep.airline.service.DatabaseService;
+import com.isep.airline.service.FichierService;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,10 +17,14 @@ public class Main {
 
     private static CompagnieAerienne compagnie;
     private static Scanner scanner;
+    private static FichierService fichierService;
+    private static DatabaseService databaseService;
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
         compagnie = new CompagnieAerienne("SkyISEP Airlines", "SI");
+        fichierService = new FichierService();
+        databaseService = new DatabaseService();
 
         // Charger des donnees de demonstration
         chargerDonneesDemonstration();
@@ -40,6 +48,8 @@ public class Main {
                 case 7 -> menuEquipages();
                 case 8 -> compagnie.afficherRapport();
                 case 9 -> demonstrationPolymorphisme();
+                case 10 -> menuFichiers();
+                case 11 -> menuBaseDeDonnees();
                 case 0 -> {
                     quitter = true;
                     System.out.println("Merci d'avoir utilise notre systeme. Au revoir !");
@@ -63,6 +73,8 @@ public class Main {
         System.out.println("7. Gestion des Equipages");
         System.out.println("8. Statistiques et Rapports");
         System.out.println("9. Demonstration Polymorphisme");
+        System.out.println("10. Fichiers (Export/Import CSV)");
+        System.out.println("11. Base de donnees (BONUS H2/JDBC)");
         System.out.println("0. Quitter");
         System.out.println("====================================");
     }
@@ -729,6 +741,168 @@ public class Main {
         compagnie.reserverVol("P003", "SI102");
 
         System.out.println("\n[OK] Donnees de demonstration chargees avec succes !\n");
+    }
+
+    // ======================== MENU FICHIERS (I/O) ========================
+
+    private static void menuFichiers() {
+        boolean retour = false;
+        while (!retour) {
+            System.out.println("\n--- Fichiers (Export / Import CSV) ---");
+            System.out.println("1. Exporter les passagers en CSV");
+            System.out.println("2. Exporter les vols en CSV");
+            System.out.println("3. Exporter les reservations en CSV");
+            System.out.println("4. Importer des passagers depuis CSV");
+            System.out.println("5. Ecrire un rapport texte");
+            System.out.println("0. Retour");
+            int choix = lireEntier("Votre choix : ");
+            switch (choix) {
+                case 1 -> {
+                    try {
+                        String chemin = lireChaine("Chemin du fichier (ex: data/passagers.csv) : ");
+                        if (chemin.isEmpty()) chemin = "data/passagers.csv";
+                        fichierService.exporterPassagers(compagnie.getPassagers(), chemin);
+                    } catch (IOException e) {
+                        System.out.println("Erreur : " + e.getMessage());
+                    }
+                }
+                case 2 -> {
+                    try {
+                        String chemin = lireChaine("Chemin du fichier (ex: data/vols.csv) : ");
+                        if (chemin.isEmpty()) chemin = "data/vols.csv";
+                        fichierService.exporterVols(compagnie.getVols(), chemin);
+                    } catch (IOException e) {
+                        System.out.println("Erreur : " + e.getMessage());
+                    }
+                }
+                case 3 -> {
+                    try {
+                        String chemin = lireChaine("Chemin du fichier (ex: data/reservations.csv) : ");
+                        if (chemin.isEmpty()) chemin = "data/reservations.csv";
+                        fichierService.exporterReservations(compagnie.getReservations(), chemin);
+                    } catch (IOException e) {
+                        System.out.println("Erreur : " + e.getMessage());
+                    }
+                }
+                case 4 -> {
+                    try {
+                        String chemin = lireChaine("Chemin du fichier CSV (ex: data/passagers.csv) : ");
+                        if (chemin.isEmpty()) chemin = "data/passagers.csv";
+                        List<Passager> importes = fichierService.importerPassagers(chemin);
+                        for (Passager p : importes) {
+                            compagnie.ajouterPassager(p);
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Erreur : " + e.getMessage());
+                    }
+                }
+                case 5 -> {
+                    try {
+                        String chemin = lireChaine("Chemin du fichier (ex: data/rapport.txt) : ");
+                        if (chemin.isEmpty()) chemin = "data/rapport.txt";
+                        fichierService.ecrireFichierTexte(chemin, compagnie.obtenirInformation());
+                    } catch (IOException e) {
+                        System.out.println("Erreur : " + e.getMessage());
+                    }
+                }
+                case 0 -> retour = true;
+                default -> System.out.println("Choix invalide.");
+            }
+        }
+    }
+
+    // ======================== MENU BASE DE DONNEES (BONUS) ========================
+
+    private static void menuBaseDeDonnees() {
+        boolean retour = false;
+        while (!retour) {
+            System.out.println("\n--- Base de Donnees H2 (BONUS JDBC) ---");
+            System.out.println("1. Initialiser la base");
+            System.out.println("2. Sauvegarder les passagers en BDD");
+            System.out.println("3. Sauvegarder les vols en BDD");
+            System.out.println("4. Charger les passagers depuis la BDD");
+            System.out.println("5. Afficher les vols en BDD");
+            System.out.println("6. Statistiques BDD");
+            System.out.println("0. Retour");
+            int choix = lireEntier("Votre choix : ");
+            switch (choix) {
+                case 1 -> {
+                    try {
+                        databaseService.initialiserBase();
+                        System.out.println("Base de donnees initialisee.");
+                    } catch (SQLException e) {
+                        System.out.println("Erreur SQL : " + e.getMessage());
+                    }
+                }
+                case 2 -> {
+                    try {
+                        databaseService.initialiserBase();
+                        int count = 0;
+                        for (Passager p : compagnie.getPassagers()) {
+                            if (databaseService.insererPassager(p)) count++;
+                        }
+                        System.out.println(count + " passager(s) sauvegarde(s) en BDD.");
+                    } catch (SQLException e) {
+                        System.out.println("Erreur SQL : " + e.getMessage());
+                    }
+                }
+                case 3 -> {
+                    try {
+                        databaseService.initialiserBase();
+                        int count = 0;
+                        for (Vol v : compagnie.getVols()) {
+                            if (databaseService.insererVol(v.getNumeroVol(), v.getTypeVol(),
+                                    v.getDateDepart(), v.getDateArrivee(), v.getPrix())) {
+                                count++;
+                            }
+                        }
+                        System.out.println(count + " vol(s) sauvegarde(s) en BDD.");
+                    } catch (SQLException e) {
+                        System.out.println("Erreur SQL : " + e.getMessage());
+                    }
+                }
+                case 4 -> {
+                    try {
+                        databaseService.initialiserBase();
+                        List<Passager> passagers = databaseService.listerPassagers();
+                        for (Passager p : passagers) {
+                            compagnie.ajouterPassager(p);
+                        }
+                        System.out.println(passagers.size() + " passager(s) charge(s) depuis la BDD.");
+                    } catch (SQLException e) {
+                        System.out.println("Erreur SQL : " + e.getMessage());
+                    }
+                }
+                case 5 -> {
+                    try {
+                        databaseService.initialiserBase();
+                        List<String> vols = databaseService.listerVols();
+                        if (vols.isEmpty()) {
+                            System.out.println("Aucun vol en base.");
+                        } else {
+                            System.out.println("--- Vols en base de donnees ---");
+                            for (String desc : vols) {
+                                System.out.println("  " + desc);
+                            }
+                        }
+                    } catch (SQLException e) {
+                        System.out.println("Erreur SQL : " + e.getMessage());
+                    }
+                }
+                case 6 -> {
+                    try {
+                        databaseService.initialiserBase();
+                        System.out.println("--- Statistiques BDD ---");
+                        System.out.println("Passagers en base : " + databaseService.compterPassagers());
+                        System.out.println("Vols en base      : " + databaseService.compterVols());
+                    } catch (SQLException e) {
+                        System.out.println("Erreur SQL : " + e.getMessage());
+                    }
+                }
+                case 0 -> retour = true;
+                default -> System.out.println("Choix invalide.");
+            }
+        }
     }
 
     // ======================== UTILITAIRES ========================

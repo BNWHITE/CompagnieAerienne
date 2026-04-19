@@ -6,9 +6,26 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Classe principale representant la compagnie aerienne.
- * Gere les vols, passagers, employes, avions, equipages, reservations et aeroports.
- * Implemente ObtenirInformation.
+ * Classe centrale orchestrant l'ensemble des opérations de la compagnie aérienne.
+ *
+ * <p>Gère les entités suivantes via des opérations CRUD complètes :
+ * {@link Aeroport}, {@link Vol}, {@link Passager}, {@link Employe},
+ * {@link Avion}, {@link Equipage}, {@link Reservation}.</p>
+ *
+ * <p>Implémente {@link ObtenirInformation}.</p>
+ *
+ * <p><b>Exemple d'utilisation :</b></p>
+ * <pre>
+ *   CompagnieAerienne compagnie = new CompagnieAerienne("SkyISEP Airlines", "SI");
+ *   compagnie.ajouterPassager(new Passager("P001", "Dupont", "Jean", ...));
+ * </pre>
+ *
+ * @author  Équipe SkyISEP
+ * @version 1.0
+ * @since   2025
+ * @see     Vol
+ * @see     Passager
+ * @see     Employe
  */
 public class CompagnieAerienne implements ObtenirInformation {
     private String nom;

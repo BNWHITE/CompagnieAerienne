@@ -2,22 +2,50 @@ package com.isep.airline.model;
 
 /**
  * Classe représentant un vol moyen courrier (1500 - 4000 km).
- * Hérite de Vol.
+ * Hérite de {@link Vol} et implémente {@link ObtenirInformation}.
  *
- * Différence de structure par rapport aux autres types de vol :
- * - Service repas léger inclus
- * - Possibilité de classe affaires (limité)
- * - Durée typique : 3h - 6h
+ * <p>Caractéristiques spécifiques :</p>
+ * <ul>
+ *   <li>Service repas léger inclus</li>
+ *   <li>Possibilité de classe affaires (limité)</li>
+ *   <li>Durée typique : 3h - 6h</li>
+ * </ul>
+ *
+ * @author Compagnie Aérienne ISEP
+ * @version 1.0
+ * @since 2025
+ * @see Vol
+ * @see CourtCourrier
+ * @see LongCourrier
  */
 public class MoyenCourrier extends Vol {
-    private String distanceKm;          // Distance en km (String)
+    /** Distance du vol en kilomètres. */
+    private String distanceKm;
+    /** Indique si un repas léger est inclus dans le vol. */
     private boolean repasInclus;
+    /** Indique si la classe affaires est disponible. */
     private boolean classeAffairesDisponible;
 
+    /**
+     * Constructeur par défaut.
+     */
     public MoyenCourrier() {
         super();
     }
 
+    /**
+     * Constructeur complet d'un vol moyen courrier.
+     *
+     * @param numeroVol         numéro unique du vol
+     * @param aeroportDepart    aéroport de départ
+     * @param aeroportArrivee   aéroport d'arrivée
+     * @param dateDepart        date de départ
+     * @param dateArrivee       date d'arrivée
+     * @param heureDepart       heure de départ
+     * @param heureArrivee      heure d'arrivée
+     * @param prix              prix du billet
+     * @param distanceKm        distance en kilomètres
+     */
     public MoyenCourrier(String numeroVol, Aeroport aeroportDepart, Aeroport aeroportArrivee,
                          String dateDepart, String dateArrivee, String heureDepart,
                          String heureArrivee, String prix, String distanceKm) {
@@ -27,6 +55,10 @@ public class MoyenCourrier extends Vol {
         this.classeAffairesDisponible = true;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return {@code "Moyen Courrier"}
+     */
     @Override
     public String getTypeVol() {
         return "Moyen Courrier";
@@ -34,6 +66,10 @@ public class MoyenCourrier extends Vol {
 
     // ==================== Interface ObtenirInformation ====================
 
+    /**
+     * {@inheritDoc}
+     * Inclut la distance, le repas et la disponibilité de la classe affaires.
+     */
     @Override
     public String obtenirInformation() {
         return super.obtenirInformation() + "\n"
@@ -44,6 +80,10 @@ public class MoyenCourrier extends Vol {
 
     // ==================== Getters & Setters ====================
 
+    /**
+     * Retourne la distance du vol en km.
+     * @return distance en km
+     */
     public String getDistanceKm() {
         return distanceKm;
     }
