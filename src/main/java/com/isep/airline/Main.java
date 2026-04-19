@@ -3,6 +3,7 @@ package com.isep.airline;
 import com.isep.airline.model.*;
 import com.isep.airline.service.DatabaseService;
 import com.isep.airline.service.FichierService;
+import com.isep.airline.service.MongoDBService;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -694,35 +695,79 @@ public class Main {
         Aeroport nrt = new Aeroport("NRT", "Narita", "Tokyo", "Japon");
         Aeroport lhr = new Aeroport("LHR", "Heathrow", "Londres", "Royaume-Uni");
         Aeroport bcn = new Aeroport("BCN", "El Prat", "Barcelone", "Espagne");
+        Aeroport dxb = new Aeroport("DXB", "Dubai International", "Dubaï", "Emirats Arabes Unis");
+        Aeroport gru = new Aeroport("GRU", "Guarulhos", "São Paulo", "Brésil");
+        Aeroport ist = new Aeroport("IST", "Istanbul Airport", "Istanbul", "Turquie");
+        Aeroport rak = new Aeroport("RAK", "Menara", "Marrakech", "Maroc");
+        Aeroport ath = new Aeroport("ATH", "Eleftherios Venizelos", "Athènes", "Grèce");
+        Aeroport lis = new Aeroport("LIS", "Humberto Delgado", "Lisbonne", "Portugal");
+        Aeroport arn = new Aeroport("ARN", "Arlanda", "Stockholm", "Suède");
+        Aeroport ams = new Aeroport("AMS", "Schiphol", "Amsterdam", "Pays-Bas");
+        Aeroport fco = new Aeroport("FCO", "Fiumicino", "Rome", "Italie");
+        Aeroport ber = new Aeroport("BER", "Berlin Brandenburg", "Berlin", "Allemagne");
+        Aeroport icn = new Aeroport("ICN", "Incheon", "Séoul", "Corée du Sud");
+        Aeroport bom = new Aeroport("BOM", "Chhatrapati Shivaji", "Mumbai", "Inde");
+        Aeroport cai = new Aeroport("CAI", "Cairo International", "Le Caire", "Egypte");
+        Aeroport dss = new Aeroport("DSS", "Blaise Diagne", "Dakar", "Sénégal");
+        Aeroport syd = new Aeroport("SYD", "Kingsford Smith", "Sydney", "Australie");
+        Aeroport los = new Aeroport("LOS", "Murtala Muhammed", "Lagos", "Nigéria");
         compagnie.ajouterAeroport(cdg);
         compagnie.ajouterAeroport(jfk);
         compagnie.ajouterAeroport(nrt);
         compagnie.ajouterAeroport(lhr);
         compagnie.ajouterAeroport(bcn);
+        compagnie.ajouterAeroport(dxb);
+        compagnie.ajouterAeroport(gru);
+        compagnie.ajouterAeroport(ist);
+        compagnie.ajouterAeroport(rak);
+        compagnie.ajouterAeroport(ath);
+        compagnie.ajouterAeroport(lis);
+        compagnie.ajouterAeroport(arn);
+        compagnie.ajouterAeroport(ams);
+        compagnie.ajouterAeroport(fco);
+        compagnie.ajouterAeroport(ber);
+        compagnie.ajouterAeroport(icn);
+        compagnie.ajouterAeroport(bom);
+        compagnie.ajouterAeroport(cai);
+        compagnie.ajouterAeroport(dss);
+        compagnie.ajouterAeroport(syd);
+        compagnie.ajouterAeroport(los);
 
-        // Avions
+        // Avions (flotte de 6 appareils)
         compagnie.ajouterAvion(new Avion("F-GKXA", "Airbus A320", 180));
         compagnie.ajouterAvion(new Avion("F-GKXB", "Boeing 737", 160));
         compagnie.ajouterAvion(new Avion("F-GKXC", "Airbus A350", 300));
+        compagnie.ajouterAvion(new Avion("F-GKXD", "Boeing 777", 350));
+        compagnie.ajouterAvion(new Avion("F-GKXE", "Airbus A330", 250));
+        compagnie.ajouterAvion(new Avion("F-GKXF", "Embraer E195", 120));
 
-        // Pilotes (salaire et heures en String)
+        // Pilotes
         Pilote pilote1 = new Pilote("E001", "Dupont", "Jean", "j.dupont@skyisep.com", "0601020304", "EMP001", "8000",
                 "ATPL-001", "5000");
         Pilote pilote2 = new Pilote("E002", "Martin", "Pierre", "p.martin@skyisep.com", "0605060708", "EMP002", "7500",
                 "ATPL-002", "3000");
+        Pilote pilote3 = new Pilote("E003", "Renaud", "Marc", "m.renaud@skyisep.com", "0602030405", "EMP003", "9000",
+                "ATPL-003", "8000");
         compagnie.ajouterEmploye(pilote1);
         compagnie.ajouterEmploye(pilote2);
+        compagnie.ajouterEmploye(pilote3);
 
-        // Personnel de cabine (salaire et experience en String)
-        PersonnelCabine pc1 = new PersonnelCabine("E003", "Lemoine", "Sophie", "s.lemoine@skyisep.com", "0611121314",
-                "EMP003", "3500", "Chef de cabine", "10");
-        PersonnelCabine pc2 = new PersonnelCabine("E004", "Bernard", "Marie", "m.bernard@skyisep.com", "0615161718",
-                "EMP004", "3000", "Hotesse", "5");
-        PersonnelCabine pc3 = new PersonnelCabine("E005", "Petit", "Luc", "l.petit@skyisep.com", "0619202122", "EMP005",
+        // Personnel de cabine
+        PersonnelCabine pc1 = new PersonnelCabine("E004", "Lemoine", "Sophie", "s.lemoine@skyisep.com", "0611121314",
+                "EMP004", "3500", "Chef de cabine", "10");
+        PersonnelCabine pc2 = new PersonnelCabine("E005", "Bernard", "Marie", "m.bernard@skyisep.com", "0615161718",
+                "EMP005", "3000", "Hotesse", "5");
+        PersonnelCabine pc3 = new PersonnelCabine("E006", "Petit", "Luc", "l.petit@skyisep.com", "0619202122", "EMP006",
                 "3000", "Steward", "3");
+        PersonnelCabine pc4 = new PersonnelCabine("E007", "Ndiaye", "Aminata", "a.ndiaye@skyisep.com", "0622232425",
+                "EMP007", "3200", "Hotesse", "7");
+        PersonnelCabine pc5 = new PersonnelCabine("E008", "Costa", "Lucia", "l.costa@skyisep.com", "0626272829",
+                "EMP008", "2800", "Steward", "2");
         compagnie.ajouterEmploye(pc1);
         compagnie.ajouterEmploye(pc2);
         compagnie.ajouterEmploye(pc3);
+        compagnie.ajouterEmploye(pc4);
+        compagnie.ajouterEmploye(pc5);
 
         // Equipages
         Equipage equipage1 = new Equipage("EQ001", pilote1);
@@ -732,39 +777,93 @@ public class Main {
 
         Equipage equipage2 = new Equipage("EQ002", pilote2);
         equipage2.ajouterPersonnelCabine(pc3);
+        equipage2.ajouterPersonnelCabine(pc4);
         compagnie.ajouterEquipage(equipage2);
 
-        // Passagers
-        compagnie.ajouterPassager(
-                new Passager("P001", "Moreau", "Alice", "alice.moreau@email.com", "0631323334", "FR123456"));
-        compagnie.ajouterPassager(
-                new Passager("P002", "Durand", "Bob", "bob.durand@email.com", "0635363738", "FR654321"));
-        compagnie.ajouterPassager(
-                new Passager("P003", "Garcia", "Carlos", "carlos.garcia@email.com", "0639404142", "ES789012"));
+        Equipage equipage3 = new Equipage("EQ003", pilote3);
+        equipage3.ajouterPersonnelCabine(pc5);
+        compagnie.ajouterEquipage(equipage3);
 
-        // Vols (avec sous-classes et Aeroport)
-        Vol vol1 = new LongCourrier("SI101", cdg, jfk, "20/04/2025", "20/04/2025", "08:00", "12:00", "450", "5800");
-        Vol vol2 = new LongCourrier("SI102", cdg, nrt, "21/04/2025", "22/04/2025", "10:30", "06:30", "800", "9700");
-        Vol vol3 = new CourtCourrier("SI103", cdg, lhr, "22/04/2025", "22/04/2025", "14:00", "15:30", "120", "350");
-        Vol vol4 = new MoyenCourrier("SI104", cdg, bcn, "23/04/2025", "23/04/2025", "09:00", "11:00", "180", "1100");
-        compagnie.planifierVol(vol1);
-        compagnie.planifierVol(vol2);
-        compagnie.planifierVol(vol3);
-        compagnie.planifierVol(vol4);
+        // ════════════ CHARGEMENT DES PASSAGERS DEPUIS MONGODB ════════════
+        System.out.println("\n[MongoDB] Chargement des passagers depuis la base de données...");
+        MongoDBService mongoInit = new MongoDBService();
+        try {
+            mongoInit.ouvrirConnexion();
+            List<Passager> passagersMongo = mongoInit.listerPassagers();
+            for (Passager p : passagersMongo) {
+                compagnie.ajouterPassager(p);
+            }
+            System.out.println("[MongoDB] " + passagersMongo.size() + " passagers chargés depuis Atlas.");
+            mongoInit.fermerConnexion();
+        } catch (Exception e) {
+            System.out.println("[MongoDB] Connexion impossible, chargement de passagers par défaut.");
+            compagnie.ajouterPassager(new Passager("P001", "Moreau", "Alice", "alice.moreau@email.com", "0631323334", "FR123456"));
+            compagnie.ajouterPassager(new Passager("P002", "Durand", "Bob", "bob.durand@email.com", "0635363738", "FR654321"));
+            compagnie.ajouterPassager(new Passager("P003", "Garcia", "Carlos", "carlos.garcia@email.com", "0639404142", "ES789012"));
+        }
 
-        // Affectation avions et equipages aux vols
-        compagnie.affecterAvionAuVol("SI101", "F-GKXA");
-        compagnie.affecterAvionAuVol("SI102", "F-GKXC");
-        compagnie.affecterAvionAuVol("SI103", "F-GKXB");
+        // ════════════ VOLS (20 vols correspondant à MongoDB) ════════════
+        // Long Courrier
+        compagnie.planifierVol(new LongCourrier("SI101", cdg, jfk, "22/04/2026", "22/04/2026", "08:00", "12:00", "480", "5800"));
+        compagnie.planifierVol(new LongCourrier("SI102", cdg, nrt, "24/04/2026", "25/04/2026", "10:30", "06:30", "850", "9700"));
+        compagnie.planifierVol(new LongCourrier("SI103", cdg, dxb, "28/04/2026", "28/04/2026", "14:00", "22:00", "520", "5200"));
+        compagnie.planifierVol(new LongCourrier("SI104", cdg, gru, "02/05/2026", "03/05/2026", "22:00", "06:00", "720", "9400"));
+        compagnie.planifierVol(new LongCourrier("SI115", cdg, icn, "10/05/2026", "11/05/2026", "13:00", "08:00", "890", "9600"));
+        compagnie.planifierVol(new LongCourrier("SI116", cdg, bom, "15/05/2026", "15/05/2026", "21:00", "09:30", "580", "6600"));
+        compagnie.planifierVol(new LongCourrier("SI119", cdg, syd, "01/06/2026", "02/06/2026", "20:00", "16:00", "1100", "16900"));
+        compagnie.planifierVol(new LongCourrier("SI120", cdg, los, "05/06/2026", "05/06/2026", "09:00", "15:30", "490", "5100"));
+
+        // Moyen Courrier
+        compagnie.planifierVol(new MoyenCourrier("SI105", cdg, ist, "23/04/2026", "23/04/2026", "07:00", "12:00", "250", "2200"));
+        compagnie.planifierVol(new MoyenCourrier("SI106", cdg, rak, "26/04/2026", "26/04/2026", "08:30", "11:30", "180", "1900"));
+        compagnie.planifierVol(new MoyenCourrier("SI109", cdg, ath, "01/05/2026", "01/05/2026", "06:00", "10:00", "220", "2100"));
+        compagnie.planifierVol(new MoyenCourrier("SI112", cdg, lis, "06/05/2026", "06/05/2026", "11:00", "13:00", "195", "1500"));
+        compagnie.planifierVol(new MoyenCourrier("SI113", cdg, arn, "08/05/2026", "08/05/2026", "09:00", "12:00", "230", "1500"));
+        compagnie.planifierVol(new MoyenCourrier("SI117", cdg, cai, "20/05/2026", "20/05/2026", "15:00", "20:00", "280", "3200"));
+        compagnie.planifierVol(new MoyenCourrier("SI118", cdg, dss, "25/05/2026", "25/05/2026", "10:00", "15:30", "350", "4200"));
+
+        // Court Courrier
+        compagnie.planifierVol(new CourtCourrier("SI107", cdg, lhr, "25/04/2026", "25/04/2026", "14:00", "15:30", "120", "350"));
+        compagnie.planifierVol(new CourtCourrier("SI108", cdg, ams, "27/04/2026", "27/04/2026", "16:00", "17:15", "95", "430"));
+        compagnie.planifierVol(new CourtCourrier("SI110", cdg, bcn, "03/05/2026", "03/05/2026", "07:00", "09:00", "110", "830"));
+        compagnie.planifierVol(new CourtCourrier("SI111", cdg, fco, "05/05/2026", "05/05/2026", "12:00", "14:15", "130", "1100"));
+        compagnie.planifierVol(new CourtCourrier("SI114", cdg, ber, "09/05/2026", "09/05/2026", "17:00", "19:00", "105", "870"));
+
+        // Affectation avions aux vols
+        compagnie.affecterAvionAuVol("SI101", "F-GKXD");   // B777 → JFK
+        compagnie.affecterAvionAuVol("SI102", "F-GKXC");   // A350 → NRT
+        compagnie.affecterAvionAuVol("SI103", "F-GKXE");   // A330 → DXB
+        compagnie.affecterAvionAuVol("SI107", "F-GKXF");   // E195 → LHR
+        compagnie.affecterAvionAuVol("SI108", "F-GKXA");   // A320 → AMS
+        compagnie.affecterAvionAuVol("SI110", "F-GKXB");   // B737 → BCN
+
+        // Affectation équipages aux vols
         compagnie.affecterEquipageAuVol("SI101", "EQ001");
         compagnie.affecterEquipageAuVol("SI102", "EQ002");
+        compagnie.affecterEquipageAuVol("SI103", "EQ003");
 
-        // Quelques reservations
-        compagnie.reserverVol("P001", "SI101");
-        compagnie.reserverVol("P002", "SI101");
-        compagnie.reserverVol("P003", "SI102");
+        // Réservations (les passagers viennent de MongoDB)
+        compagnie.reserverVol("P001", "SI101"); // Alice → JFK
+        compagnie.reserverVol("P015", "SI101"); // John → JFK
+        compagnie.reserverVol("P016", "SI101"); // Emily → JFK
+        compagnie.reserverVol("P018", "SI101"); // Sarah → JFK
+        compagnie.reserverVol("P007", "SI101"); // Lucas → JFK
+        compagnie.reserverVol("P019", "SI102"); // Yuki → NRT
+        compagnie.reserverVol("P021", "SI102"); // Li → NRT
+        compagnie.reserverVol("P003", "SI102"); // Claire → NRT
+        compagnie.reserverVol("P024", "SI103"); // Omar → DXB
+        compagnie.reserverVol("P022", "SI103"); // Raj → DXB
+        compagnie.reserverVol("P004", "SI105"); // Kahina → IST
+        compagnie.reserverVol("P005", "SI105"); // Seydina → IST
+        compagnie.reserverVol("P010", "SI107"); // Hans → LHR
+        compagnie.reserverVol("P012", "SI107"); // Jan → LHR
+        compagnie.reserverVol("P030", "SI107"); // Liam → LHR
+        compagnie.reserverVol("P009", "SI111"); // Maria → FCO
+        compagnie.reserverVol("P011", "SI110"); // Carmen → BCN
+        compagnie.reserverVol("P025", "SI118"); // Fatou → DSS
+        compagnie.reserverVol("P005", "SI118"); // Seydina → DSS
 
-        System.out.println("\n[OK] Donnees de demonstration chargees avec succes !\n");
+        System.out.println("\n[OK] Donnees chargees avec succes (passagers depuis MongoDB Atlas) !\n");
     }
 
     // ======================== MENU FICHIERS (I/O) ========================
