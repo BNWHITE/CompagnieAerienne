@@ -422,6 +422,15 @@ public class Main {
                         }
                     }
                     compagnie.planifierVol(vol);
+                    // Synchronisation MongoDB Atlas
+                    try {
+                        mongoService.ouvrirConnexion();
+                        mongoService.insererVol(vol.getNumeroVol(), vol.getTypeVol(),
+                                vol.getDateDepart(), vol.getDateArrivee(), vol.getPrix());
+                        mongoService.fermerConnexion();
+                    } catch (Exception e) {
+                        System.out.println("[MongoDB] Erreur sync vol : " + e.getMessage());
+                    }
                 }
                 case 2 -> {
                     String numero = lireChaine("N du vol : ");
@@ -502,7 +511,23 @@ public class Main {
                 case 1 -> {
                     String idPassager = lireChaine("ID du passager : ");
                     String numVol = lireChaine("N du vol : ");
-                    compagnie.reserverVol(idPassager, numVol);
+                    Reservation res = compagnie.reserverVol(idPassager, numVol);
+                    // Synchronisation MongoDB Atlas
+                    if (res != null) {
+                        try {
+                            Vol volRes = compagnie.rechercherVol(numVol);
+                            String prix = (volRes != null) ? volRes.getPrix() : "0";
+                            mongoService.ouvrirConnexion();
+                            mongoService.insererReservation(res.getNumeroReservation(),
+                                    idPassager, numVol,
+                                    java.time.LocalDate.now().format(
+                                            java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                                    prix);
+                            mongoService.fermerConnexion();
+                        } catch (Exception e) {
+                            System.out.println("[MongoDB] Erreur sync réservation : " + e.getMessage());
+                        }
+                    }
                 }
                 case 2 -> {
                     String numRes = lireChaine("N de la reservation : ");
