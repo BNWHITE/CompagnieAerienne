@@ -50,6 +50,7 @@ public class Main {
                 case 9 -> demonstrationPolymorphisme();
                 case 10 -> menuFichiers();
                 case 11 -> menuBaseDeDonnees();
+                case 12 -> menuMongoDB();
                 case 0 -> {
                     quitter = true;
                     System.out.println("Merci d'avoir utilise notre systeme. Au revoir !");
@@ -75,6 +76,7 @@ public class Main {
         System.out.println("9. Demonstration Polymorphisme");
         System.out.println("10. Fichiers (Export/Import CSV)");
         System.out.println("11. Base de donnees (BONUS H2/JDBC)");
+        System.out.println("12. Base de donnees MongoDB Atlas");
         System.out.println("0. Quitter");
         System.out.println("====================================");
     }
@@ -932,6 +934,88 @@ public class Main {
                 default -> System.out.println("Choix invalide.");
             }
         }
+    }
+
+    // ======================== MENU MONGODB ATLAS ========================
+
+    /**
+     * Menu interactif pour les opérations MongoDB Atlas (NoSQL).
+     * Permet d'insérer, lister, rechercher et supprimer des passagers et vols
+     * dans un cluster MongoDB Atlas hébergé dans le cloud.
+     */
+    private static void menuMongoDB() {
+        com.isep.airline.service.MongoDBService mongoService = new com.isep.airline.service.MongoDBService();
+        mongoService.ouvrirConnexion();
+
+        boolean retour = false;
+        while (!retour) {
+            System.out.println("\n--- MongoDB Atlas ---");
+            System.out.println("1. Inserer un passager");
+            System.out.println("2. Lister les passagers");
+            System.out.println("3. Rechercher un passager");
+            System.out.println("4. Supprimer un passager");
+            System.out.println("5. Inserer un vol");
+            System.out.println("6. Lister les vols");
+            System.out.println("7. Compter passagers et vols");
+            System.out.println("0. Retour");
+            int choix = lireEntier("Votre choix : ");
+            switch (choix) {
+                case 1 -> {
+                    String id = lireChaine("ID passager : ");
+                    String nom = lireChaine("Nom : ");
+                    String prenom = lireChaine("Prenom : ");
+                    String email = lireChaine("Email : ");
+                    String tel = lireChaine("Telephone : ");
+                    String passeport = lireChaine("Numero passeport : ");
+                    com.isep.airline.model.Passager p = new com.isep.airline.model.Passager(id, nom, prenom, email, tel, passeport);
+                    mongoService.insererPassager(p);
+                }
+                case 2 -> {
+                    var passagers = mongoService.listerPassagers();
+                    if (passagers.isEmpty()) {
+                        System.out.println("Aucun passager dans MongoDB.");
+                    } else {
+                        passagers.forEach(p -> System.out.println("  " + p.getId() + " | " + p.getNom() + " " + p.getPrenom()));
+                    }
+                }
+                case 3 -> {
+                    String id = lireChaine("ID du passager : ");
+                    var p = mongoService.rechercherPassager(id);
+                    if (p != null) {
+                        System.out.println("Trouve : " + p.getNom() + " " + p.getPrenom() + " — " + p.getEmail());
+                    } else {
+                        System.out.println("Passager introuvable.");
+                    }
+                }
+                case 4 -> {
+                    String id = lireChaine("ID du passager a supprimer : ");
+                    mongoService.supprimerPassager(id);
+                }
+                case 5 -> {
+                    String num = lireChaine("Numero du vol : ");
+                    String type = lireChaine("Type (Court/Moyen/Long Courrier) : ");
+                    String dep = lireChaine("Date depart : ");
+                    String arr = lireChaine("Date arrivee : ");
+                    String prix = lireChaine("Prix : ");
+                    mongoService.insererVol(num, type, dep, arr, prix);
+                }
+                case 6 -> {
+                    var vols = mongoService.listerVols();
+                    if (vols.isEmpty()) {
+                        System.out.println("Aucun vol dans MongoDB.");
+                    } else {
+                        vols.forEach(v -> System.out.println("  " + v));
+                    }
+                }
+                case 7 -> {
+                    System.out.println("Passagers : " + mongoService.compterPassagers());
+                    System.out.println("Vols : " + mongoService.compterVols());
+                }
+                case 0 -> retour = true;
+                default -> System.out.println("Choix invalide.");
+            }
+        }
+        mongoService.fermerConnexion();
     }
 
     // ======================== UTILITAIRES ========================
