@@ -197,6 +197,54 @@ Toutes les classes du projet sont documentées avec :
 
 ---
 
+## 📖 Guide Utilisateur
+
+### Menu principal
+
+Au lancement, l'application affiche un menu interactif en console :
+
+```
+╔══════════════════════════════════════════╗
+║     SKYISEP AIRLINES — Menu Principal    ║
+╠══════════════════════════════════════════╣
+║  1. Gérer les aéroports                 ║
+║  2. Gérer les vols                      ║
+║  3. Gérer les passagers                 ║
+║  4. Gérer les employés                  ║
+║  5. Gérer les avions                    ║
+║  6. Gérer les équipages                 ║
+║  7. Gérer les réservations              ║
+║  8. Statistiques (graphiques)           ║
+║  9. Fichiers (import/export CSV)        ║
+║ 10. Base de données (H2)               ║
+║  0. Quitter                             ║
+╚══════════════════════════════════════════╝
+```
+
+### Fonctionnalités par menu
+
+| Menu | Actions disponibles |
+|------|-------------------|
+| **Aéroports** | Ajouter, lister, supprimer un aéroport (code IATA, nom, ville, pays) |
+| **Vols** | Créer un vol (court/moyen/long courrier), lister, modifier statut, supprimer |
+| **Passagers** | Ajouter, rechercher, modifier, supprimer un passager |
+| **Employés** | Ajouter pilote ou personnel cabine, lister, supprimer |
+| **Avions** | Ajouter un avion à la flotte, affecter à un vol, lister |
+| **Équipages** | Composer un équipage (pilote + personnel cabine), affecter à un vol |
+| **Réservations** | Réserver un vol pour un passager, annuler, consulter |
+| **Statistiques** | Afficher des graphiques (histogrammes, camemberts) via JFreeChart |
+| **Fichiers CSV** | Exporter/importer passagers, vols et réservations au format CSV |
+| **Base de données** | Sauvegarder/charger les données dans une base H2 embarquée |
+
+### Exemple : réserver un vol
+
+1. **Menu 3** → Ajouter un passager (nom, prénom, email, téléphone, passeport)
+2. **Menu 2** → Créer un vol (numéro, type, aéroports, dates, prix)
+3. **Menu 7** → Créer une réservation (sélectionner passager + vol)
+4. **Menu 9** → Exporter les réservations en CSV pour archivage
+
+---
+
 ## 🧱 Architecture
 
 Le projet suit une architecture orientée objet en couches :
@@ -242,8 +290,8 @@ La documentation technique complète est disponible dans [`documentation/README.
 
 | Nom | Rôle | GitHub |
 |-----|------|--------|
-| **Kahina Medjkoune** | Développeuse — Modèles & Services | [@Kahinamedjk](https://github.com/Kahinamedjk) |
-| Équipe SkyISEP | Développement général | ISEP — Paris |
+| **Seydina SY** | Chef de projet — Architecture & Intégration | [@BNWHITE](https://github.com/BNWHITE) |
+| **Kahina Medjkoune** | Développeuse — Services & Documentation | [@Kahinamedjk](https://github.com/Kahinamedjk) |
 
 ---
 
