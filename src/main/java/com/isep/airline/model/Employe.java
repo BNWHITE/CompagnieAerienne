@@ -6,25 +6,33 @@ import java.util.List;
 /**
  * Classe représentant un employé de la compagnie aérienne.
  *
- * <p>Hérite de {@link Personne} (qui implémente {@link ObtenirInformation}).
- * Classe mère de {@link Pilote} et {@link PersonnelCabine}.</p>
+ * <p>
+ * Hérite de {@link Personne} (qui implémente {@link ObtenirInformation}).
+ * Classe mère de {@link Pilote} et {@link PersonnelCabine}.
+ * </p>
  *
- * <p><b>Attributs en String</b> : salaire (conformément aux attentes pédagogiques).<br>
- * <b>Relation directe</b> : {@code Employe} → {@code List<Vol>}.</p>
+ * <p>
+ * <b>Attributs en String</b> : salaire (conformément aux attentes
+ * pédagogiques).<br>
+ * <b>Relation directe</b> : {@code Employe} → {@code List<Vol>}.
+ * </p>
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
- * @see     Pilote
- * @see     PersonnelCabine
- * @see     Vol
+ * @since 2025
+ * @see Pilote
+ * @see PersonnelCabine
+ * @see Vol
  */
 public class Employe extends Personne {
+    /** Numéro d'identification de l'employé. */
     private String numeroEmploye;
+    /** Rôle de l'employé (Pilote, Personnel Cabine, etc.). */
     private String role;
-    private String salaire; // En String conformément aux attentes du prof
+    /** Salaire de l'employé (format String conformément aux attentes pédagogiques). */
+    private String salaire;
 
-    // Association directe avec Vol
+    /** Liste des vols auxquels l'employé est affecté (association). */
     private List<Vol> vols;
 
     /**
@@ -38,17 +46,17 @@ public class Employe extends Personne {
     /**
      * Constructeur complet.
      *
-     * @param id             identifiant unique
-     * @param nom            nom de famille
-     * @param prenom         prénom
-     * @param email          adresse e-mail
-     * @param telephone      numéro de téléphone
-     * @param numeroEmploye  matricule de l'employé
-     * @param role           rôle dans la compagnie (ex : {@code "Pilote"})
-     * @param salaire        salaire mensuel brut (en String)
+     * @param id            identifiant unique
+     * @param nom           nom de famille
+     * @param prenom        prénom
+     * @param email         adresse e-mail
+     * @param telephone     numéro de téléphone
+     * @param numeroEmploye matricule de l'employé
+     * @param role          rôle dans la compagnie (ex : {@code "Pilote"})
+     * @param salaire       salaire mensuel brut (en String)
      */
     public Employe(String id, String nom, String prenom, String email, String telephone,
-                   String numeroEmploye, String role, String salaire) {
+            String numeroEmploye, String role, String salaire) {
         super(id, nom, prenom, email, telephone);
         this.numeroEmploye = numeroEmploye;
         this.role = role;
@@ -61,8 +69,10 @@ public class Employe extends Personne {
     /**
      * Retourne le rôle de l'employé.
      *
-     * <p>Cette méthode est surchargée (polymorphisme) dans {@link Pilote} et
-     * {@link PersonnelCabine} pour fournir une description enrichie.</p>
+     * <p>
+     * Cette méthode est surchargée (polymorphisme) dans {@link Pilote} et
+     * {@link PersonnelCabine} pour fournir une description enrichie.
+     * </p>
      *
      * @return le rôle de l'employé
      */
@@ -71,7 +81,8 @@ public class Employe extends Personne {
     }
 
     /**
-     * Affecte un vol à cet employé (relation directe {@code Employe} ↔ {@code Vol}).
+     * Affecte un vol à cet employé (relation directe {@code Employe} ↔
+     * {@code Vol}).
      *
      * @param vol le vol à affecter (ignoré s'il est {@code null} ou déjà présent)
      */
