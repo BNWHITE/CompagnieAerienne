@@ -12,6 +12,7 @@ import java.util.List;
  * <p><b>Relation :</b> {@code Passager} → {@code List<Reservation>} (composition).</p>
  *
  * @author  Équipe SkyISEP
+ * @author  Kahina Medjkoune
  * @version 1.0
  * @since   2025
  * @see     Personne

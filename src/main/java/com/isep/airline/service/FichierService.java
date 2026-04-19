@@ -32,6 +32,7 @@ import java.util.List;
  * </pre>
  *
  * @author  Équipe SkyISEP
+ * @author  Kahina Medjkoune
  * @version 1.0
  * @since   2025
  */

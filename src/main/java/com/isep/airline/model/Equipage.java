@@ -13,6 +13,7 @@ import java.util.List;
  * <p><b>Relation :</b> Composition — un équipage appartient à un {@link Vol}.</p>
  *
  * @author  Équipe SkyISEP
+ * @author  Kahina Medjkoune
  * @version 1.0
  * @since   2025
  * @see     Pilote

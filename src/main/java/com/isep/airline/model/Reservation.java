@@ -12,6 +12,7 @@ import java.util.List;
  * <p>Statuts possibles : {@code CONFIRMEE}, {@code ANNULEE}, {@code EN_ATTENTE}.</p>
  *
  * @author  Équipe SkyISEP
+ * @author  Kahina Medjkoune
  * @version 1.0
  * @since   2025
  * @see     Passager

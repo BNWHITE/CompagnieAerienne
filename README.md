@@ -240,9 +240,10 @@ La documentation technique complète est disponible dans [`documentation/README.
 
 ## 👥 Auteurs
 
-| Nom | École |
-|-----|-------|
-| Équipe SkyISEP | ISEP — Paris |
+| Nom | Rôle | GitHub |
+|-----|------|--------|
+| **Kahina Medjkoune** | Développeuse — Modèles & Services | [@Kahinamedjk](https://github.com/Kahinamedjk) |
+| Équipe SkyISEP | Développement général | ISEP — Paris |
 
 ---
 

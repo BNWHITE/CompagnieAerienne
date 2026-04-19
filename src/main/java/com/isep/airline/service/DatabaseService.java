@@ -37,6 +37,7 @@ import java.util.List;
  *   db.fermerConnexion();
  * </pre>
  *
+ * @author  Kahina Medjkoune
  * @author  Équipe SkyISEP
  * @version 1.0
  * @since   2025
