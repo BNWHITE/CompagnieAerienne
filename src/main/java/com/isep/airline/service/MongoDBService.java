@@ -165,6 +165,142 @@ public class MongoDBService {
     }
 
     /**
+     * Insère ou met à jour un aéroport dans la collection {@code aeroports}.
+     *
+     * @param codeIATA code IATA de l'aéroport
+     * @param nom      nom de l'aéroport
+     * @param ville    ville
+     * @param pays     pays
+     * @return {@code true} si l'opération a réussi
+     */
+    public boolean insererAeroport(String codeIATA, String nom, String ville, String pays) {
+        MongoCollection<Document> collection = getDatabase().getCollection("aeroports");
+        Document doc = new Document("_id", codeIATA)
+                .append("nom", nom)
+                .append("ville", ville)
+                .append("pays", pays);
+        collection.replaceOne(
+                Filters.eq("_id", codeIATA),
+                doc,
+                new ReplaceOptions().upsert(true));
+        System.out.println("[MongoDBService] Aéroport " + codeIATA + " inséré/mis à jour.");
+        return true;
+    }
+
+    /**
+     * Insère ou met à jour un avion dans la collection {@code avions}.
+     *
+     * @param immatriculation immatriculation de l'avion
+     * @param modele          modèle de l'avion
+     * @param capacite        capacité en passagers
+     * @return {@code true} si l'opération a réussi
+     */
+    public boolean insererAvion(String immatriculation, String modele, int capacite) {
+        MongoCollection<Document> collection = getDatabase().getCollection("avions");
+        Document doc = new Document("_id", immatriculation)
+                .append("modele", modele)
+                .append("capacite", capacite)
+                .append("disponible", true);
+        collection.replaceOne(
+                Filters.eq("_id", immatriculation),
+                doc,
+                new ReplaceOptions().upsert(true));
+        System.out.println("[MongoDBService] Avion " + immatriculation + " inséré/mis à jour.");
+        return true;
+    }
+
+    /**
+     * Insère ou met à jour un pilote dans la collection {@code pilotes}.
+     *
+     * @param id          identifiant du pilote
+     * @param nom         nom
+     * @param prenom      prénom
+     * @param email       email
+     * @param telephone   téléphone
+     * @param numEmploye  numéro employé
+     * @param salaire     salaire
+     * @param licence     licence de pilote
+     * @param heuresDeVol heures de vol
+     * @return {@code true} si l'opération a réussi
+     */
+    public boolean insererPilote(String id, String nom, String prenom, String email,
+                                  String telephone, String numEmploye, String salaire,
+                                  String licence, String heuresDeVol) {
+        MongoCollection<Document> collection = getDatabase().getCollection("pilotes");
+        Document doc = new Document("_id", id)
+                .append("nom", nom)
+                .append("prenom", prenom)
+                .append("email", email)
+                .append("telephone", telephone)
+                .append("numero_employe", numEmploye)
+                .append("salaire", salaire)
+                .append("licence", licence)
+                .append("heures_de_vol", heuresDeVol);
+        collection.replaceOne(
+                Filters.eq("_id", id),
+                doc,
+                new ReplaceOptions().upsert(true));
+        System.out.println("[MongoDBService] Pilote " + id + " inséré/mis à jour.");
+        return true;
+    }
+
+    /**
+     * Insère ou met à jour un personnel de cabine dans la collection {@code personnel_cabine}.
+     *
+     * @param id               identifiant
+     * @param nom              nom
+     * @param prenom           prénom
+     * @param email            email
+     * @param telephone        téléphone
+     * @param numEmploye       numéro employé
+     * @param salaire          salaire
+     * @param qualification    qualification
+     * @param anneesExperience années d'expérience
+     * @return {@code true} si l'opération a réussi
+     */
+    public boolean insererPersonnelCabine(String id, String nom, String prenom, String email,
+                                           String telephone, String numEmploye, String salaire,
+                                           String qualification, String anneesExperience) {
+        MongoCollection<Document> collection = getDatabase().getCollection("personnel_cabine");
+        Document doc = new Document("_id", id)
+                .append("nom", nom)
+                .append("prenom", prenom)
+                .append("email", email)
+                .append("telephone", telephone)
+                .append("numero_employe", numEmploye)
+                .append("salaire", salaire)
+                .append("qualification", qualification)
+                .append("annees_experience", anneesExperience);
+        collection.replaceOne(
+                Filters.eq("_id", id),
+                doc,
+                new ReplaceOptions().upsert(true));
+        System.out.println("[MongoDBService] Personnel cabine " + id + " inséré/mis à jour.");
+        return true;
+    }
+
+    /**
+     * Insère ou met à jour un équipage dans la collection {@code equipages}.
+     *
+     * @param idEquipage      identifiant de l'équipage
+     * @param piloteId        identifiant du pilote
+     * @param personnelCabine liste des identifiants du personnel de cabine
+     * @return {@code true} si l'opération a réussi
+     */
+    public boolean insererEquipage(String idEquipage, String piloteId, List<String> personnelCabine) {
+        MongoCollection<Document> collection = getDatabase().getCollection("equipages");
+        Document doc = new Document("_id", idEquipage)
+                .append("pilote_id", piloteId)
+                .append("personnel_cabine_ids", personnelCabine);
+        collection.replaceOne(
+                Filters.eq("_id", idEquipage),
+                doc,
+                new ReplaceOptions().upsert(true));
+        System.out.println("[MongoDBService] Équipage " + idEquipage + " inséré/mis à jour.");
+        return true;
+    }
+
+    /**
      * Insère une réservation dans la collection {@code reservations}.
      *
      * @param numeroReservation numéro unique de la réservation
@@ -339,6 +475,11 @@ public class MongoDBService {
         getDatabase().getCollection("reservations").deleteMany(new Document());
         getDatabase().getCollection("vols").deleteMany(new Document());
         getDatabase().getCollection("passagers").deleteMany(new Document());
+        getDatabase().getCollection("aeroports").deleteMany(new Document());
+        getDatabase().getCollection("avions").deleteMany(new Document());
+        getDatabase().getCollection("pilotes").deleteMany(new Document());
+        getDatabase().getCollection("personnel_cabine").deleteMany(new Document());
+        getDatabase().getCollection("equipages").deleteMany(new Document());
         System.out.println("[MongoDBService] Toutes les collections vidées.");
     }
 }

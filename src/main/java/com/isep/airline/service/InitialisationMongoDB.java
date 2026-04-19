@@ -2,6 +2,8 @@ package com.isep.airline.service;
 
 import com.isep.airline.model.Passager;
 
+import java.util.List;
+
 /**
  * Script d'initialisation de la base de données MongoDB Atlas.
  *
@@ -107,6 +109,82 @@ public class InitialisationMongoDB {
         // --- Passager Océanie ---
         mongo.insererPassager(new Passager("P030", "O'Brien", "Liam",
                 "liam.obrien@email.au", "+61291234567", "AU2233441"));
+
+        // ═══════════════════════════════════════════════════════════════════
+        //                     AÉROPORTS (21)
+        // ═══════════════════════════════════════════════════════════════════
+        System.out.println("\n🏢 Insertion de 21 aéroports internationaux...");
+
+        mongo.insererAeroport("CDG", "Charles de Gaulle", "Paris", "France");
+        mongo.insererAeroport("JFK", "John F. Kennedy", "New York", "USA");
+        mongo.insererAeroport("NRT", "Narita", "Tokyo", "Japon");
+        mongo.insererAeroport("LHR", "Heathrow", "Londres", "Royaume-Uni");
+        mongo.insererAeroport("BCN", "El Prat", "Barcelone", "Espagne");
+        mongo.insererAeroport("DXB", "Dubai International", "Dubaï", "Emirats Arabes Unis");
+        mongo.insererAeroport("GRU", "Guarulhos", "São Paulo", "Brésil");
+        mongo.insererAeroport("IST", "Istanbul Airport", "Istanbul", "Turquie");
+        mongo.insererAeroport("RAK", "Menara", "Marrakech", "Maroc");
+        mongo.insererAeroport("ATH", "Eleftherios Venizelos", "Athènes", "Grèce");
+        mongo.insererAeroport("LIS", "Humberto Delgado", "Lisbonne", "Portugal");
+        mongo.insererAeroport("ARN", "Arlanda", "Stockholm", "Suède");
+        mongo.insererAeroport("AMS", "Schiphol", "Amsterdam", "Pays-Bas");
+        mongo.insererAeroport("FCO", "Fiumicino", "Rome", "Italie");
+        mongo.insererAeroport("BER", "Berlin Brandenburg", "Berlin", "Allemagne");
+        mongo.insererAeroport("ICN", "Incheon", "Séoul", "Corée du Sud");
+        mongo.insererAeroport("BOM", "Chhatrapati Shivaji", "Mumbai", "Inde");
+        mongo.insererAeroport("CAI", "Cairo International", "Le Caire", "Egypte");
+        mongo.insererAeroport("DSS", "Blaise Diagne", "Dakar", "Sénégal");
+        mongo.insererAeroport("SYD", "Kingsford Smith", "Sydney", "Australie");
+        mongo.insererAeroport("LOS", "Murtala Muhammed", "Lagos", "Nigéria");
+
+        // ═══════════════════════════════════════════════════════════════════
+        //                       AVIONS (6)
+        // ═══════════════════════════════════════════════════════════════════
+        System.out.println("\n🛩️  Insertion de 6 avions...");
+
+        mongo.insererAvion("F-GKXA", "Airbus A320", 180);
+        mongo.insererAvion("F-GKXB", "Boeing 737", 160);
+        mongo.insererAvion("F-GKXC", "Airbus A350", 300);
+        mongo.insererAvion("F-GKXD", "Boeing 777", 350);
+        mongo.insererAvion("F-GKXE", "Airbus A330", 250);
+        mongo.insererAvion("F-GKXF", "Embraer E195", 120);
+
+        // ═══════════════════════════════════════════════════════════════════
+        //                       PILOTES (3)
+        // ═══════════════════════════════════════════════════════════════════
+        System.out.println("\n👨‍✈️ Insertion de 3 pilotes...");
+
+        mongo.insererPilote("E001", "Dupont", "Jean", "j.dupont@skyisep.com",
+                "0601020304", "EMP001", "8000", "ATPL-2015-FR", "12000");
+        mongo.insererPilote("E002", "Martin", "Pierre", "p.martin@skyisep.com",
+                "0605060708", "EMP002", "7500", "ATPL-2018-FR", "8000");
+        mongo.insererPilote("E003", "Renaud", "Marc", "m.renaud@skyisep.com",
+                "0602030405", "EMP003", "9000", "ATPL-2012-FR", "15000");
+
+        // ═══════════════════════════════════════════════════════════════════
+        //                   PERSONNEL CABINE (5)
+        // ═══════════════════════════════════════════════════════════════════
+        System.out.println("\n💼 Insertion de 5 personnels de cabine...");
+
+        mongo.insererPersonnelCabine("E004", "Lemoine", "Sophie", "s.lemoine@skyisep.com",
+                "0611121314", "EMP004", "3500", "Chef de cabine", "10");
+        mongo.insererPersonnelCabine("E005", "Bernard", "Marie", "m.bernard@skyisep.com",
+                "0615161718", "EMP005", "3000", "Hôtesse senior", "7");
+        mongo.insererPersonnelCabine("E006", "Petit", "Luc", "l.petit@skyisep.com",
+                "0619202122", "EMP006", "2800", "Steward", "5");
+        mongo.insererPersonnelCabine("E007", "Ndiaye", "Aminata", "a.ndiaye@skyisep.com",
+                "0622232425", "EMP007", "3200", "Hôtesse senior", "8");
+        mongo.insererPersonnelCabine("E008", "Costa", "Lucia", "l.costa@skyisep.com",
+                "0626272829", "EMP008", "2600", "Hôtesse", "3");
+
+        // ═══════════════════════════════════════════════════════════════════
+        //                      ÉQUIPAGES (3)
+        // ═══════════════════════════════════════════════════════════════════
+        System.out.println("\n👥 Insertion de 3 équipages...");
+
+        mongo.insererEquipage("EQ001", "E001", List.of("E004", "E005"));
+        mongo.insererEquipage("EQ002", "E002", List.of("E006", "E007"));
+        mongo.insererEquipage("EQ003", "E003", List.of("E004", "E008"));
 
         // ═══════════════════════════════════════════════════════════════════
         //                       VOLS (20)
@@ -275,6 +353,11 @@ public class InitialisationMongoDB {
         System.out.println("\n═══════════════════════════════════════════════════════");
         System.out.println("  ✅ RÉSUMÉ DE L'INITIALISATION");
         System.out.println("═══════════════════════════════════════════════════════");
+        System.out.println("  Aéroports    : 21");
+        System.out.println("  Avions       : 6");
+        System.out.println("  Pilotes      : 3");
+        System.out.println("  Pers. cabine : 5");
+        System.out.println("  Équipages    : 3");
         System.out.println("  Passagers    : " + mongo.compterPassagers());
         System.out.println("  Vols         : " + mongo.compterVols());
         System.out.println("  Réservations : 45");
