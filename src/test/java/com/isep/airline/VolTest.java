@@ -9,9 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests unitaires pour les classes {@link Vol}, {@link CourtCourrier},
  * {@link MoyenCourrier} et {@link LongCourrier}.
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
+ * @since 2025
  */
 @DisplayName("Tests Vol (Court/Moyen/Long Courrier)")
 class VolTest {

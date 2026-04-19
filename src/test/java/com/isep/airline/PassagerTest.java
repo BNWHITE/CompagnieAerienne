@@ -12,17 +12,20 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests unitaires pour la classe {@link Passager}.
  *
- * <p>Utilise <b>JUnit 5</b> (Jupiter API) :
+ * <p>
+ * Utilise <b>JUnit 5</b> (Jupiter API) :
  * <ul>
- *   <li>{@code @Test} — marque une méthode de test</li>
- *   <li>{@code @BeforeEach} — initialisation avant chaque test</li>
- *   <li>{@code @DisplayName} — nom lisible du test</li>
- *   <li>{@code assertEquals}, {@code assertNotNull}, {@code assertTrue} — assertions</li>
- * </ul></p>
+ * <li>{@code @Test} — marque une méthode de test</li>
+ * <li>{@code @BeforeEach} — initialisation avant chaque test</li>
+ * <li>{@code @DisplayName} — nom lisible du test</li>
+ * <li>{@code assertEquals}, {@code assertNotNull}, {@code assertTrue} —
+ * assertions</li>
+ * </ul>
+ * </p>
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
+ * @since 2025
  */
 @DisplayName("Tests Passager")
 class PassagerTest {

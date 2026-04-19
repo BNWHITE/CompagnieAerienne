@@ -14,11 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests unitaires pour le {@link FichierService}.
  *
- * <p>Vérifie les opérations de lecture/écriture CSV et les utilitaires fichiers.</p>
+ * <p>
+ * Vérifie les opérations de lecture/écriture CSV et les utilitaires fichiers.
+ * </p>
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
+ * @since 2025
  */
 @DisplayName("Tests FichierService (I/O fichiers)")
 class FichierServiceTest {

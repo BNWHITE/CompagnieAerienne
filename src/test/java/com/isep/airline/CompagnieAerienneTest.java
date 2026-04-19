@@ -10,11 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests unitaires pour la classe {@link CompagnieAerienne}.
  *
- * <p>Vérifie les opérations CRUD sur les entités gérées par la compagnie.</p>
+ * <p>
+ * Vérifie les opérations CRUD sur les entités gérées par la compagnie.
+ * </p>
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
+ * @since 2025
  */
 @DisplayName("Tests CompagnieAerienne")
 class CompagnieAerienneTest {
@@ -85,8 +87,10 @@ class CompagnieAerienneTest {
     @Test
     @DisplayName("Ajout d'un pilote et d'un personnel de cabine")
     void testAjouterEmployes() {
-        Pilote pilote = new Pilote("E001", "Lefèvre", "Marc", "marc@mail.com", "06", "EMP001", "5000", "ATPL-001", "3000");
-        PersonnelCabine pc = new PersonnelCabine("E002", "Durand", "Marie", "marie@mail.com", "07", "EMP002", "3000", "Hôtesse", "5");
+        Pilote pilote = new Pilote("E001", "Lefèvre", "Marc", "marc@mail.com", "06", "EMP001", "5000", "ATPL-001",
+                "3000");
+        PersonnelCabine pc = new PersonnelCabine("E002", "Durand", "Marie", "marie@mail.com", "07", "EMP002", "3000",
+                "Hôtesse", "5");
 
         compagnie.ajouterEmploye(pilote);
         compagnie.ajouterEmploye(pc);

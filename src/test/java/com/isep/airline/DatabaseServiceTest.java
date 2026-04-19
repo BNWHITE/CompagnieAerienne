@@ -12,11 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests unitaires pour le {@link DatabaseService} (bonus — JDBC + H2).
  *
- * <p>Utilise une base H2 embarquée en mémoire pour éviter de polluer le disque.</p>
+ * <p>
+ * Utilise une base H2 embarquée en mémoire pour éviter de polluer le disque.
+ * </p>
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
+ * @since 2025
  */
 @DisplayName("Tests DatabaseService (JDBC + H2)")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -25,7 +27,8 @@ class DatabaseServiceTest {
     private static DatabaseService db;
 
     /**
-     * Ouvre la connexion et initialise les tables une seule fois avant tous les tests.
+     * Ouvre la connexion et initialise les tables une seule fois avant tous les
+     * tests.
      */
     @BeforeAll
     static void setUpAll() throws SQLException {
