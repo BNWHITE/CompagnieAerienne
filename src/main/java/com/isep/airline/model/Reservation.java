@@ -6,26 +6,37 @@ import java.util.List;
 /**
  * Classe représentant une réservation de vol.
  *
- * <p><b>Association</b> entre un {@link Passager} et un ou plusieurs {@link Vol}s.
- * Implémente {@link ObtenirInformation}.</p>
+ * <p>
+ * <b>Association</b> entre un {@link Passager} et un ou plusieurs {@link Vol}s.
+ * Implémente {@link ObtenirInformation}.
+ * </p>
  *
- * <p>Statuts possibles : {@code CONFIRMEE}, {@code ANNULEE}, {@code EN_ATTENTE}.</p>
+ * <p>
+ * Statuts possibles : {@code CONFIRMEE}, {@code ANNULEE}, {@code EN_ATTENTE}.
+ * </p>
  *
- * @author  Équipe SkyISEP
- * @author  Kahina Medjkoune
+ * @author Équipe SkyISEP
+ * @author Kahina Medjkoune
  * @version 1.0
- * @since   2025
- * @see     Passager
- * @see     Vol
+ * @since 2025
+ * @see Passager
+ * @see Vol
  */
 public class Reservation implements ObtenirInformation {
+    /** Numéro unique de la réservation. */
     private String numeroReservation;
+    /** Passager ayant effectué la réservation. */
     private Passager passager;
+    /** Vol principal de la réservation. */
     private Vol vol;
-    private List<Vol> volsReserves; // Déclaré avec List (pas ArrayList)
+    /** Liste de tous les vols réservés (multi-segments). */
+    private List<Vol> volsReserves;
+    /** Date de la réservation au format JJ/MM/AAAA. */
     private String dateReservation;
-    private String statut; // CONFIRMEE, ANNULEE, EN_ATTENTE
-    private String montantTotal; // En String conformément aux attentes du prof
+    /** Statut : CONFIRMEE, ANNULEE ou EN_ATTENTE. */
+    private String statut;
+    /** Montant total de la réservation (format String). */
+    private String montantTotal;
 
     /**
      * Constructeur par défaut. Statut initialisé à {@code "CONFIRMEE"}.
@@ -39,7 +50,8 @@ public class Reservation implements ObtenirInformation {
     /**
      * Constructeur complet.
      *
-     * @param numeroReservation numéro unique de réservation (ex : {@code "RES-001"})
+     * @param numeroReservation numéro unique de réservation (ex :
+     *                          {@code "RES-001"})
      * @param passager          le passager qui effectue la réservation
      * @param vol               le vol principal réservé
      */
