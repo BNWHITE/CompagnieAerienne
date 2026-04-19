@@ -6,25 +6,32 @@ import java.util.List;
 /**
  * Classe abstraite représentant un vol de la compagnie aérienne.
  *
- * <p>Implémente {@link ObtenirInformation}. Trois sous-classes concrètes :
- * {@link CourtCourrier}, {@link MoyenCourrier}, {@link LongCourrier}.</p>
+ * <p>
+ * Implémente {@link ObtenirInformation}. Trois sous-classes concrètes :
+ * {@link CourtCourrier}, {@link MoyenCourrier}, {@link LongCourrier}.
+ * </p>
  *
- * <p><b>Relations :</b>
+ * <p>
+ * <b>Relations :</b>
  * <ul>
- *   <li>Agrégation avec {@link Aeroport} (départ / arrivée)</li>
- *   <li>Composition avec {@link Avion} et {@link Equipage}</li>
- *   <li>Association avec {@link Passager} et {@link Employe}</li>
- * </ul></p>
+ * <li>Agrégation avec {@link Aeroport} (départ / arrivée)</li>
+ * <li>Composition avec {@link Avion} et {@link Equipage}</li>
+ * <li>Association avec {@link Passager} et {@link Employe}</li>
+ * </ul>
+ * </p>
  *
- * <p><b>Statuts possibles :</b> {@code PLANIFIE}, {@code EN_COURS}, {@code TERMINE},
- * {@code ANNULE}.</p>
+ * <p>
+ * <b>Statuts possibles :</b> {@code PLANIFIE}, {@code EN_COURS},
+ * {@code TERMINE},
+ * {@code ANNULE}.
+ * </p>
  *
- * @author  Équipe SkyISEP
+ * @author Équipe SkyISEP
  * @version 1.0
- * @since   2025
- * @see     CourtCourrier
- * @see     MoyenCourrier
- * @see     LongCourrier
+ * @since 2025
+ * @see CourtCourrier
+ * @see MoyenCourrier
+ * @see LongCourrier
  */
 public abstract class Vol implements ObtenirInformation {
     /** Identifiant unique du vol (ex: AF123). */
@@ -61,8 +68,8 @@ public abstract class Vol implements ObtenirInformation {
     }
 
     public Vol(String numeroVol, Aeroport aeroportDepart, Aeroport aeroportArrivee,
-               String dateDepart, String dateArrivee, String heureDepart,
-               String heureArrivee, String prix) {
+            String dateDepart, String dateArrivee, String heureDepart,
+            String heureArrivee, String prix) {
         this.numeroVol = numeroVol;
         this.aeroportDepart = aeroportDepart;
         this.aeroportArrivee = aeroportArrivee;
@@ -84,7 +91,8 @@ public abstract class Vol implements ObtenirInformation {
         }
     }
 
-    // ==================== Methode abstraite (difference de structure) ====================
+    // ==================== Methode abstraite (difference de structure)
+    // ====================
 
     /**
      * Retourne le type de vol (Court Courrier, Moyen Courrier, Long Courrier).
@@ -213,7 +221,8 @@ public abstract class Vol implements ObtenirInformation {
                 + "Arrivee      : " + arriveeInfo + " le " + dateArrivee + " a " + heureArrivee + "\n"
                 + "Prix         : " + prix + " EUR\n"
                 + "Statut       : " + statut + "\n"
-                + "Avion        : " + (avion != null ? avion.getImmatriculation() + " (" + avion.getModele() + ")" : "Non affecte") + "\n"
+                + "Avion        : "
+                + (avion != null ? avion.getImmatriculation() + " (" + avion.getModele() + ")" : "Non affecte") + "\n"
                 + "Equipage     : " + (equipage != null ? equipage.getIdEquipage() : "Non affecte") + "\n"
                 + "Passagers    : " + passagers.size() + "\n"
                 + "Employes     : " + employes.size()

@@ -13,28 +13,36 @@ import java.util.List;
 /**
  * Service de communication avec des fichiers externes.
  *
- * <p>Permet de <b>sauvegarder</b> et de <b>charger</b> les données de l'application
- * dans des fichiers au format <b>CSV</b> (Comma-Separated Values).</p>
+ * <p>
+ * Permet de <b>sauvegarder</b> et de <b>charger</b> les données de
+ * l'application
+ * dans des fichiers au format <b>CSV</b> (Comma-Separated Values).
+ * </p>
  *
  * <h2>Java I/O utilisée</h2>
  * <ul>
- *   <li>{@link java.io.BufferedWriter} / {@link java.io.FileWriter} — écriture ligne par ligne</li>
- *   <li>{@link java.io.BufferedReader} / {@link java.io.FileReader} — lecture ligne par ligne</li>
- *   <li>{@link java.nio.file.Files} — opérations sur les fichiers (création, existence, copie)</li>
- *   <li>{@link java.nio.file.Path} / {@link java.nio.file.Paths} — manipulation de chemins</li>
- *   <li>{@link java.nio.charset.StandardCharsets} — encodage UTF-8</li>
+ * <li>{@link java.io.BufferedWriter} / {@link java.io.FileWriter} — écriture
+ * ligne par ligne</li>
+ * <li>{@link java.io.BufferedReader} / {@link java.io.FileReader} — lecture
+ * ligne par ligne</li>
+ * <li>{@link java.nio.file.Files} — opérations sur les fichiers (création,
+ * existence, copie)</li>
+ * <li>{@link java.nio.file.Path} / {@link java.nio.file.Paths} — manipulation
+ * de chemins</li>
+ * <li>{@link java.nio.charset.StandardCharsets} — encodage UTF-8</li>
  * </ul>
  *
  * <h2>Format CSV</h2>
+ * 
  * <pre>
  *   # Passagers : id;nom;prenom;email;telephone;numeroPasseport
  *   # Vols      : numeroVol;typeVol;dateDepart;dateArrivee;heureDepart;heureArrivee;prix;statut
  * </pre>
  *
- * @author  Équipe SkyISEP
- * @author  Kahina Medjkoune
+ * @author Équipe SkyISEP
+ * @author Kahina Medjkoune
  * @version 1.0
- * @since   2025
+ * @since 2025
  */
 public class FichierService {
 
@@ -42,13 +50,13 @@ public class FichierService {
     private static final String SEPARATEUR = ";";
 
     // ── Nom des fichiers par défaut ─────────────────────────────────────────
-    private static final String FICHIER_PASSAGERS    = "data/passagers.csv";
-    private static final String FICHIER_VOLS         = "data/vols.csv";
+    private static final String FICHIER_PASSAGERS = "data/passagers.csv";
+    private static final String FICHIER_VOLS = "data/vols.csv";
     private static final String FICHIER_RESERVATIONS = "data/reservations.csv";
 
     // ── Entête CSV ──────────────────────────────────────────────────────────
-    private static final String ENTETE_PASSAGERS    = "id;nom;prenom;email;telephone;numeroPasseport";
-    private static final String ENTETE_VOLS         = "numeroVol;typeVol;dateDepart;dateArrivee;heureDepart;heureArrivee;prix;statut";
+    private static final String ENTETE_PASSAGERS = "id;nom;prenom;email;telephone;numeroPasseport";
+    private static final String ENTETE_VOLS = "numeroVol;typeVol;dateDepart;dateArrivee;heureDepart;heureArrivee;prix;statut";
     private static final String ENTETE_RESERVATIONS = "numeroReservation;passagerId;passagerNom;numeroVol;dateReservation;statut;montantTotal";
 
     // ════════════════════════════════════════════════════════════════════════
@@ -58,11 +66,15 @@ public class FichierService {
     /**
      * Exporte la liste des passagers dans un fichier CSV.
      *
-     * <p>Utilise {@link java.io.BufferedWriter} via {@link java.io.FileWriter}
-     * pour une écriture efficace ligne par ligne.</p>
+     * <p>
+     * Utilise {@link java.io.BufferedWriter} via {@link java.io.FileWriter}
+     * pour une écriture efficace ligne par ligne.
+     * </p>
      *
-     * @param  passagers  la liste des {@link Passager} à exporter (ne doit pas être {@code null})
-     * @param  cheminFichier chemin du fichier de sortie (ex : {@code "data/passagers.csv"})
+     * @param passagers     la liste des {@link Passager} à exporter (ne doit pas
+     *                      être {@code null})
+     * @param cheminFichier chemin du fichier de sortie (ex :
+     *                      {@code "data/passagers.csv"})
      * @throws IOException si une erreur d'écriture survient
      */
     public void exporterPassagers(List<Passager> passagers, String cheminFichier) throws IOException {
@@ -82,11 +94,11 @@ public class FichierService {
             for (Passager p : passagers) {
                 StringBuilder ligne = new StringBuilder();
                 ligne.append(echapper(p.getId())).append(SEPARATEUR)
-                     .append(echapper(p.getNom())).append(SEPARATEUR)
-                     .append(echapper(p.getPrenom())).append(SEPARATEUR)
-                     .append(echapper(p.getEmail())).append(SEPARATEUR)
-                     .append(echapper(p.getTelephone())).append(SEPARATEUR)
-                     .append(echapper(p.getNumeroPasseport()));
+                        .append(echapper(p.getNom())).append(SEPARATEUR)
+                        .append(echapper(p.getPrenom())).append(SEPARATEUR)
+                        .append(echapper(p.getEmail())).append(SEPARATEUR)
+                        .append(echapper(p.getTelephone())).append(SEPARATEUR)
+                        .append(echapper(p.getNumeroPasseport()));
                 writer.write(ligne.toString());
                 writer.newLine();
             }
@@ -97,9 +109,9 @@ public class FichierService {
     /**
      * Exporte la liste des vols dans un fichier CSV.
      *
-     * @param  vols          la liste des {@link Vol} à exporter
-     * @param  cheminFichier chemin du fichier de sortie
-     * @throws IOException   si une erreur d'écriture survient
+     * @param vols          la liste des {@link Vol} à exporter
+     * @param cheminFichier chemin du fichier de sortie
+     * @throws IOException si une erreur d'écriture survient
      */
     public void exporterVols(List<Vol> vols, String cheminFichier) throws IOException {
         Path chemin = Paths.get(cheminFichier);
@@ -116,15 +128,15 @@ public class FichierService {
                 String arrCode = (v.getAeroportArrivee() != null) ? v.getAeroportArrivee().getCodeIATA() : "";
                 StringBuilder ligne = new StringBuilder();
                 ligne.append(echapper(v.getNumeroVol())).append(SEPARATEUR)
-                     .append(echapper(v.getTypeVol())).append(SEPARATEUR)
-                     .append(echapper(depCode)).append(SEPARATEUR)
-                     .append(echapper(arrCode)).append(SEPARATEUR)
-                     .append(echapper(v.getDateDepart())).append(SEPARATEUR)
-                     .append(echapper(v.getDateArrivee())).append(SEPARATEUR)
-                     .append(echapper(v.getHeureDepart())).append(SEPARATEUR)
-                     .append(echapper(v.getHeureArrivee())).append(SEPARATEUR)
-                     .append(echapper(v.getPrix())).append(SEPARATEUR)
-                     .append(echapper(v.getStatut()));
+                        .append(echapper(v.getTypeVol())).append(SEPARATEUR)
+                        .append(echapper(depCode)).append(SEPARATEUR)
+                        .append(echapper(arrCode)).append(SEPARATEUR)
+                        .append(echapper(v.getDateDepart())).append(SEPARATEUR)
+                        .append(echapper(v.getDateArrivee())).append(SEPARATEUR)
+                        .append(echapper(v.getHeureDepart())).append(SEPARATEUR)
+                        .append(echapper(v.getHeureArrivee())).append(SEPARATEUR)
+                        .append(echapper(v.getPrix())).append(SEPARATEUR)
+                        .append(echapper(v.getStatut()));
                 writer.write(ligne.toString());
                 writer.newLine();
             }
@@ -135,9 +147,9 @@ public class FichierService {
     /**
      * Exporte la liste des réservations dans un fichier CSV.
      *
-     * @param  reservations  la liste des {@link Reservation} à exporter
-     * @param  cheminFichier chemin du fichier de sortie
-     * @throws IOException   si une erreur d'écriture survient
+     * @param reservations  la liste des {@link Reservation} à exporter
+     * @param cheminFichier chemin du fichier de sortie
+     * @throws IOException si une erreur d'écriture survient
      */
     public void exporterReservations(List<Reservation> reservations, String cheminFichier) throws IOException {
         Path chemin = Paths.get(cheminFichier);
@@ -150,23 +162,25 @@ public class FichierService {
             writer.newLine();
 
             for (Reservation r : reservations) {
-                String passagerId  = (r.getPassager() != null) ? r.getPassager().getId() : "";
+                String passagerId = (r.getPassager() != null) ? r.getPassager().getId() : "";
                 String passagerNom = (r.getPassager() != null)
-                        ? r.getPassager().getNom() + " " + r.getPassager().getPrenom() : "";
-                String numeroVol   = (r.getVol() != null) ? r.getVol().getNumeroVol() : "";
+                        ? r.getPassager().getNom() + " " + r.getPassager().getPrenom()
+                        : "";
+                String numeroVol = (r.getVol() != null) ? r.getVol().getNumeroVol() : "";
                 StringBuilder ligne = new StringBuilder();
                 ligne.append(echapper(r.getNumeroReservation())).append(SEPARATEUR)
-                     .append(echapper(passagerId)).append(SEPARATEUR)
-                     .append(echapper(passagerNom)).append(SEPARATEUR)
-                     .append(echapper(numeroVol)).append(SEPARATEUR)
-                     .append(echapper(r.getDateReservation())).append(SEPARATEUR)
-                     .append(echapper(r.getStatut())).append(SEPARATEUR)
-                     .append(echapper(r.getMontantTotal()));
+                        .append(echapper(passagerId)).append(SEPARATEUR)
+                        .append(echapper(passagerNom)).append(SEPARATEUR)
+                        .append(echapper(numeroVol)).append(SEPARATEUR)
+                        .append(echapper(r.getDateReservation())).append(SEPARATEUR)
+                        .append(echapper(r.getStatut())).append(SEPARATEUR)
+                        .append(echapper(r.getMontantTotal()));
                 writer.write(ligne.toString());
                 writer.newLine();
             }
         }
-        System.out.println("[FichierService] " + reservations.size() + " réservation(s) exportée(s) → " + cheminFichier);
+        System.out
+                .println("[FichierService] " + reservations.size() + " réservation(s) exportée(s) → " + cheminFichier);
     }
 
     // ════════════════════════════════════════════════════════════════════════
@@ -176,13 +190,17 @@ public class FichierService {
     /**
      * Importe une liste de passagers depuis un fichier CSV.
      *
-     * <p>Utilise {@link java.io.BufferedReader} via {@link java.io.FileReader}
-     * pour une lecture efficace ligne par ligne. La première ligne (entête) est ignorée.</p>
+     * <p>
+     * Utilise {@link java.io.BufferedReader} via {@link java.io.FileReader}
+     * pour une lecture efficace ligne par ligne. La première ligne (entête) est
+     * ignorée.
+     * </p>
      *
-     * @param  cheminFichier chemin du fichier CSV source
+     * @param cheminFichier chemin du fichier CSV source
      * @return une {@link List} de {@link Passager} reconstitués
      * @throws IOException           si le fichier est introuvable ou illisible
-     * @throws IllegalStateException si une ligne CSV est malformée (nombre de colonnes incorrect)
+     * @throws IllegalStateException si une ligne CSV est malformée (nombre de
+     *                               colonnes incorrect)
      */
     public List<Passager> importerPassagers(String cheminFichier) throws IOException {
         List<Passager> passagers = new ArrayList<>();
@@ -213,12 +231,12 @@ public class FichierService {
                     continue;
                 }
                 Passager p = new Passager(
-                        colonnes[0].trim(),  // id
-                        colonnes[1].trim(),  // nom
-                        colonnes[2].trim(),  // prenom
-                        colonnes[3].trim(),  // email
-                        colonnes[4].trim(),  // telephone
-                        colonnes[5].trim()   // numeroPasseport
+                        colonnes[0].trim(), // id
+                        colonnes[1].trim(), // nom
+                        colonnes[2].trim(), // prenom
+                        colonnes[3].trim(), // email
+                        colonnes[4].trim(), // telephone
+                        colonnes[5].trim() // numeroPasseport
                 );
                 passagers.add(p);
             }
@@ -228,12 +246,16 @@ public class FichierService {
     }
 
     /**
-     * Lit le contenu brut d'un fichier texte et le retourne sous forme de {@link String}.
+     * Lit le contenu brut d'un fichier texte et le retourne sous forme de
+     * {@link String}.
      *
-     * <p>Utilise {@link java.nio.file.Files#readString(Path)} — Java NIO.2.</p>
+     * <p>
+     * Utilise {@link java.nio.file.Files#readString(Path)} — Java NIO.2.
+     * </p>
      *
-     * @param  cheminFichier chemin du fichier à lire
-     * @return le contenu complet du fichier en UTF-8, ou une chaîne vide si le fichier n'existe pas
+     * @param cheminFichier chemin du fichier à lire
+     * @return le contenu complet du fichier en UTF-8, ou une chaîne vide si le
+     *         fichier n'existe pas
      * @throws IOException si une erreur de lecture survient
      */
     public String lireFichierTexte(String cheminFichier) throws IOException {
@@ -248,12 +270,15 @@ public class FichierService {
     /**
      * Écrit du texte dans un fichier (écrase le contenu existant).
      *
-     * <p>Utilise {@link java.nio.file.Files#writeString(Path, CharSequence, java.nio.file.OpenOption...)}
-     * — Java NIO.2.</p>
+     * <p>
+     * Utilise
+     * {@link java.nio.file.Files#writeString(Path, CharSequence, java.nio.file.OpenOption...)}
+     * — Java NIO.2.
+     * </p>
      *
-     * @param  cheminFichier chemin du fichier de sortie
-     * @param  contenu       texte à écrire
-     * @throws IOException   si une erreur d'écriture survient
+     * @param cheminFichier chemin du fichier de sortie
+     * @param contenu       texte à écrire
+     * @throws IOException si une erreur d'écriture survient
      */
     public void ecrireFichierTexte(String cheminFichier, String contenu) throws IOException {
         Path chemin = Paths.get(cheminFichier);
@@ -271,9 +296,12 @@ public class FichierService {
     /**
      * Vérifie si un fichier existe.
      *
-     * <p>Utilise {@link java.nio.file.Files#exists(Path, java.nio.file.LinkOption...)}.</p>
+     * <p>
+     * Utilise
+     * {@link java.nio.file.Files#exists(Path, java.nio.file.LinkOption...)}.
+     * </p>
      *
-     * @param  cheminFichier le chemin à vérifier
+     * @param cheminFichier le chemin à vérifier
      * @return {@code true} si le fichier existe, {@code false} sinon
      */
     public boolean fichierExiste(String cheminFichier) {
@@ -283,27 +311,31 @@ public class FichierService {
     /**
      * Retourne la taille d'un fichier en octets.
      *
-     * @param  cheminFichier le chemin du fichier
+     * @param cheminFichier le chemin du fichier
      * @return la taille en octets, ou {@code -1} si le fichier n'existe pas
      * @throws IOException si une erreur survient lors de l'accès au fichier
      */
     public long tailleFichier(String cheminFichier) throws IOException {
         Path chemin = Paths.get(cheminFichier);
-        if (!Files.exists(chemin)) return -1L;
+        if (!Files.exists(chemin))
+            return -1L;
         return Files.size(chemin);
     }
 
     /**
      * Copie un fichier vers une destination.
      *
-     * <p>Utilise {@link java.nio.file.Files#copy(Path, Path, java.nio.file.CopyOption...)}.</p>
+     * <p>
+     * Utilise
+     * {@link java.nio.file.Files#copy(Path, Path, java.nio.file.CopyOption...)}.
+     * </p>
      *
-     * @param  source      chemin du fichier source
-     * @param  destination chemin de destination
+     * @param source      chemin du fichier source
+     * @param destination chemin de destination
      * @throws IOException si la copie échoue
      */
     public void copierFichier(String source, String destination) throws IOException {
-        Path src  = Paths.get(source);
+        Path src = Paths.get(source);
         Path dest = Paths.get(destination);
         creerDossiersSiNecessaire(dest);
         Files.copy(src, dest, StandardCopyOption.REPLACE_EXISTING);
@@ -313,10 +345,13 @@ public class FichierService {
     /**
      * Supprime un fichier s'il existe.
      *
-     * <p>Utilise {@link java.nio.file.Files#deleteIfExists(Path)}.</p>
+     * <p>
+     * Utilise {@link java.nio.file.Files#deleteIfExists(Path)}.
+     * </p>
      *
-     * @param  cheminFichier le chemin du fichier à supprimer
-     * @return {@code true} si le fichier a été supprimé, {@code false} s'il n'existait pas
+     * @param cheminFichier le chemin du fichier à supprimer
+     * @return {@code true} si le fichier a été supprimé, {@code false} s'il
+     *         n'existait pas
      * @throws IOException si la suppression échoue
      */
     public boolean supprimerFichier(String cheminFichier) throws IOException {
@@ -328,9 +363,10 @@ public class FichierService {
     // ════════════════════════════════════════════════════════════════════════
 
     /**
-     * Exporte les passagers vers le fichier par défaut ({@value #FICHIER_PASSAGERS}).
+     * Exporte les passagers vers le fichier par défaut
+     * ({@value #FICHIER_PASSAGERS}).
      *
-     * @param  passagers la liste des passagers à exporter
+     * @param passagers la liste des passagers à exporter
      * @throws IOException si une erreur d'écriture survient
      */
     public void exporterPassagers(List<Passager> passagers) throws IOException {
@@ -340,7 +376,7 @@ public class FichierService {
     /**
      * Exporte les vols vers le fichier par défaut ({@value #FICHIER_VOLS}).
      *
-     * @param  vols la liste des vols à exporter
+     * @param vols la liste des vols à exporter
      * @throws IOException si une erreur d'écriture survient
      */
     public void exporterVols(List<Vol> vols) throws IOException {
@@ -348,17 +384,19 @@ public class FichierService {
     }
 
     /**
-     * Exporte les réservations vers le fichier par défaut ({@value #FICHIER_RESERVATIONS}).
+     * Exporte les réservations vers le fichier par défaut
+     * ({@value #FICHIER_RESERVATIONS}).
      *
-     * @param  reservations la liste des réservations à exporter
-     * @throws IOException  si une erreur d'écriture survient
+     * @param reservations la liste des réservations à exporter
+     * @throws IOException si une erreur d'écriture survient
      */
     public void exporterReservations(List<Reservation> reservations) throws IOException {
         exporterReservations(reservations, FICHIER_RESERVATIONS);
     }
 
     /**
-     * Importe les passagers depuis le fichier par défaut ({@value #FICHIER_PASSAGERS}).
+     * Importe les passagers depuis le fichier par défaut
+     * ({@value #FICHIER_PASSAGERS}).
      *
      * @return la liste des passagers importés
      * @throws IOException si une erreur de lecture survient
@@ -386,14 +424,16 @@ public class FichierService {
     }
 
     /**
-     * Échappe une valeur pour l'écriture CSV (remplace {@code null} par une chaîne vide,
+     * Échappe une valeur pour l'écriture CSV (remplace {@code null} par une chaîne
+     * vide,
      * supprime les retours à la ligne).
      *
-     * @param  valeur la valeur à échapper
+     * @param valeur la valeur à échapper
      * @return la valeur nettoyée, jamais {@code null}
      */
     private String echapper(String valeur) {
-        if (valeur == null) return "";
+        if (valeur == null)
+            return "";
         return valeur.replace("\n", " ").replace("\r", "");
     }
 }

@@ -130,7 +130,8 @@ public class Main {
                     } else {
                         System.out.println("Liste des aeroports (" + aeroports.size() + ") :");
                         for (Aeroport a : aeroports) {
-                            System.out.println("  " + a.getCodeIATA() + " - " + a.getNom() + " (" + a.getVille() + ", " + a.getPays() + ")");
+                            System.out.println("  " + a.getCodeIATA() + " - " + a.getNom() + " (" + a.getVille() + ", "
+                                    + a.getPays() + ")");
                         }
                     }
                 }
@@ -264,7 +265,8 @@ public class Main {
                     String salaire = lireChaine("Salaire : ");
                     String qualification = lireChaine("Qualification : ");
                     String experience = lireChaine("Annees d'experience : ");
-                    PersonnelCabine pc = new PersonnelCabine(id, nom, prenom, email, tel, numEmp, salaire, qualification, experience);
+                    PersonnelCabine pc = new PersonnelCabine(id, nom, prenom, email, tel, numEmp, salaire,
+                            qualification, experience);
                     compagnie.ajouterEmploye(pc);
                 }
                 case 3 -> {
@@ -302,7 +304,8 @@ public class Main {
                     } else {
                         System.out.println("Liste des employes (" + employes.size() + ") :");
                         for (Employe e : employes) {
-                            System.out.println("  " + e.getId() + " - " + e.getNom() + " " + e.getPrenom() + " (" + e.obtenirRole() + ")");
+                            System.out.println("  " + e.getId() + " - " + e.getNom() + " " + e.getPrenom() + " ("
+                                    + e.obtenirRole() + ")");
                         }
                     }
                 }
@@ -374,12 +377,16 @@ public class Main {
 
                     Vol vol;
                     switch (typeVol) {
-                        case 1 -> vol = new CourtCourrier(numero, aeroportDepart, aeroportArrivee, dateDepart, dateArrivee, heureDepart, heureArrivee, prix, distance);
-                        case 2 -> vol = new MoyenCourrier(numero, aeroportDepart, aeroportArrivee, dateDepart, dateArrivee, heureDepart, heureArrivee, prix, distance);
-                        case 3 -> vol = new LongCourrier(numero, aeroportDepart, aeroportArrivee, dateDepart, dateArrivee, heureDepart, heureArrivee, prix, distance);
+                        case 1 -> vol = new CourtCourrier(numero, aeroportDepart, aeroportArrivee, dateDepart,
+                                dateArrivee, heureDepart, heureArrivee, prix, distance);
+                        case 2 -> vol = new MoyenCourrier(numero, aeroportDepart, aeroportArrivee, dateDepart,
+                                dateArrivee, heureDepart, heureArrivee, prix, distance);
+                        case 3 -> vol = new LongCourrier(numero, aeroportDepart, aeroportArrivee, dateDepart,
+                                dateArrivee, heureDepart, heureArrivee, prix, distance);
                         default -> {
                             System.out.println("Type invalide, vol cree en Court Courrier par defaut.");
-                            vol = new CourtCourrier(numero, aeroportDepart, aeroportArrivee, dateDepart, dateArrivee, heureDepart, heureArrivee, prix, distance);
+                            vol = new CourtCourrier(numero, aeroportDepart, aeroportArrivee, dateDepart, dateArrivee,
+                                    heureDepart, heureArrivee, prix, distance);
                         }
                     }
                     compagnie.planifierVol(vol);
@@ -420,7 +427,8 @@ public class Main {
                         for (Vol v : volsList) {
                             String dep = (v.getAeroportDepart() != null) ? v.getAeroportDepart().getCodeIATA() : "?";
                             String arr = (v.getAeroportArrivee() != null) ? v.getAeroportArrivee().getCodeIATA() : "?";
-                            System.out.println("  " + v.getNumeroVol() + " | " + dep + " -> " + arr + " | " + v.getTypeVol() + " | " + v.getStatut());
+                            System.out.println("  " + v.getNumeroVol() + " | " + dep + " -> " + arr + " | "
+                                    + v.getTypeVol() + " | " + v.getStatut());
                         }
                     }
                 }
@@ -433,7 +441,8 @@ public class Main {
                         for (Vol v : volsPlanifies) {
                             String dep = (v.getAeroportDepart() != null) ? v.getAeroportDepart().getCodeIATA() : "?";
                             String arr = (v.getAeroportArrivee() != null) ? v.getAeroportArrivee().getCodeIATA() : "?";
-                            System.out.println("  " + v.getNumeroVol() + " | " + dep + " -> " + arr + " | " + v.getTypeVol());
+                            System.out.println(
+                                    "  " + v.getNumeroVol() + " | " + dep + " -> " + arr + " | " + v.getTypeVol());
                         }
                     }
                 }
@@ -495,7 +504,8 @@ public class Main {
                     } else {
                         System.out.println("Liste des reservations (" + reservations.size() + ") :");
                         for (Reservation r : reservations) {
-                            System.out.println("  " + r.getNumeroReservation() + " | " + r.getPassager().getNom() + " | " + r.getStatut());
+                            System.out.println("  " + r.getNumeroReservation() + " | " + r.getPassager().getNom()
+                                    + " | " + r.getStatut());
                         }
                     }
                 }
@@ -554,7 +564,8 @@ public class Main {
                     } else {
                         System.out.println("Liste des avions (" + avionsList.size() + ") :");
                         for (Avion a : avionsList) {
-                            System.out.println("  " + a.getImmatriculation() + " - " + a.getModele() + " (" + a.getCapacite() + " places)");
+                            System.out.println("  " + a.getImmatriculation() + " - " + a.getModele() + " ("
+                                    + a.getCapacite() + " places)");
                         }
                     }
                 }
@@ -636,7 +647,9 @@ public class Main {
                     } else {
                         System.out.println("Liste des equipages (" + equipagesList.size() + ") :");
                         for (Equipage eq : equipagesList) {
-                            System.out.println("  " + eq.getIdEquipage() + " - Pilote: " + (eq.getPilote() != null ? eq.getPilote().getNom() : "N/A") + " - PC: " + eq.getPersonnelCabine().size());
+                            System.out.println("  " + eq.getIdEquipage() + " - Pilote: "
+                                    + (eq.getPilote() != null ? eq.getPilote().getNom() : "N/A") + " - PC: "
+                                    + eq.getPersonnelCabine().size());
                         }
                     }
                 }
@@ -650,7 +663,8 @@ public class Main {
 
     /**
      * Demonstration du polymorphisme entre Pilote et PersonnelCabine.
-     * Les deux heritent de Employe et surchargent obtenirRole() et obtenirInformation().
+     * Les deux heritent de Employe et surchargent obtenirRole() et
+     * obtenirInformation().
      */
     private static void demonstrationPolymorphisme() {
         System.out.println("\n========== DEMONSTRATION POLYMORPHISME ==========");
@@ -690,15 +704,20 @@ public class Main {
         compagnie.ajouterAvion(new Avion("F-GKXC", "Airbus A350", 300));
 
         // Pilotes (salaire et heures en String)
-        Pilote pilote1 = new Pilote("E001", "Dupont", "Jean", "j.dupont@skyisep.com", "0601020304", "EMP001", "8000", "ATPL-001", "5000");
-        Pilote pilote2 = new Pilote("E002", "Martin", "Pierre", "p.martin@skyisep.com", "0605060708", "EMP002", "7500", "ATPL-002", "3000");
+        Pilote pilote1 = new Pilote("E001", "Dupont", "Jean", "j.dupont@skyisep.com", "0601020304", "EMP001", "8000",
+                "ATPL-001", "5000");
+        Pilote pilote2 = new Pilote("E002", "Martin", "Pierre", "p.martin@skyisep.com", "0605060708", "EMP002", "7500",
+                "ATPL-002", "3000");
         compagnie.ajouterEmploye(pilote1);
         compagnie.ajouterEmploye(pilote2);
 
         // Personnel de cabine (salaire et experience en String)
-        PersonnelCabine pc1 = new PersonnelCabine("E003", "Lemoine", "Sophie", "s.lemoine@skyisep.com", "0611121314", "EMP003", "3500", "Chef de cabine", "10");
-        PersonnelCabine pc2 = new PersonnelCabine("E004", "Bernard", "Marie", "m.bernard@skyisep.com", "0615161718", "EMP004", "3000", "Hotesse", "5");
-        PersonnelCabine pc3 = new PersonnelCabine("E005", "Petit", "Luc", "l.petit@skyisep.com", "0619202122", "EMP005", "3000", "Steward", "3");
+        PersonnelCabine pc1 = new PersonnelCabine("E003", "Lemoine", "Sophie", "s.lemoine@skyisep.com", "0611121314",
+                "EMP003", "3500", "Chef de cabine", "10");
+        PersonnelCabine pc2 = new PersonnelCabine("E004", "Bernard", "Marie", "m.bernard@skyisep.com", "0615161718",
+                "EMP004", "3000", "Hotesse", "5");
+        PersonnelCabine pc3 = new PersonnelCabine("E005", "Petit", "Luc", "l.petit@skyisep.com", "0619202122", "EMP005",
+                "3000", "Steward", "3");
         compagnie.ajouterEmploye(pc1);
         compagnie.ajouterEmploye(pc2);
         compagnie.ajouterEmploye(pc3);
@@ -714,9 +733,12 @@ public class Main {
         compagnie.ajouterEquipage(equipage2);
 
         // Passagers
-        compagnie.ajouterPassager(new Passager("P001", "Moreau", "Alice", "alice.moreau@email.com", "0631323334", "FR123456"));
-        compagnie.ajouterPassager(new Passager("P002", "Durand", "Bob", "bob.durand@email.com", "0635363738", "FR654321"));
-        compagnie.ajouterPassager(new Passager("P003", "Garcia", "Carlos", "carlos.garcia@email.com", "0639404142", "ES789012"));
+        compagnie.ajouterPassager(
+                new Passager("P001", "Moreau", "Alice", "alice.moreau@email.com", "0631323334", "FR123456"));
+        compagnie.ajouterPassager(
+                new Passager("P002", "Durand", "Bob", "bob.durand@email.com", "0635363738", "FR654321"));
+        compagnie.ajouterPassager(
+                new Passager("P003", "Garcia", "Carlos", "carlos.garcia@email.com", "0639404142", "ES789012"));
 
         // Vols (avec sous-classes et Aeroport)
         Vol vol1 = new LongCourrier("SI101", cdg, jfk, "20/04/2025", "20/04/2025", "08:00", "12:00", "450", "5800");
@@ -760,7 +782,8 @@ public class Main {
                 case 1 -> {
                     try {
                         String chemin = lireChaine("Chemin du fichier (ex: data/passagers.csv) : ");
-                        if (chemin.isEmpty()) chemin = "data/passagers.csv";
+                        if (chemin.isEmpty())
+                            chemin = "data/passagers.csv";
                         fichierService.exporterPassagers(compagnie.getPassagers(), chemin);
                     } catch (IOException e) {
                         System.out.println("Erreur : " + e.getMessage());
@@ -769,7 +792,8 @@ public class Main {
                 case 2 -> {
                     try {
                         String chemin = lireChaine("Chemin du fichier (ex: data/vols.csv) : ");
-                        if (chemin.isEmpty()) chemin = "data/vols.csv";
+                        if (chemin.isEmpty())
+                            chemin = "data/vols.csv";
                         fichierService.exporterVols(compagnie.getVols(), chemin);
                     } catch (IOException e) {
                         System.out.println("Erreur : " + e.getMessage());
@@ -778,7 +802,8 @@ public class Main {
                 case 3 -> {
                     try {
                         String chemin = lireChaine("Chemin du fichier (ex: data/reservations.csv) : ");
-                        if (chemin.isEmpty()) chemin = "data/reservations.csv";
+                        if (chemin.isEmpty())
+                            chemin = "data/reservations.csv";
                         fichierService.exporterReservations(compagnie.getReservations(), chemin);
                     } catch (IOException e) {
                         System.out.println("Erreur : " + e.getMessage());
@@ -787,7 +812,8 @@ public class Main {
                 case 4 -> {
                     try {
                         String chemin = lireChaine("Chemin du fichier CSV (ex: data/passagers.csv) : ");
-                        if (chemin.isEmpty()) chemin = "data/passagers.csv";
+                        if (chemin.isEmpty())
+                            chemin = "data/passagers.csv";
                         List<Passager> importes = fichierService.importerPassagers(chemin);
                         for (Passager p : importes) {
                             compagnie.ajouterPassager(p);
@@ -799,7 +825,8 @@ public class Main {
                 case 5 -> {
                     try {
                         String chemin = lireChaine("Chemin du fichier (ex: data/rapport.txt) : ");
-                        if (chemin.isEmpty()) chemin = "data/rapport.txt";
+                        if (chemin.isEmpty())
+                            chemin = "data/rapport.txt";
                         fichierService.ecrireFichierTexte(chemin, compagnie.obtenirInformation());
                     } catch (IOException e) {
                         System.out.println("Erreur : " + e.getMessage());
@@ -811,7 +838,8 @@ public class Main {
         }
     }
 
-    // ======================== MENU BASE DE DONNEES (BONUS) ========================
+    // ======================== MENU BASE DE DONNEES (BONUS)
+    // ========================
 
     private static void menuBaseDeDonnees() {
         boolean retour = false;
@@ -839,7 +867,8 @@ public class Main {
                         databaseService.initialiserBase();
                         int count = 0;
                         for (Passager p : compagnie.getPassagers()) {
-                            if (databaseService.insererPassager(p)) count++;
+                            if (databaseService.insererPassager(p))
+                                count++;
                         }
                         System.out.println(count + " passager(s) sauvegarde(s) en BDD.");
                     } catch (SQLException e) {

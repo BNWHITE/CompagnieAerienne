@@ -6,17 +6,22 @@ import java.util.List;
 /**
  * Classe représentant un passager de la compagnie aérienne.
  *
- * <p>Hérite de {@link Personne} (qui implémente {@link ObtenirInformation}).
- * Un passager possède un numéro de passeport et peut effectuer plusieurs réservations.</p>
+ * <p>
+ * Hérite de {@link Personne} (qui implémente {@link ObtenirInformation}).
+ * Un passager possède un numéro de passeport et peut effectuer plusieurs
+ * réservations.
+ * </p>
  *
- * <p><b>Relation :</b> {@code Passager} → {@code List<Reservation>} (composition).</p>
+ * <p>
+ * <b>Relation :</b> {@code Passager} → {@code List<Reservation>} (composition).
+ * </p>
  *
- * @author  Équipe SkyISEP
- * @author  Kahina Medjkoune
+ * @author Équipe SkyISEP
+ * @author Kahina Medjkoune
  * @version 1.0
- * @since   2025
- * @see     Personne
- * @see     Reservation
+ * @since 2025
+ * @see Personne
+ * @see Reservation
  */
 public class Passager extends Personne {
     /** Numéro de passeport unique du passager. */
@@ -53,10 +58,12 @@ public class Passager extends Personne {
     /**
      * Réserve un vol pour ce passager.
      *
-     * <p>Crée une nouvelle {@link Reservation} et l'ajoute à la liste des réservations
-     * du passager, puis ajoute le passager au vol.</p>
+     * <p>
+     * Crée une nouvelle {@link Reservation} et l'ajoute à la liste des réservations
+     * du passager, puis ajoute le passager au vol.
+     * </p>
      *
-     * @param  vol le vol à réserver (ne doit pas être {@code null} ni indisponible)
+     * @param vol le vol à réserver (ne doit pas être {@code null} ni indisponible)
      * @return la {@link Reservation} créée, ou {@code null} si le vol est invalide
      */
     public Reservation reserverVol(Vol vol) {
